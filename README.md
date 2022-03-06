@@ -1,9 +1,9 @@
-# KekHost
+# KekAccount
 KekHost is an application written in [rust](https://www.rust-lang.org/) for hosting files. 
 
 <br>
 
-[API Documentation](https://oss.kotw.dev/kekhost/docs/API)
+[Documentation](https://oss.kotw.dev/kekaccount/docs/)
 
 <br>
 
@@ -36,7 +36,7 @@ Copy default.env to .env and change the settings in .env.
 cargo build --release
 ```
 
-The executable will be located at `target/release/uploadserver`
+The executable will be located at `target/release/kekaccount`
 
 <br>
 
@@ -51,10 +51,9 @@ cargo run
 
 ## Goals
 
-- Webinterface for uploading files
-- Git support
-- Github hook
-- Github action
+- TCP api
+- WS api
+- REST api
 
 <br>
 
@@ -64,4 +63,4 @@ If you have aditional ideas how to make this tool better please create a feature
 <br>
 
 ## Contributing
-More information [here](https://oss.kotw.dev/kekhost/CONTRIBUTE).
+More information [here](https://oss.kotw.dev/kekaccount/CONTRIBUTE).
