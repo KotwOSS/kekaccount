@@ -17,3 +17,4 @@ serde = { version = "1.0.136", features = ["derive"] }
 serde_json = { version = "1.0.79" }
 hex = "0.4.3"
 derive_more = "0.99.17"
+regex = "1.5.5"
