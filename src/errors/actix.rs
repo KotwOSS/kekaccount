@@ -17,6 +17,10 @@ pub struct JsonErrorType {
 
 impl JsonErrorType {
     pub const BAD_REQUEST: JsonErrorType = JsonErrorType { code: StatusCode::BAD_REQUEST, msg: "Bad request" };
+    pub const MISSING_FIELD: JsonErrorType = JsonErrorType { code: StatusCode::BAD_REQUEST, msg: "Missing field" };
+    pub const BAD_CREDENTIALS: JsonErrorType = JsonErrorType { code: StatusCode::UNAUTHORIZED, msg: "Bad credentials" };
+    pub const EXISTS: JsonErrorType = JsonErrorType { code: StatusCode::CONFLICT, msg: "Exists" };
+    pub const INTERNAL_SERVER_ERROR: JsonErrorType = JsonErrorType { code: StatusCode::INTERNAL_SERVER_ERROR, msg: "Internal server error" };
 
     pub fn get_code(&self) -> StatusCode {
         self.code
@@ -44,7 +48,7 @@ impl Display for JsonError {
             "status": self.err_type.code.as_u16(),
             "generic": self.err_type.msg,
             "message": self.msg
-        }).to_string())
+        }))
     }
 }
 
