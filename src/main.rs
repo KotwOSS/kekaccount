@@ -1,3 +1,5 @@
+#![feature(once_cell)]
+
 #[macro_use] 
 extern crate diesel;
 
@@ -7,7 +9,7 @@ extern crate serde_json;
 extern crate dotenv;
 
 use dotenv::dotenv;
-use std::env;
+use std::{env, sync::Arc};
 
 pub mod api;
 pub mod models;
@@ -15,7 +17,7 @@ pub mod schema;
 pub mod database;
 pub mod colors;
 pub mod routes;
-pub mod random;
+pub mod util;
 pub mod errors;
 
 use database::PgPool;
@@ -31,7 +33,6 @@ async fn main() {
     );
 
     let pool: PgPool = database::establish_connection(env::var("DATABASE_URL").expect("Database url not set!"));
-
 
     let http_address = env::var("http_address")
         .unwrap_or("0.0.0.0".to_owned());
@@ -49,13 +50,19 @@ async fn main() {
         .parse()
         .unwrap_or(5071);
 
-    let cloned_pool = pool.clone();
+    let db_clean_interval = env::var("db_clean_interval")
+        .unwrap_or("60000".to_owned())
+        .parse()
+        .unwrap_or(60000);
 
+    let pool_arc = Arc::new(pool.clone());
 
-    let (_tcp, _http) = tokio::join!(
+    // INITIALIZATION
+    util::checker::init();
+    
+    let (_tcp, _db_cleaner, _http) = tokio::join!(
         api::tcp::main(&pool, tcp_address, tcp_port),
-        async move {
-            api::http::main(cloned_pool, http_address, http_port).await
-        }
+        api::db_clean::main(&pool, db_clean_interval),
+        api::http::main(pool_arc, http_address, http_port)
     );
 }
