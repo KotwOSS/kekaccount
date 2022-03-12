@@ -22,7 +22,6 @@ pub async fn main(pool: &PgPool, address: String, port: u16) -> Result<(), Error
 }
 
 async fn accept_loop(tcp_listener: TcpListener, _pool: &PgPool) {
-    println!("{}READY{} tcp", colors::YELLOW, colors::RESET);
     while let Ok((mut tcp_stream, _socket_addr)) = tcp_listener.accept().await {
         tokio::spawn(async move {
             println!("CONNECTED: {}", _socket_addr);
