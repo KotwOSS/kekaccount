@@ -1,9 +1,6 @@
-use diesel::{PgConnection, QueryResult, QueryDsl};
-use crate::diesel::RunQueryDsl;
+use diesel::{PgConnection, QueryResult, QueryDsl, BoolExpressionMethods, RunQueryDsl, ExpressionMethods};
 
 use crate::schema::tokens;
-
-use crate::diesel::ExpressionMethods;
 
 #[derive(Queryable, Insertable)]
 #[table_name="tokens"]
@@ -15,6 +12,10 @@ pub struct Token {
 }
 
 impl Token {
+    pub fn clone_id(&self) -> Vec<u8> {
+        self.id.clone()
+    }
+
     pub fn create(&self, connection: &PgConnection) -> QueryResult<usize> {
         diesel::insert_into(tokens::table)
             .values(self)
@@ -24,7 +25,15 @@ impl Token {
     pub fn find(id: Vec<u8>, connection: &PgConnection) -> Vec<Token> {
         tokens::table
             .filter(tokens::dsl::id.eq(id))
-            .select((tokens::dsl::id, tokens::dsl::username, tokens::dsl::password))
+            .select((tokens::dsl::id, tokens::dsl::user_id, tokens::dsl::name, tokens::dsl::permissions))
+            .load::<Token>(connection)
+            .expect("Error while executing query!")
+    }
+
+    pub fn get_name(user_id: Vec<u8>, name: String, connection: &PgConnection) -> Vec<Token> {
+        tokens::table
+            .filter(tokens::dsl::name.eq(name).and(tokens::dsl::user_id.eq(user_id)))
+            .select((tokens::dsl::id, tokens::dsl::user_id, tokens::dsl::name, tokens::dsl::permissions))
             .load::<Token>(connection)
             .expect("Error while executing query!")
     }
