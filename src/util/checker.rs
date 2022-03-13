@@ -5,7 +5,7 @@ use tokio::sync::OnceCell;
 use crate::{errors::actix::{JsonError, JsonErrorType}, colors, models::{user, token}, database::PgPool};
 
 static EMAIL_REGEX: OnceCell<Regex> = OnceCell::const_new();
-static URL_REGEX: OnceCell<Regex> = OnceCell::const_new();
+//static URL_REGEX: OnceCell<Regex> = OnceCell::const_new();
 
 pub fn min_max_size<'a>(name: &'a str, len: usize, min: usize, max: usize) -> Result<(), JsonError> {
     if len < min || len > max {
@@ -36,7 +36,8 @@ pub fn init() {
     );
 
     EMAIL_REGEX.set(Regex::new(r"^\w+[\+\.\w-]*@([\w-]+\.)*\w+[\w-]*\.([a-z]{2,18}|\d+)$").unwrap()).unwrap();
-    URL_REGEX.set(Regex::new(r"^(ht|f)tps?:\/\/(localhost|((\w+-+)*\w+\.){1,}[a-zA-Z]{2,18}|(\b25[0-5]|\b2[0-4][0-9]|\b[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})(:(4915[01]|491[0-4][0-9]|490[0-9]{2}|4[0-8][0-9]{3}|[0-3]?[0-9]?[0-9]?[0-9]?[0-9]))?(\/([\w%\- ]+\/?)*(\?[\w-]+=[\w-]+(&[\w-]+=[\w-]+)*)?)?$").unwrap()).unwrap();
+    // TODO: write a regex that parses
+    //URL_REGEX.set(Regex::new(r"^(ht|f)tps?:\/\/(localhost|((\w+-+)*\w+\.){1,}[a-zA-Z]{2,18}|(\b25[0-5]|\b2[0-4][0-9]|\b[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})(:(4915[01]|491[0-4][0-9]|490[0-9]{2}|4[0-8][0-9]{3}|[0-3]?[0-9]?[0-9]?[0-9]?[0-9]))?(\/([\w%\- ]+\/?)*(\?[\w-]+=[\w-]+(&[\w-]+=[\w-]+)*)?)?$").unwrap()).unwrap();
 }
 
 pub fn map_qres<'a, T>(qres: QueryResult<T>, text: &'a str) -> Result<T, JsonError> {
