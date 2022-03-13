@@ -51,6 +51,13 @@ impl Token {
             .load::<Token>(connection)
     }
 
+    pub fn find_user(user_id: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<Token>> {
+        tokens::table
+            .filter(tokens::dsl::user_id.eq(user_id))
+            .select((tokens::dsl::id, tokens::dsl::token, tokens::dsl::user_id, tokens::dsl::name, tokens::dsl::permissions))
+            .load::<Token>(connection)
+    }
+
     pub fn delete(id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
         diesel::delete(tokens::table)
             .filter(tokens::dsl::id.eq(id))
