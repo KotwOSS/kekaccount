@@ -1,11 +1,11 @@
 use hex::{ToHex};
-use actix_web::{post, web, Result};
+use actix_web::{post, web, Result, Responder};
 use serde::Deserialize;
 
 use crate::errors::actix::JsonErrorType;
 use crate::models::{user, token};
 use crate::api::http::State;
-use crate::util::{self, random, checker};
+use crate::util::{self, random, checker::{self, map_qres}};
 
 #[derive(Deserialize)]
 pub struct CreateData {
@@ -17,12 +17,12 @@ pub struct CreateData {
 }
 
 #[post("/api/auth/token/create")]
-pub async fn create(create_data: web::Json<CreateData>, state: web::Data<State>) -> Result<String> {
+pub async fn create(create_data: web::Json<CreateData>, state: web::Data<State>) -> Result<impl Responder> {
     if create_data.username.is_none() && create_data.email.is_none() {
         return Err(JsonErrorType::MISSING_FIELD.new_error("Missing username or email!".to_owned()).into());
     }
 
-    let password = util::hex::parse_to_buf(create_data.password.clone(), 128)
+    let password = util::hex::parse_to_buf(create_data.password.as_str(), 128)
         .map_err(|e| JsonErrorType::BAD_REQUEST.new_error(format!(
             "Error while parsing field password! ({})",
             e
@@ -31,52 +31,37 @@ pub async fn create(create_data: web::Json<CreateData>, state: web::Data<State>)
     let name = create_data.name.clone();
     checker::min_max_size("Length of name", name.len(), 3, 32)?;
 
-    let db_connection = &state.pool.get()
-        .expect("Error while connecting to database!");
+    let db_connection = &checker::get_con(&state.pool)?;
     
     let users = match create_data.username.clone() {
-        Some(username) => user::User::find_username(username, password, db_connection),
-        None => user::User::find_email(create_data.email.clone().unwrap(), password, db_connection)
-    };
+        Some(username) => map_qres(user::User::find_username(username, password, db_connection), "Error while selecting users"),
+        None => map_qres(user::User::find_email(create_data.email.clone().unwrap(), password, db_connection), "Error while selecting users")
+    }?;
 
+    match users.first() {
+        Some(user) => {
+            let user_id = user.clone_id();
 
-    if users.len() == 1 {
-        let user_id = users[0].clone_id();
+            let token = random::random_byte_array(128);
+            let token_hex = token.encode_hex::<String>();
 
-        let tokens = token::Token::get_name(user_id.clone(), name.clone(), db_connection);
-
-        if tokens.len() == 0 {
-            let id = random::random_byte_array(128);
+            let id = random::random_byte_array(8);
             let id_hex = id.encode_hex::<String>();
 
-            let new_token = token::Token {
-                id,
-                name,
-                user_id,
-                permissions: create_data.permissions
-            };
 
-            new_token.create(db_connection).map_err(|e| JsonErrorType::INTERNAL_SERVER_ERROR.new_error(format!(
-                "Error while trying to insert token. Please report this to an administrator! ({})",
-                e
-            )))?;
+            let new_token = token::Token { id, token, name, user_id, permissions: create_data.permissions };
 
-            return Ok(json!({
+            map_qres(new_token.create(db_connection), "Error while inserting token")?;
+
+            Ok(web::Json(json!({
                 "success": true,
-                "created": true,
-                "token": id_hex
-            }).to_string());
-        } else {
-            return Ok(json!({
-                "success": true,
-                "created": false,
-                "token": tokens[0].clone_id().encode_hex::<String>()
-            }).to_string());
-        }
-    } else {
-        return Err(JsonErrorType::BAD_CREDENTIALS.new_error(format!(
-            "Invalid {} and or password!", 
-            if create_data.username.is_some() {"username"} else {"email"}
-        )).into());
+                "token": token_hex,
+                "id": id_hex
+            })))
+        },
+        None => Err(JsonErrorType::BAD_CREDENTIALS.new_error(format!(
+                "Invalid {} and or password!", 
+                if create_data.username.is_some() {"username"} else {"email"}
+            )).into())
     }
 }
