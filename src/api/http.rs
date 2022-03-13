@@ -17,7 +17,11 @@ pub async fn main(pool: Arc<PgPool>, address: String, port: u16) -> Result<(), E
         App::new()
             .service(routes::api::index)
             .service(routes::api::auth::token::create::create)
+            .service(routes::api::auth::token::list::list)
+            .service(routes::api::auth::token::delete::delete)
+            .service(routes::api::auth::token::info::info)
             .service(routes::api::auth::register::register)
+            .service(routes::api::apps::create::create)
             .app_data(web::Data::new(State { pool: pool.clone() }))
     })
     .bind((address, port))?

@@ -21,6 +21,9 @@ impl JsonErrorType {
     pub const BAD_CREDENTIALS: JsonErrorType = JsonErrorType { code: StatusCode::UNAUTHORIZED, msg: "Bad credentials" };
     pub const EXISTS: JsonErrorType = JsonErrorType { code: StatusCode::CONFLICT, msg: "Exists" };
     pub const INTERNAL_SERVER_ERROR: JsonErrorType = JsonErrorType { code: StatusCode::INTERNAL_SERVER_ERROR, msg: "Internal server error" };
+    pub const DATABASE_ERROR: JsonErrorType = JsonErrorType { code: StatusCode::INTERNAL_SERVER_ERROR, msg: "Database error" };
+    pub const NOT_FOUND: JsonErrorType = JsonErrorType { code: StatusCode::NOT_FOUND, msg: "Not found" };
+    pub const FORBIDDEN: JsonErrorType = JsonErrorType { code: StatusCode::FORBIDDEN, msg: "Forbidden" };
 
     pub fn get_code(&self) -> StatusCode {
         self.code
