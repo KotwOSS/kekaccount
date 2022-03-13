@@ -18,7 +18,8 @@ pub struct ListData {
 #[derive(Serialize)]
 pub struct ShowAbleToken {
     id: String,
-    name: String
+    name: String,
+    active: bool
 }
 
 #[post("/api/auth/token/list")]
@@ -47,7 +48,8 @@ pub async fn list(_list_data: web::Json<ListData>, state: web::Data<State>, requ
         let mapped: Vec<ShowAbleToken> = tokens.iter()
             .map(|tk| ShowAbleToken {
                 id: tk.id.encode_hex::<String>(),
-                name: tk.name.clone()
+                name: tk.name.clone(),
+                active: tk.id==token.id
             })
             .collect();
 
