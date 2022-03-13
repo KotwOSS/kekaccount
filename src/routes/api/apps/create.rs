@@ -1,11 +1,11 @@
-use hex::{ToHex};
+//use hex::ToHex;
 use actix_web::{post, web, Result, HttpRequest, Responder};
 use serde::Deserialize;
 
 use crate::errors::actix::JsonErrorType;
-use crate::models::{user, token};
+//use crate::models::{user, token};
 use crate::api::http::State;
-use crate::util::{self, random, checker::{self, map_qres, map_opt}};
+use crate::util::{self, checker::{self, map_opt}};
 
 #[derive(Deserialize)]
 pub struct CreateData {
@@ -29,12 +29,16 @@ pub async fn create(create_data: web::Json<CreateData>, state: web::Data<State>,
     let name = create_data.name.clone();
     checker::min_max_size("Length of name", name.len(), 3, 32)?;
 
-    let description = create_data.name.clone();
-    checker::min_max_size("Length of name", name.len(), 0, 255)?;
+    let _description = create_data.description.clone();
+    checker::min_max_size("Length of description", name.len(), 0, 255)?;
+
+    let _redirect_uri = create_data.redirect_uri.clone();
+    checker::min_max_size("Length of redirect_uri", name.len(), 0, 255)?;
+    // TODO: check validity using URL_REGEX
 
     let db_connection = &checker::get_con(&state.pool)?;
 
-    let (user, token) = checker::authorize(token, db_connection)?;
+    let (_user, token) = checker::authorize(token, db_connection)?;
 
     if token.permissions & 0b1 == 0 {
         return Err(JsonErrorType::FORBIDDEN.new_error(format!(
