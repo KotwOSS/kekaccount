@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 use crate::errors::actix::JsonErrorType;
 use crate::models::{token};
 use crate::api::http::State;
-use crate::util::{self, checker::{self, map_qres, map_opt}};
+use crate::util::checker::{self, map_qres, hex_header};
 
 #[derive(Deserialize)]
 pub struct ListData {
@@ -24,15 +24,7 @@ pub struct ShowAbleToken {
 
 #[post("/api/auth/token/list")]
 pub async fn list(_list_data: web::Json<ListData>, state: web::Data<State>, request: HttpRequest) -> Result<impl Responder> {
-    let headers = request.headers();
-
-    let authorization_hex = map_opt(headers.get("Authorization"), "Missing authorization header")?.to_str().unwrap();
-
-    let token =  util::hex::parse_to_buf(authorization_hex, 256)
-        .map_err(|e| JsonErrorType::BAD_REQUEST.new_error(format!(
-            "Error while parsing authorize header: {}",
-            e
-        )))?;
+    let token = hex_header("Authorization", 256, request.headers())?;
 
     let db_connection = &checker::get_con(&state.pool)?;
     
