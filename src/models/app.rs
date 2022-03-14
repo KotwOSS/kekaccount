@@ -27,6 +27,13 @@ impl App {
             .load::<App>(connection)
     }
 
+    pub fn find_owner(owner: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<App>> {
+        apps::table
+            .filter(apps::dsl::owner.eq(owner))
+            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
+            .load::<App>(connection)
+    }
+
     pub fn delete(id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
         diesel::delete(apps::table)
             .filter(apps::dsl::id.eq(id))
