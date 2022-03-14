@@ -1,4 +1,14 @@
 table! {
+    app_tokens (id) {
+        id -> Bytea,
+        token -> Bytea,
+        app_id -> Bytea,
+        name -> Varchar,
+        permissions -> Int2,
+    }
+}
+
+table! {
     apps (id) {
         id -> Bytea,
         owner -> Bytea,
@@ -22,13 +32,14 @@ table! {
 table! {
     users (id) {
         id -> Bytea,
-        username -> Varchar,
+        name -> Varchar,
         email -> Varchar,
         password -> Bytea,
     }
 }
 
 allow_tables_to_appear_in_same_query!(
+    app_tokens,
     apps,
     tokens,
     users,

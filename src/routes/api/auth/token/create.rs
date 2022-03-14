@@ -1,11 +1,11 @@
-use hex::{ToHex};
+use hex::ToHex;
 use actix_web::{post, web, Result, Responder};
 use serde::Deserialize;
 
 use crate::errors::actix::JsonErrorType;
 use crate::models::{user, token};
 use crate::api::http::State;
-use crate::util::{self, random, checker::{self, map_qres}};
+use crate::util::{random, checker::{self, map_qres}};
 
 #[derive(Deserialize)]
 pub struct CreateData {
@@ -22,11 +22,7 @@ pub async fn create(create_data: web::Json<CreateData>, state: web::Data<State>)
         return Err(JsonErrorType::MISSING_FIELD.new_error("Missing username or email!".to_owned()).into());
     }
 
-    let password = util::hex::parse_to_buf(create_data.password.as_str(), 128)
-        .map_err(|e| JsonErrorType::BAD_REQUEST.new_error(format!(
-            "Error while parsing field password! ({})",
-            e
-        )))?;
+    let password = checker::hex("password", create_data.password.as_str(), 128)?;
 
     let name = create_data.name.clone();
     checker::min_max_size("Length of name", name.len(), 3, 32)?;
@@ -34,14 +30,12 @@ pub async fn create(create_data: web::Json<CreateData>, state: web::Data<State>)
     let db_connection = &checker::get_con(&state.pool)?;
     
     let users = match create_data.username.clone() {
-        Some(username) => map_qres(user::User::find_username(username, password, db_connection), "Error while selecting users"),
+        Some(username) => map_qres(user::User::find_name(username, password, db_connection), "Error while selecting users"),
         None => map_qres(user::User::find_email(create_data.email.clone().unwrap(), password, db_connection), "Error while selecting users")
     }?;
 
-    match users.first() {
+    match users.into_iter().next() {
         Some(user) => {
-            let user_id = user.clone_id();
-
             let token = random::random_byte_array(128);
             let token_hex = token.encode_hex::<String>();
 
@@ -49,7 +43,7 @@ pub async fn create(create_data: web::Json<CreateData>, state: web::Data<State>)
             let id_hex = id.encode_hex::<String>();
 
 
-            let new_token = token::Token { id, token, name, user_id, permissions: create_data.permissions };
+            let new_token = token::Token { id, token, name, user_id: user.id, permissions: create_data.permissions };
 
             map_qres(new_token.create(db_connection), "Error while inserting token")?;
 

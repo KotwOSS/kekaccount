@@ -13,24 +13,6 @@ pub struct Token {
 }
 
 impl Token {
-    pub fn clone_id(&self) -> Vec<u8> {
-        self.id.clone()
-    }
-
-    pub fn clone_user_id(&self) -> Vec<u8> {
-        self.user_id.clone()
-    }
-
-    pub fn clone(&self) -> Token {
-        Token { 
-            id: self.id.clone(), 
-            token: self.id.clone(), 
-            user_id: self.user_id.clone(), 
-            name: self.name.clone(), 
-            permissions: self.permissions.clone()
-        }
-    }
-
     pub fn create(&self, connection: &PgConnection) -> QueryResult<usize> {
         diesel::insert_into(tokens::table)
             .values(self)
@@ -42,6 +24,12 @@ impl Token {
             .filter(tokens::dsl::id.eq(id))
             .select((tokens::dsl::id, tokens::dsl::token, tokens::dsl::user_id, tokens::dsl::name, tokens::dsl::permissions))
             .load::<Token>(connection)
+    }
+
+    pub fn delete(id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
+        diesel::delete(tokens::table)
+            .filter(tokens::dsl::id.eq(id))
+            .execute(connection)       
     }
 
     pub fn find_token(token: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<Token>> {
@@ -56,12 +44,6 @@ impl Token {
             .filter(tokens::dsl::user_id.eq(user_id))
             .select((tokens::dsl::id, tokens::dsl::token, tokens::dsl::user_id, tokens::dsl::name, tokens::dsl::permissions))
             .load::<Token>(connection)
-    }
-
-    pub fn delete(id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
-        diesel::delete(tokens::table)
-            .filter(tokens::dsl::id.eq(id))
-            .execute(connection)       
     }
 
     pub fn get_name(user_id: Vec<u8>, name: String, connection: &PgConnection) -> QueryResult<Vec<Token>> {
