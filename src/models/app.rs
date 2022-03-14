@@ -1,4 +1,4 @@
-use diesel::{PgConnection, QueryResult, QueryDsl, RunQueryDsl, ExpressionMethods};
+use diesel::{PgConnection, QueryResult, QueryDsl, RunQueryDsl, ExpressionMethods, BoolExpressionMethods};
 
 use crate::schema::apps;
 
@@ -13,14 +13,6 @@ pub struct App {
 }
 
 impl App {
-    pub fn clone_id(&self) -> Vec<u8> {
-        self.id.clone()
-    }
-
-    pub fn clone_owner(&self) -> Vec<u8> {
-        self.owner.clone()
-    }
-
     pub fn create(&self, connection: &PgConnection) -> QueryResult<usize> {
         diesel::insert_into(apps::table)
             .values(self)
@@ -32,5 +24,17 @@ impl App {
             .filter(apps::dsl::id.eq(id))
             .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::description, apps::dsl::redirect_uri))
             .load::<App>(connection)
+    }
+
+    pub fn delete(id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
+        diesel::delete(apps::table)
+            .filter(apps::dsl::id.eq(id))
+            .execute(connection)
+    }
+
+    pub fn delete_owner(id: Vec<u8>, owner: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
+        diesel::delete(apps::table)
+            .filter(apps::dsl::id.eq(id).and(apps::dsl::owner.eq(owner)))
+            .execute(connection)
     }
 }
