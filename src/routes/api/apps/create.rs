@@ -11,7 +11,8 @@ use crate::util::{random, checker::{self, map_qres, hex_header}};
 pub struct CreateData {
     name: String,
     description: String,
-    redirect_uri: String
+    redirect_uri: String,
+    homepage: String
 }
 
 #[post("/api/apps/create")]
@@ -26,6 +27,10 @@ pub async fn create(create_data: web::Json<CreateData>, state: web::Data<State>,
 
     let redirect_uri = create_data.redirect_uri.clone();
     checker::min_max_size("Length of redirect_uri", redirect_uri.len(), 0, 255)?;
+    // TODO: check validity using URL_REGEX
+
+    let homepage = create_data.homepage.clone();
+    checker::min_max_size("Length of homepage", homepage.len(), 0, 255)?;
     // TODO: check validity using URL_REGEX
 
     let db_connection = &checker::get_con(&state.pool)?;
@@ -46,6 +51,7 @@ pub async fn create(create_data: web::Json<CreateData>, state: web::Data<State>,
             name,
             description,
             redirect_uri,
+            homepage,
             owner: user.id,
         };
 
