@@ -23,7 +23,7 @@ pub async fn delete(delete_data: web::Json<DeleteData>, state: web::Data<State>,
 
     if token.permissions & 0b100 == 0 {
         return Err(JsonErrorType::FORBIDDEN.new_error(format!(
-            "You don't have the permissions to create apps. (Your permission level: {})",
+            "You don't have the permissions to delete apps. (Your permission level: {})",
             token.permissions
         )).into());
     } else {
