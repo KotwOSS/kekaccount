@@ -38,7 +38,7 @@ pub async fn list(_list_data: web::Json<ListData>, state: web::Data<State>, requ
     
     let (user, token) = checker::authorize(token, db_connection)?;
 
-    if token.permissions & 0b10 == 0 {
+    if token.permissions & 0b1 == 0 {
         return Err(JsonErrorType::FORBIDDEN.new_error(format!(
             "You don't have the permissions to list tokens. (Your permission level: {})",
             token.permissions

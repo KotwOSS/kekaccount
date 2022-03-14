@@ -30,7 +30,7 @@ pub async fn info(_info_data: web::Json<InfoData>, state: web::Data<State>, requ
 
     Ok(web::Json(json!({
         "user": {
-            "name": user.username,
+            "name": user.name,
             "email": user.email,
             "id": user.id.encode_hex::<String>(),
         },

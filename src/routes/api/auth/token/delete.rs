@@ -35,11 +35,11 @@ pub async fn delete(delete_data: web::Json<DeleteData>, state: web::Data<State>)
     let db_connection = &checker::get_con(&state.pool)?;
     
     let users = match delete_data.username.clone() {
-        Some(username) => map_qres(user::User::find_username(username, password, db_connection), "Error while selecting users"),
+        Some(username) => map_qres(user::User::find_name(username, password, db_connection), "Error while selecting users"),
         None => map_qres(user::User::find_email(delete_data.email.clone().unwrap(), password, db_connection), "Error while selecting users")
     }?;
 
-    match users.first() {
+    match users.into_iter().next() {
         Some(_user) => {
             match  map_qres(token::Token::delete(id, db_connection), "Error while deleting token")? {
                 0 => Err(JsonErrorType::NOT_FOUND.new_error(format!(
