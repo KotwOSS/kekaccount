@@ -37,10 +37,10 @@ pub async fn list(_list_data: web::Json<ListData>, state: web::Data<State>, requ
         )).into());
     } else {
         let tokens = map_qres(token::Token::find_user(user.id, db_connection), "Error while selecting tokens")?;
-        let mapped: Vec<ShowAbleToken> = tokens.iter()
+        let mapped: Vec<ShowAbleToken> = tokens.into_iter()
             .map(|tk| ShowAbleToken {
                 id: tk.id.encode_hex::<String>(),
-                name: tk.name.clone(),
+                name: tk.name,
                 active: tk.id==token.id
             })
             .collect();
