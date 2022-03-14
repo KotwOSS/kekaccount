@@ -10,6 +10,7 @@ pub struct App {
     pub name: String,
     pub description: String,
     pub redirect_uri: String,
+    pub homepage: String,
 }
 
 impl App {
@@ -22,7 +23,7 @@ impl App {
     pub fn find(id: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<App>> {
         apps::table
             .filter(apps::dsl::id.eq(id))
-            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::description, apps::dsl::redirect_uri))
+            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
             .load::<App>(connection)
     }
 
