@@ -31,18 +31,18 @@ pub async fn register(register_data: web::Json<RegisterData>, state: web::Data<S
 
     let db_connection = &checker::get_con(&state.pool)?;
 
-    match map_qres(user::User::count_username_or_email(username.clone(), email.clone(), db_connection), "Error while selecting users")? {
+    match map_qres(user::User::count_name_or_email(username.clone(), email.clone(), db_connection), "Error while selecting users")? {
         0 => {
             let id = random::random_byte_array(16);
             let id_hex = id.encode_hex::<String>();
 
-            let new_user = user::User { username, email, password, id };
+            let new_user = user::User { name: username, email, password, id };
 
             map_qres(new_user.create(db_connection), "Error while inserting user")?;
 
             Ok(web::Json(json!({
                 "success": true,
-                "user_id": id_hex
+                "id": id_hex
             })))
         },
         _ => {
