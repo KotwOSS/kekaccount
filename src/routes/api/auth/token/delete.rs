@@ -4,7 +4,7 @@ use serde::Deserialize;
 use crate::errors::actix::JsonErrorType;
 use crate::models::{user, token};
 use crate::api::http::State;
-use crate::util::{self, checker::{self, map_qres}};
+use crate::util::{checker::{self, map_qres}};
 
 #[derive(Deserialize)]
 pub struct DeleteData {
@@ -20,17 +20,9 @@ pub async fn delete(delete_data: web::Json<DeleteData>, state: web::Data<State>)
         return Err(JsonErrorType::MISSING_FIELD.new_error("Missing username or email!".to_owned()).into());
     }
 
-    let password = util::hex::parse_to_buf(delete_data.password.as_str(), 128)
-        .map_err(|e| JsonErrorType::BAD_REQUEST.new_error(format!(
-            "Error while parsing field password! ({})",
-            e
-        )))?;
+    let password = checker::hex("password", delete_data.password.as_str(), 128)?;
 
-    let id = util::hex::parse_to_buf(delete_data.id.as_str(), 16)
-        .map_err(|e| JsonErrorType::BAD_REQUEST.new_error(format!(
-            "Error while parsing field password! ({})",
-            e
-        )))?;
+    let id = checker::hex("id", delete_data.id.as_str(), 16)?;
 
     let db_connection = &checker::get_con(&state.pool)?;
     
