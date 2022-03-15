@@ -16,15 +16,20 @@ pub async fn main(pool: Arc<PgPool>, address: String, port: u16) -> Result<(), E
     match HttpServer::new(move || {
         App::new()
             .service(routes::api::index)
+            // TOKEN
             .service(routes::api::auth::token::create::create)
             .service(routes::api::auth::token::list::list)
             .service(routes::api::auth::token::delete::delete)
             .service(routes::api::auth::token::info::info)
+            // REGISTER
             .service(routes::api::auth::register::register)
+            // APPS
             .service(routes::api::apps::create::create)
             .service(routes::api::apps::delete::delete)
             .service(routes::api::apps::list::list)
             .service(routes::api::apps::update::update)
+            .service(routes::api::apps::search::search)
+            // USERS
             .service(routes::api::users::retrieve::retrieve)
             .service(routes::api::users::search::search)
             .app_data(web::Data::new(State { pool: pool.clone() }))
