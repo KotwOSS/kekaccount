@@ -1,4 +1,4 @@
-use diesel::{PgConnection, QueryResult, QueryDsl, RunQueryDsl, ExpressionMethods, BoolExpressionMethods};
+use diesel::{PgConnection, QueryResult, QueryDsl, RunQueryDsl, ExpressionMethods, BoolExpressionMethods, PgTextExpressionMethods};
 
 use crate::schema::apps;
 
@@ -62,5 +62,14 @@ impl App {
             .filter(apps::dsl::id.eq(id).and(apps::dsl::owner.eq(owner)))
             .set(changes)
             .execute(connection)
+    }
+
+    pub fn ilike_name_ol(name: String, offset: i64, limit: i64, connection: &PgConnection) -> QueryResult<Vec<App>> {
+        apps::table
+            .filter(apps::dsl::name.ilike(name))
+            .limit(limit)
+            .offset(offset)
+            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
+            .load::<App>(connection)
     }
 }
