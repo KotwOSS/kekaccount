@@ -1,4 +1,4 @@
-use diesel::{PgConnection, QueryResult, QueryDsl, RunQueryDsl, ExpressionMethods, BoolExpressionMethods};
+use diesel::{PgConnection, QueryResult, QueryDsl, RunQueryDsl, ExpressionMethods, BoolExpressionMethods, PgTextExpressionMethods};
 
 use crate::schema::apps;
 
@@ -11,6 +11,17 @@ pub struct App {
     pub description: String,
     pub redirect_uri: String,
     pub homepage: String,
+}
+
+#[derive(AsChangeset)]
+#[table_name="apps"]
+pub struct AppChangeSet {
+    pub id: Option<Vec<u8>>,
+    pub owner: Option<Vec<u8>>,
+    pub name: Option<String>,
+    pub description: Option<String>,
+    pub redirect_uri: Option<String>,
+    pub homepage: Option<String>,
 }
 
 impl App {
@@ -44,5 +55,21 @@ impl App {
         diesel::delete(apps::table)
             .filter(apps::dsl::id.eq(id).and(apps::dsl::owner.eq(owner)))
             .execute(connection)
+    }
+
+    pub fn update_owner(id: Vec<u8>, owner: Vec<u8>, changes: &AppChangeSet, connection: &PgConnection) -> QueryResult<usize> {
+        diesel::update(apps::table)
+            .filter(apps::dsl::id.eq(id).and(apps::dsl::owner.eq(owner)))
+            .set(changes)
+            .execute(connection)
+    }
+
+    pub fn ilike_name_ol(name: String, offset: i64, limit: i64, connection: &PgConnection) -> QueryResult<Vec<App>> {
+        apps::table
+            .filter(apps::dsl::name.ilike(name))
+            .limit(limit)
+            .offset(offset)
+            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
+            .load::<App>(connection)
     }
 }

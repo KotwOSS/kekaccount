@@ -1,4 +1,4 @@
-use diesel::{RunQueryDsl, BoolExpressionMethods, ExpressionMethods, PgConnection, QueryResult, QueryDsl};
+use diesel::{RunQueryDsl, BoolExpressionMethods, ExpressionMethods, PgConnection, QueryResult, QueryDsl, PgTextExpressionMethods};
 use crate::schema::users;
 
 #[derive(Queryable, Insertable)]
@@ -9,6 +9,16 @@ pub struct User {
     pub password: Vec<u8>,
     pub email: String
 }
+
+#[derive(AsChangeset)]
+#[table_name="users"]
+pub struct UserChangeSet {
+    pub id: Option<Vec<u8>>,
+    pub name: Option<String>,
+    pub password: Option<Vec<u8>>,
+    pub email: Option<String>
+}
+
 
 impl User {
     pub fn create(&self, connection: &PgConnection) -> QueryResult<usize> {
@@ -56,5 +66,21 @@ impl User {
             .filter(users::dsl::name.eq(name).or(users::dsl::email.eq(email)))
             .count()
             .get_result::<i64>(connection)
+    }
+
+    pub fn update(id: Vec<u8>, changes: &UserChangeSet, connection: &PgConnection) -> QueryResult<usize> {
+        diesel::update(users::table)
+            .filter(users::dsl::id.eq(id))
+            .set(changes)
+            .execute(connection)
+    }
+
+    pub fn ilike_name_ol(name: String, offset: i64, limit: i64, connection: &PgConnection) -> QueryResult<Vec<User>> {
+        users::table
+            .filter(users::dsl::name.ilike(name))
+            .limit(limit)
+            .offset(offset)
+            .select((users::dsl::id, users::dsl::name, users::dsl::password, users::dsl::email))
+            .load::<User>(connection)
     }
 }
