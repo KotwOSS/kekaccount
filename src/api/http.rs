@@ -35,6 +35,7 @@ pub async fn main(pool: Arc<PgPool>, address: String, port: u16) -> Result<(), E
             .service(routes::api::users::search::search)
             // USER
             .service(routes::api::user::info::info)
+            .service(routes::api::user::update::update)
             .app_data(web::Data::new(State { pool: pool.clone() }))
     })
     .bind((address, port))?

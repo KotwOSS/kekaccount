@@ -21,19 +21,30 @@ pub async fn update(update_data: web::Json<UpdateData>, state: web::Data<State>,
 
     let id = checker::hex("id", update_data.id.as_str(), 40)?;
 
+    let mut update_count = 0;
+
     let name: Option<String> = update_data.name.clone();
     if let Some(ref name) = name { 
         checker::min_max_size("Length of name", name.len(), 3, 32)?; 
+        update_count+=1;
     }
 
     let description: Option<String> = update_data.description.clone();
     if let Some(ref description) = description { 
-        checker::min_max_size("Length of description", description.len(), 3, 255)?; 
+        checker::min_max_size("Length of description", description.len(), 3, 255)?;
+        update_count+=1;
     }
 
     let redirect_uri: Option<String> = update_data.redirect_uri.clone();
     if let Some(ref redirect_uri) = redirect_uri { 
-        checker::min_max_size("Length of redirect_uri", redirect_uri.len(), 3, 255)?; 
+        checker::min_max_size("Length of redirect_uri", redirect_uri.len(), 3, 255)?;
+        update_count+=1;
+    }
+
+    if update_count==0 {
+        return Err(JsonErrorType::BAD_REQUEST.new_error(format!(
+            "You have to add atleast one field which you want to update"
+        )).into());
     }
 
     let homepage: Option<String> = update_data.homepage.clone();
@@ -64,7 +75,8 @@ pub async fn update(update_data: web::Json<UpdateData>, state: web::Data<State>,
                 update_data.id
             )).into()),
             _ => Ok(web::Json(json!({
-                "success": true
+                "success": true,
+                "updated_fields": update_count
             })))
         };
     }
