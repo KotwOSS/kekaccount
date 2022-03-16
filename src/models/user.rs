@@ -10,6 +10,16 @@ pub struct User {
     pub email: String
 }
 
+#[derive(AsChangeset)]
+#[table_name="users"]
+pub struct UserChangeSet {
+    pub id: Option<Vec<u8>>,
+    pub name: Option<String>,
+    pub password: Option<Vec<u8>>,
+    pub email: Option<String>
+}
+
+
 impl User {
     pub fn create(&self, connection: &PgConnection) -> QueryResult<usize> {
         diesel::insert_into(users::table)
@@ -56,6 +66,13 @@ impl User {
             .filter(users::dsl::name.eq(name).or(users::dsl::email.eq(email)))
             .count()
             .get_result::<i64>(connection)
+    }
+
+    pub fn update(id: Vec<u8>, changes: &UserChangeSet, connection: &PgConnection) -> QueryResult<usize> {
+        diesel::update(users::table)
+            .filter(users::dsl::id.eq(id))
+            .set(changes)
+            .execute(connection)
     }
 
     pub fn ilike_name_ol(name: String, offset: i64, limit: i64, connection: &PgConnection) -> QueryResult<Vec<User>> {
