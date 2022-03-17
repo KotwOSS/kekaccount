@@ -1,4 +1,4 @@
-use diesel::{PgConnection, QueryResult, QueryDsl, RunQueryDsl, ExpressionMethods};
+use diesel::{PgConnection, QueryResult, QueryDsl, RunQueryDsl, ExpressionMethods, BoolExpressionMethods};
 
 use crate::schema::app_tokens;
 
@@ -29,6 +29,12 @@ impl AppToken {
     pub fn delete(id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
         diesel::delete(app_tokens::table)
             .filter(app_tokens::dsl::id.eq(id))
+            .execute(connection)
+    }
+
+    pub fn delete_app(id: Vec<u8>, app_id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
+        diesel::delete(app_tokens::table)
+            .filter(app_tokens::dsl::id.eq(id).and(app_tokens::dsl::app_id.eq(app_id)))
             .execute(connection)
     }
 
