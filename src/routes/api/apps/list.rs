@@ -27,7 +27,7 @@ pub async fn list(_list_data: web::Json<ListData>, state: web::Data<State>, requ
             token.permissions
         )).into());
     } else {
-        let apps = map_qres(app::App::find_owner(user.id, db_connection), "Error while selecting apps")?;
+        let apps = map_qres(app::App::find_owner_all(user.id, db_connection), "Error while selecting apps")?;
 
         let mapped: Vec<serde_json::Value> = apps.into_iter()
             .map(|app| json!({

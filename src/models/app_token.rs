@@ -1,4 +1,4 @@
-use diesel::{PgConnection, QueryResult, QueryDsl, RunQueryDsl, ExpressionMethods};
+use diesel::{PgConnection, QueryResult, QueryDsl, RunQueryDsl, ExpressionMethods, BoolExpressionMethods};
 
 use crate::schema::app_tokens;
 
@@ -32,9 +32,28 @@ impl AppToken {
             .execute(connection)
     }
 
+    pub fn delete_app(id: Vec<u8>, app_id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
+        diesel::delete(app_tokens::table)
+            .filter(app_tokens::dsl::id.eq(id).and(app_tokens::dsl::app_id.eq(app_id)))
+            .execute(connection)
+    }
+
+    pub fn delete_app_all(app_id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
+        diesel::delete(app_tokens::table)
+            .filter(app_tokens::dsl::app_id.eq(app_id))
+            .execute(connection)
+    }
+
     pub fn find_app(app_id: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<AppToken>> {
         app_tokens::table
             .filter(app_tokens::dsl::app_id.eq(app_id))
+            .select((app_tokens::dsl::id, app_tokens::dsl::token, app_tokens::dsl::app_id, app_tokens::dsl::name, app_tokens::dsl::permissions))
+            .load::<AppToken>(connection)
+    }
+
+    pub fn find_token(token: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<AppToken>> {
+        app_tokens::table
+            .filter(app_tokens::dsl::token.eq(token))
             .select((app_tokens::dsl::id, app_tokens::dsl::token, app_tokens::dsl::app_id, app_tokens::dsl::name, app_tokens::dsl::permissions))
             .load::<AppToken>(connection)
     }
