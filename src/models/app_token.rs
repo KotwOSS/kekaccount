@@ -38,6 +38,12 @@ impl AppToken {
             .execute(connection)
     }
 
+    pub fn delete_app_all(app_id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
+        diesel::delete(app_tokens::table)
+            .filter(app_tokens::dsl::app_id.eq(app_id))
+            .execute(connection)
+    }
+
     pub fn find_app(app_id: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<AppToken>> {
         app_tokens::table
             .filter(app_tokens::dsl::app_id.eq(app_id))
