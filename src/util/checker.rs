@@ -3,7 +3,7 @@ use diesel::{QueryResult, PgConnection, r2d2::ConnectionManager};
 use r2d2::PooledConnection;
 use regex::{self, Regex};
 use tokio::sync::OnceCell;
-use crate::{errors::actix::{JsonError, JsonErrorType}, util, colors, models::{user, token}, database::PgPool};
+use crate::{errors::actix::{JsonError, JsonErrorType}, util, colors, models::{user, token, app_token, app}, database::PgPool};
 
 static EMAIL_REGEX: OnceCell<Regex> = OnceCell::const_new();
 //static URL_REGEX: OnceCell<Regex> = OnceCell::const_new();
@@ -91,6 +91,26 @@ pub fn authorize(token: Vec<u8>, db_connection: &PgConnection) -> Result<(user::
                     "The account behind this token doesn't exist anymore. Has it been deleted?"
                 ))),
                 Some(user)=>Ok((user, token))
+            }
+        },
+        None => Err(JsonErrorType::BAD_CREDENTIALS.new_error(format!(
+            "Invalid token!"
+        )))
+    }
+}
+
+pub fn authorize_app(token: Vec<u8>, db_connection: &PgConnection) -> Result<(app::App, app_token::AppToken), JsonError> {
+    let tokens = map_qres(app_token::AppToken::find_token(token, db_connection), "Error while selecting tokens")?;
+
+    match tokens.into_iter().next() {
+        Some(token) => {
+            let apps = map_qres(app::App::find(token.app_id.clone(), db_connection), "Error while selecting users")?;
+
+            match apps.into_iter().next() {
+                None=>Err(JsonErrorType::NOT_FOUND.new_error(format!(
+                    "The app behind this token doesn't exist anymore. Has it been deleted?"
+                ))),
+                Some(app)=>Ok((app, token))
             }
         },
         None => Err(JsonErrorType::BAD_CREDENTIALS.new_error(format!(
