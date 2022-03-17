@@ -1,10 +1,10 @@
-use hex::{ToHex};
+use hex::ToHex;
 
 use actix_web::{post, web, Result, Responder, HttpRequest};
-use serde::{Deserialize, Serialize};
+use serde::Deserialize;
 
 use crate::errors::actix::JsonErrorType;
-use crate::models::{token};
+use crate::models::token;
 use crate::api::http::State;
 use crate::util::checker::{self, map_qres, hex_header};
 
@@ -13,13 +13,6 @@ pub struct ListData {
     // unused for now
     // offset: Option<u32>,
     // amount: Option<u8>
-}
-
-#[derive(Serialize)]
-pub struct ShowAbleToken {
-    id: String,
-    name: String,
-    active: bool
 }
 
 #[post("/api/auth/token/list")]
@@ -37,14 +30,16 @@ pub async fn list(_list_data: web::Json<ListData>, state: web::Data<State>, requ
         )).into());
     } else {
         let tokens = map_qres(token::Token::find_user(user.id, db_connection), "Error while selecting tokens")?;
-        let mapped: Vec<ShowAbleToken> = tokens.into_iter()
-            .map(|tk| ShowAbleToken {
-                id: tk.id.encode_hex::<String>(),
-                name: tk.name,
-                active: tk.id==token.id
-            })
+        
+        let mapped: Vec<serde_json::Value> = tokens.into_iter()
+            .map(|tk| json!({
+                "id": tk.id.encode_hex::<String>(),
+                "name": tk.name,
+                "perms": tk.permissions,
+                "active": tk.id==token.id
+            }))
             .collect();
 
-        return Ok(web::Json(mapped));
+        Ok(web::Json(mapped))
     }
 }
