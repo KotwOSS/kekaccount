@@ -44,4 +44,11 @@ impl AppToken {
             .select((app_tokens::dsl::id, app_tokens::dsl::token, app_tokens::dsl::app_id, app_tokens::dsl::name, app_tokens::dsl::permissions))
             .load::<AppToken>(connection)
     }
+
+    pub fn find_token(token: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<AppToken>> {
+        app_tokens::table
+            .filter(app_tokens::dsl::token.eq(token))
+            .select((app_tokens::dsl::id, app_tokens::dsl::token, app_tokens::dsl::app_id, app_tokens::dsl::name, app_tokens::dsl::permissions))
+            .load::<AppToken>(connection)
+    }
 }
