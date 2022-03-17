@@ -30,6 +30,7 @@ pub async fn main(pool: Arc<PgPool>, address: String, port: u16) -> Result<(), E
             .service(routes::api::apps::update::update)
             .service(routes::api::apps::search::search)
             .service(routes::api::apps::retrieve::retrieve)
+            .service(routes::api::apps::token::create::create)
             // USERS
             .service(routes::api::users::retrieve::retrieve)
             .service(routes::api::users::search::search)
