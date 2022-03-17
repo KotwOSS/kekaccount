@@ -2,7 +2,7 @@ use actix_web::{post, web, Result, HttpRequest, Responder};
 use serde::Deserialize;
 
 use crate::errors::actix::JsonErrorType;
-use crate::models::app;
+use crate::models::{app, app_token};
 use crate::api::http::State;
 use crate::util::checker::{self, map_qres, hex_header};
 
@@ -27,14 +27,18 @@ pub async fn delete(delete_data: web::Json<DeleteData>, state: web::Data<State>,
             token.permissions
         )).into());
     } else {
-        return match map_qres(app::App::delete_owner(id, user.id, db_connection), "Error while deleting app")? {
+        return match map_qres(app::App::delete_owner(id.clone(), user.id, db_connection), "Error while deleting app")? {
             0 => Err(JsonErrorType::NOT_FOUND.new_error(format!(
                 "App with id '{}' not found!",
                 delete_data.id
             )).into()),
-            _ => Ok(web::Json(json!({
-                "success": true
-            })))
+            _ => {
+                map_qres(app_token::AppToken::delete_app_all(id, db_connection), "Error while deleting app tokens")?;
+
+                Ok(web::Json(json!({
+                    "success": true
+                })))
+            }
         };
     }
 }
