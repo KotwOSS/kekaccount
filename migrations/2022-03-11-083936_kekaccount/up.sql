@@ -30,3 +30,8 @@ CREATE TABLE apps (
     redirect_uri VARCHAR(255) NOT NULL,
     homepage VARCHAR(255) NOT NULL
 );
+
+CREATE TABLE verifications (
+    id BYTEA PRIMARY KEY,
+    owner BYTEA NOT NULL
+);

@@ -38,9 +38,17 @@ table! {
     }
 }
 
+table! {
+    verifications (id) {
+        id -> Bytea,
+        owner -> Bytea,
+    }
+}
+
 allow_tables_to_appear_in_same_query!(
     app_tokens,
     apps,
     tokens,
     users,
+    verifications,
 );
