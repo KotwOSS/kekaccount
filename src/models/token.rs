@@ -32,7 +32,13 @@ impl Token {
             .execute(connection)       
     }
 
-    pub fn delete_user(user_id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
+    pub fn delete_user(id: Vec<u8>, user_id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
+        diesel::delete(tokens::table)
+            .filter(tokens::dsl::id.eq(id).and(tokens::dsl::user_id.eq(user_id)))
+            .execute(connection)       
+    }
+
+    pub fn delete_user_all(user_id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
         diesel::delete(tokens::table)
             .filter(tokens::dsl::user_id.eq(user_id))
             .execute(connection)       
