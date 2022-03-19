@@ -2,7 +2,7 @@ use actix_web::{post, web, Result, Responder};
 use serde::Deserialize;
 
 use crate::errors::actix::JsonErrorType;
-use crate::models::{user, token};
+use crate::models::{user, token, verification};
 use crate::api::http::State;
 use crate::util::checker::{self, map_qres};
 
@@ -30,7 +30,8 @@ pub async fn delete(delete_data: web::Json<DeleteData>, state: web::Data<State>)
 
     match users.into_iter().next() {
         Some(user) => {
-            map_qres(token::Token::delete_user(user.id.clone(), db_connection), "Error while deleting tokens")?;
+            map_qres(verification::Verification::delete_owner_all(user.id.clone(), db_connection), "Error while deleting verifications")?;
+            map_qres(token::Token::delete_user_all(user.id.clone(), db_connection), "Error while deleting tokens")?;
             map_qres(user::User::delete(user.id, db_connection), "Error while deleting user")?;
             Ok(web::Json(json!({
                 "success": true

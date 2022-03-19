@@ -57,8 +57,29 @@ async fn main() {
 
     let pool_arc = Arc::new(pool.clone());
 
+    let smtp_host = env::var("smtp_host")
+        .unwrap_or("youremail.com".to_owned());
+    
+    let smtp_port = env::var("smtp_port")
+        .unwrap_or("25".to_owned())
+        .parse()
+        .unwrap_or(25);
+
+    let smtp_user = env::var("smtp_user")
+        .unwrap_or("account".to_owned());
+
+    let smtp_password = env::var("smtp_password")
+        .unwrap_or("1234".to_owned());
+
+    let smtp_from = env::var("smtp_from")
+        .unwrap_or("KekAccount <account@youremail.com>".to_owned());
+
+    let verification_base = env::var("verification_base")
+        .unwrap_or("http://localhost:5070/verify/".to_owned());
+
     // INITIALIZATION
     util::checker::init();
+    api::smtp::init(smtp_host, smtp_port, smtp_user, smtp_password, smtp_from, verification_base);
     
     let (_tcp, _db_cleaner, _http) = tokio::join!(
         api::tcp::main(&pool, tcp_address, tcp_port),

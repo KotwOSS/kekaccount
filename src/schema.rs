@@ -1,4 +1,12 @@
 table! {
+    access_codes (id) {
+        id -> Bytea,
+        app_id -> Bytea,
+        token_id -> Bytea,
+    }
+}
+
+table! {
     app_tokens (id) {
         id -> Bytea,
         token -> Bytea,
@@ -38,9 +46,18 @@ table! {
     }
 }
 
+table! {
+    verifications (id) {
+        id -> Bytea,
+        owner -> Bytea,
+    }
+}
+
 allow_tables_to_appear_in_same_query!(
+    access_codes,
     app_tokens,
     apps,
     tokens,
     users,
+    verifications,
 );

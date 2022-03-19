@@ -12,9 +12,16 @@ diesel = { version = "1.4.8", features = ["postgres", "r2d2"] }
 r2d2-diesel = "1.0"
 r2d2 = "0.8.9"
 rand = "0.8.5"
-tokio = { version = "1.17.0", features = ["full"] }
 serde = { version = "1.0.136", features = ["derive"] }
 serde_json = { version = "1.0.79" }
 hex = "0.4.3"
 derive_more = "0.99.17"
 regex = "1.5.5"
+tokio = { version = "1.17.0", features = ["full"] }
+#tokio = { version = "1", features = ["full"] }
+lettre = { version = "0.10.0-beta.2", default-features = false, features = [
+    "tokio1",
+    "smtp-transport",
+    "tokio1-rustls-tls",
+    "builder"
+] }
