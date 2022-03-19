@@ -3,8 +3,8 @@ use actix_web::{post, web, Result, Responder};
 use serde::Deserialize;
 
 use crate::errors::actix::JsonErrorType;
-use crate::models::{user};
-use crate::api::http::State;
+use crate::models::{user, verification};
+use crate::api::{smtp, http::State};
 use crate::util::{self, random, checker::{self, map_qres}};
 
 #[derive(Deserialize)]
@@ -16,6 +16,7 @@ pub struct RegisterData {
 
 #[post("/api/auth/register")]
 pub async fn register(register_data: web::Json<RegisterData>, state: web::Data<State>) -> Result<impl Responder> {
+
     let password = util::hex::parse_to_buf(register_data.password.as_str(), 128)
         .map_err(|e| JsonErrorType::BAD_REQUEST.new_error(format!(
             "Error while parsing field password! ({})",
@@ -36,13 +37,28 @@ pub async fn register(register_data: web::Json<RegisterData>, state: web::Data<S
             let id = random::random_byte_array(16);
             let id_hex = id.encode_hex::<String>();
 
-            let new_user = user::User { name: username, email, password, id };
 
+            let verification_id = random::random_byte_array(128);
+            let verification_id_hex = verification_id.encode_hex::<String>();
+
+            let new_verification = verification::Verification { id: verification_id, owner: id.clone() };
+            map_qres(new_verification.create(db_connection), "Error while creating verification entry")?;
+
+            smtp::send_verification(username.as_str(), email.as_str(), verification_id_hex)
+                .await.map_err(|e| JsonErrorType::INTERNAL_SERVER_ERROR.new_error(format!(
+                    "Sending verification email failed: {}",
+                    e
+                )))?;
+
+
+            let new_user = user::User { name: username, email, password, id };
             map_qres(new_user.create(db_connection), "Error while inserting user")?;
+
 
             Ok(web::Json(json!({
                 "success": true,
-                "id": id_hex
+                "id": id_hex,
+                "verification_email": "sent"
             })))
         },
         _ => {
