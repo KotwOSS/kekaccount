@@ -35,3 +35,9 @@ CREATE TABLE verifications (
     id BYTEA PRIMARY KEY,
     owner BYTEA NOT NULL
 );
+
+CREATE TABLE access_codes (
+    id BYTEA PRIMARY KEY,
+    app_id BYTEA NOT NULL,
+    token_id BYTEA NOT NULL
+);

@@ -4,3 +4,4 @@ DROP TABLE IF EXISTS tokens;
 DROP TABLE IF EXISTS apps;
 DROP TABLE IF EXISTS app_tokens;
 DROP TABLE IF EXISTS verifications;
+DROP TABLE IF EXISTS access_codes;
