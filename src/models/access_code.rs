@@ -42,9 +42,9 @@ impl AccessCode {
             .execute(connection)
     }
 
-    pub fn find_app(app_id: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<AccessCode>> {
+    pub fn find_app(id: Vec<u8>, app_id: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<AccessCode>> {
         access_codes::table
-            .filter(access_codes::dsl::app_id.eq(app_id))
+            .filter(access_codes::dsl::id.eq(id).and(access_codes::dsl::app_id.eq(app_id)))
             .select((access_codes::dsl::id, access_codes::dsl::app_id, access_codes::dsl::token_id))
             .load::<AccessCode>(connection)
     }
