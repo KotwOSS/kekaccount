@@ -32,8 +32,8 @@ pub async fn delete(delete_data: web::Json<DeleteData>, state: web::Data<State>)
     }?;
 
     match users.into_iter().next() {
-        Some(_user) => {
-            match  map_qres(token::Token::delete(id, db_connection), "Error while deleting token")? {
+        Some(user) => {
+            match  map_qres(token::Token::delete_user(id, user.id, db_connection), "Error while deleting token")? {
                 0 => Err(JsonErrorType::NOT_FOUND.new_error(format!(
                     "Token with id '{}' not found!",
                     delete_data.id
