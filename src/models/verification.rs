@@ -41,4 +41,10 @@ impl Verification {
             .filter(verifications::dsl::id.eq(id).and(verifications::dsl::owner.eq(owner)))
             .execute(connection)
     }
+
+    pub fn delete_owner_all(owner: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
+        diesel::delete(verifications::table)
+            .filter(verifications::dsl::owner.eq(owner))
+            .execute(connection)
+    }
 }
