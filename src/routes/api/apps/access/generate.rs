@@ -16,7 +16,7 @@ pub struct GenerateData {
     permissions: i16
 }
 
-#[post("/api/apps/access/{id}/generate")]
+#[post("/api/apps/{id}/access/generate")]
 pub async fn generate(path: web::Path<(String,)>, generate_data: web::Json<GenerateData>, state: web::Data<State>) -> Result<impl Responder> {
     if generate_data.username.is_none() && generate_data.email.is_none() {
         return Err(JsonErrorType::MISSING_FIELD.new_error("Missing username or email!".to_owned()).into());
