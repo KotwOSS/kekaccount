@@ -21,8 +21,9 @@ pub async fn main(pool: Arc<PgPool>, address: String, port: u16) -> Result<(), E
             .service(routes::api::auth::token::list::list)
             .service(routes::api::auth::token::delete::delete)
             .service(routes::api::auth::token::info::info)
-            // REGISTER
+            // ACCOUNT
             .service(routes::api::auth::register::register)
+            .service(routes::api::auth::verify::verify)
             // APPS
             .service(routes::api::apps::create::create)
             .service(routes::api::apps::delete::delete)
