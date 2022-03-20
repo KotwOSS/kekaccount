@@ -1,6 +1,7 @@
 use std::io::Error;
 use std::sync::Arc;
 
+use actix_cors::Cors;
 use actix_web::{HttpServer, App, web};
 
 use crate::database::PgPool;
@@ -14,7 +15,18 @@ pub struct State {
 pub async fn main(pool: Arc<PgPool>, address: String, port: u16) -> Result<(), Error> {
     println!("{}START{} http on {}{}:{}", colors::LIGHT_BLUE, colors::RESET, colors::ORANGE,  address, port);
     match HttpServer::new(move || {
+        let cors = Cors::default()
+            .allow_any_origin()
+            .allow_any_method()
+            .allow_any_header()
+            .max_age(3600);
+
+
         App::new()
+            // CORS
+            .wrap(cors)
+
+            // INDEX
             .service(routes::api::index)
             // TOKEN
             .service(routes::api::auth::token::create::create)

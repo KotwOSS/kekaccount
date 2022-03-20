@@ -7,6 +7,9 @@ edition = "2021"
 
 [dependencies]
 actix-web = "4.0.1"
+# Not yet compatible with actix web 4.0.1
+#actix-ratelimit = "0.3.1"
+actix-cors = "0.6.1"
 dotenv = "0.15.0"
 diesel = { version = "1.4.8", features = ["postgres", "r2d2"] }
 r2d2-diesel = "1.0"
@@ -18,7 +21,6 @@ hex = "0.4.3"
 derive_more = "0.99.17"
 regex = "1.5.5"
 tokio = { version = "1.17.0", features = ["full"] }
-#tokio = { version = "1", features = ["full"] }
 lettre = { version = "0.10.0-beta.2", default-features = false, features = [
     "tokio1",
     "smtp-transport",
