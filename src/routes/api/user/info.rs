@@ -5,7 +5,8 @@ use serde::Deserialize;
 
 use crate::api::http::State;
 use crate::errors::actix::JsonErrorType;
-use crate::util::checker::{self, hex_header};
+use crate::models::verification;
+use crate::util::checker::{self, hex_header, map_qres};
 
 #[derive(Deserialize)]
 pub struct InfoData {
@@ -26,10 +27,14 @@ pub async fn info(_info_data: web::Json<InfoData>, state: web::Data<State>, requ
             token.permissions
         )).into());
     } else {
+        let verifications = map_qres(verification::Verification::count_owner(user.id.clone(), db_connection), "Error while counting verifications")?;
+
         return Ok(web::Json(json!({
             "name": user.name,
             "email": user.email,
-            "id": user.id.encode_hex::<String>()
+            "id": user.id.encode_hex::<String>(),
+            "verified": verifications==0,
+            "success": true
         })));
     }
 }
