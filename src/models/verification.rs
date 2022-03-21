@@ -47,4 +47,11 @@ impl Verification {
             .filter(verifications::dsl::owner.eq(owner))
             .execute(connection)
     }
+
+    pub fn count_owner(owner: Vec<u8>, connection: &PgConnection) -> QueryResult<i64> {
+        verifications::table
+            .filter(verifications::dsl::owner.eq(owner))
+            .count()
+            .get_result::<i64>(connection)
+    }
 }
