@@ -1,7 +1,7 @@
 <script lang="ts">
-    import CryptoJS from "crypto-js";
     import { goto } from '$app/navigation';
-    import { api_base } from "../config";
+    import Loader from '../components/loader.svelte';
+    import { APIError, hash_password, Routes } from "../api";
 
     let username;
     let email;
@@ -18,32 +18,21 @@
         e.preventDefault();
 
         if(password.value == password_repeat.value) {
-            let hashed_password = CryptoJS.SHA512(password.value).toString();
+            let hashed_password = hash_password(password.value);
 
             console.log(hashed_password);
 
-            fetch(`${api_base}/auth/register`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "username": username.value,
-                    "email": email.value,
-                    "password": hashed_password
-                })
-            }).then(r=>{
-                if(r.status === 200) {
-                    r.json().then(j=>goto("/email_sent"));
-                } else r.json().then(j=>{
-                    error = j.message;
-                    submit_loading = false;
-                });
-            })
+            Routes.Auth.REGISTER.send({
+                username: username.value, 
+                email: email.value, 
+                password: hashed_password
+            }).then(()=>goto("/email_sent"))
             .catch(e=>{
-                error = "Connection errors! Please contact an admin";
-                submit_loading = false;
-            });
+                if(e instanceof APIError) {
+                    error = e.get_message();
+                    submit_loading = false;
+                }
+            })
         } else {
             error = "Passwords don't match";
             submit_loading = false;
@@ -52,69 +41,43 @@
 
 </script>
 
-<main class="root">
+<div class="root">
     <form on:submit={register} class="inner">
-        <h1>Register</h1>
-        <input bind:this={username} type="text" placeholder="username">
-        <input bind:this={email} type="text" placeholder="email">
-        <input bind:this={password} type="password" placeholder="password">
-        <input bind:this={password_repeat} type="password" placeholder="repeat password">
-        {#if error}
-            <p class="error">{error}</p>
-        {/if}
-        <button class={submit_loading?"active":""} disabled={submit_loading}>
-        {#if submit_loading}
-            <div id="loading">
-                <svg viewBox="0 0 100 100">
-                    <defs>
-                        <filter id="shadow">
-                        <feDropShadow dx="0" dy="0" stdDeviation="1.5" 
-                            flood-color="#ffffff"/>
-                        </filter>
-                    </defs>
-                    <circle id="spinner" style="fill:transparent;stroke:#ffffff;stroke-width: 7px;stroke-linecap: round;filter:url(#shadow);" cx="50" cy="50" r="45"/>
-                </svg>
-            </div>
-        {:else}
-            Register
-        {/if}
-        </button>
+        <main class="blend-in">
+            <h1>Register</h1>
+            <input bind:this={username} type="text" placeholder="username">
+            <input bind:this={email} type="text" placeholder="email">
+            <input bind:this={password} type="password" placeholder="password">
+            <input bind:this={password_repeat} type="password" placeholder="repeat password">
+            {#if error}
+                <p class="error">{error}</p>
+            {/if}
+            <p class="login">Already have an account? <a href="/login">Login</a></p>
+            <button class={submit_loading?"active":""} disabled={submit_loading}>
+            {#if submit_loading}
+                <Loader />
+            {:else}
+                Register
+            {/if}
+            </button>
+        </main>
     </form>    
-</main>
+</div>
 
 <style>
     @import url("../themes/default.css");
 
+    .login {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
 
-    #loading {
+    .root :global(#loading) {
         width: 22px;
         height: 22px;
     }
 
-    @keyframes animation {
-        0% {
-            stroke-dasharray: 1 98;
-            stroke-dashoffset: -105;
-        }
-        50% {
-            stroke-dasharray: 80 10;
-            stroke-dashoffset: -160;
-        }
-        100% {
-            stroke-dasharray: 1 98;
-            stroke-dashoffset: -300;
-        }
-    }
-
-    #spinner {
-        transform-origin: center;
-        animation-name: animation;
-        animation-duration: 1.2s;
-        animation-timing-function: cubic-bezier;
-        animation-iteration-count: infinite;
-    }
-
-    main {
+    .root {
         width: 100%;
         height: 100%;
         display: flex;
@@ -144,6 +107,14 @@
         max-width: 450px;
         padding: 30px 10px;
         
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
     }
 
     @keyframes error-blend-in {
