@@ -75,7 +75,7 @@ async fn main() {
         .unwrap_or("KekAccount <account@youremail.com>".to_owned());
 
     let verification_base = env::var("verification_base")
-        .unwrap_or("http://localhost:5070/verify/".to_owned());
+        .unwrap_or("http://localhost:3000/verify?id=".to_owned());
 
     // INITIALIZATION
     util::checker::init();

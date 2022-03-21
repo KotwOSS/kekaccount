@@ -23,7 +23,7 @@ pub async fn info(_info_data: web::Json<InfoData>, state: web::Data<State>, requ
         "user_id": user.id.encode_hex::<String>(),
         "token": {
             "id": token.id.encode_hex::<String>(),
-            "permissions": token.permissions,
+            "perms": token.permissions,
             "name": token.name,
         },
         "success": true
