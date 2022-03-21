@@ -10,6 +10,7 @@
 <main class="root">
     <form class="inner">
         <h1>Verification email sent</h1>
+        <p>Please check your inbox including the spam folder</p>
         <button on:click={redirect_login}>Login</button>
     </form>
 </main>
@@ -27,7 +28,11 @@
     }
 
     h1 {
-        margin-bottom: 20px;
+        margin-bottom: 5px;
+    }
+
+    p {
+        margin-bottom: 15px;
     }
 
     form {
