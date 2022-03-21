@@ -1,163 +1,111 @@
 <script lang="ts">
-    import CryptoJS from "crypto-js";
     import { goto } from '$app/navigation';
-    import { api_base } from "../config";
+    import Loader from '../components/loader.svelte';
     import { onMount } from "svelte";
+    import { Routes, hash_password, get_identifier, APIError } from "../api";
 
-    let username_or_email;
+    let uoe;
     let password;
 
-    let error;
+    let error: undefined|string;
 
-    let submit_loading;
+    let success: boolean;
 
-    let verify_id
+    let submit_loading: boolean;
+
+    let params: URLSearchParams;
 
     onMount(()=>{
-        let params = new URLSearchParams(window.location.search);
+        params = new URLSearchParams(window.location.search);
 
-        verify_id = params.get("verify");
-
-        if(!verify_id && localStorage.getItem("token")) goto("/dash");
+        localStorage.removeItem("uoe");
+        localStorage.removeItem("password");
     });
 
-    function isEmail(email) {
-        const email_regex = /^\w+[\+\.\w-]*@([\w-]+\.)*\w+[\w-]*\.([a-z]{2,18}|\d+)$/g;
-        return email_regex.test(email);
-    }
-
-    function login(e) {
+    async function login(e) {
         submit_loading = true;
-
         e.preventDefault();
+ 
+        let hashed_password = hash_password(password.value);
+        let identifier = get_identifier(uoe.value, hashed_password);
 
-        let hashed_password = CryptoJS.SHA512(password.value).toString();
+        let redirect = params.get("r")??"/dash";
 
-        let uoe = username_or_email.value;
-        let acc_identifier = isEmail(uoe)?{"email": uoe}:{"username": uoe};
-
-
-        console.log(hashed_password);
-
-        if(verify_id) {
-            fetch(`${api_base}/auth/verify`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    "password": hashed_password,
-                    "id": verify_id,
-                    ...acc_identifier
-                })
-            }).then(r=>{
-                if(r.status === 200) {
-                    submit_loading = false;
-                } else r.json().then(j=>{
-                    error = j.message;
-                    submit_loading = false;
-                });
-            })
-            .catch(e=>{
-                error = "Connection errors! Please contact an admin";
-                submit_loading = false;
-            });
+        if(localStorage.getItem("creds")) {
+            localStorage.removeItem("creds");
+            localStorage.setItem("uoe", uoe.value);
+            localStorage.setItem("password", hashed_password);
         }
 
-        if(!localStorage.getItem("token")) fetch(`${api_base}/auth/token/create`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "password": hashed_password,
-                "name": "login",
-                "permissions": -1,
-                ...acc_identifier
-            })
-        }).then(r=>{
-            if(r.status === 200) {
-                r.json().then(j=>{
-                    submit_loading = false;
-                    localStorage.setItem("token", j.token);
-                    goto("/dash");
-                })
-            } else r.json().then(j=>{
-                error = j.message;
-                submit_loading = false;
+        let token = localStorage.getItem("token");
+
+        if(token) {
+            try {
+                let info = await Routes.Auth.Token.INFO.send({token});
+                if(info.token.permission === -1) await regenerate_token(identifier);
+                else success = true;
+            } catch(e: any) {
+                await regenerate_token(identifier);
+            }
+        } else await regenerate_token(identifier);
+
+        submit_loading = false;
+
+        if(success) goto(redirect);
+    }
+
+    async function regenerate_token(identifier: any) {
+        localStorage.removeItem("token");
+        try {
+            let response = await Routes.Auth.Token.CREATE.send({
+                name: "login", permissions: -1, identifier
             });
-        })
-        .catch(e=>{
-            error = "Connection errors! Please contact an admin";
-            submit_loading = false;
-        });
+            localStorage.setItem("token", response.token);
+            success = true;
+        } catch(e: any) {
+            if(e instanceof APIError) {
+                success = false;
+                error = e.get_message();
+            }
+        }
     }
 </script>
 
-<main class="root">
+<div class="root">
     <form on:submit={login} class="inner">
-        <h1>Login</h1>
-        {#if verify_id}
-        <p>This will verify your account!</p>
-        {/if}
-        <input bind:this={username_or_email} type="text" placeholder="username or email">
-        <input bind:this={password} type="password" placeholder="password">
-        {#if error}
-            <p class="error">{error}</p>
-        {/if}
-        <button class={submit_loading?"active":""} disabled={submit_loading}>
-        {#if submit_loading}
-            <div id="loading">
-                <svg viewBox="0 0 100 100">
-                    <defs>
-                        <filter id="shadow">
-                        <feDropShadow dx="0" dy="0" stdDeviation="1.5" 
-                            flood-color="#ffffff"/>
-                        </filter>
-                    </defs>
-                    <circle id="spinner" style="fill:transparent;stroke:#ffffff;stroke-width: 7px;stroke-linecap: round;filter:url(#shadow);" cx="50" cy="50" r="45"/>
-                </svg>
-            </div>
-        {:else}
-            Login
-        {/if}
-        </button>
+        <main class="blend-in">
+            <h1>Login</h1>
+            <input bind:this={uoe} type="text" placeholder="username or email">
+            <input bind:this={password} type="password" placeholder="password">
+            {#if error}
+                <p class="error">{error}</p>
+            {/if}
+            <p class="register">Don't have an account? <a href="/register">Register</a></p>
+            <button class={submit_loading?"active":""} disabled={submit_loading}>
+            {#if submit_loading}
+                <Loader />
+            {:else}
+                Login
+            {/if}
+            </button>
+        </main>
     </form>    
-</main>
+</div>
 
 <style>
     @import url("../themes/default.css");
 
+    .register {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
 
-    #loading {
+    .root :global(#loading) {
         width: 22px;
         height: 22px;
     }
 
-    @keyframes animation {
-        0% {
-            stroke-dasharray: 1 98;
-            stroke-dashoffset: -105;
-        }
-        50% {
-            stroke-dasharray: 80 10;
-            stroke-dashoffset: -160;
-        }
-        100% {
-            stroke-dasharray: 1 98;
-            stroke-dashoffset: -300;
-        }
-    }
-
-    #spinner {
-        transform-origin: center;
-        animation-name: animation;
-        animation-duration: 1.2s;
-        animation-timing-function: cubic-bezier;
-        animation-iteration-count: infinite;
-    }
-
-    main {
+    .root {
         width: 100%;
         height: 100%;
         display: flex;
@@ -166,10 +114,6 @@
     }
 
     h1 {
-        margin-bottom: 10px;
-    }
-
-    p {
         margin-bottom: 10px;
     }
 
@@ -194,12 +138,23 @@
         
     }
 
+    main {
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+    }
+
     @keyframes error-blend-in {
         0% { 
             opacity: 0;
+            height: 0;
         }
         100% { 
             opacity: 1;
+            height: 20px;
             margin-top: 8px;
             margin-bottom: 5px;
         }
