@@ -2,6 +2,7 @@
 CREATE TABLE users (
     id BYTEA PRIMARY KEY,
     name VARCHAR(32) NOT NULL,
+    avatar VARCHAR(255) NOT NULL,
     email VARCHAR(32) NOT NULL,
     password BYTEA NOT NULL
 );

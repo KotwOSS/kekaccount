@@ -49,9 +49,8 @@
             }
         } else await regenerate_token(identifier);
 
-        submit_loading = false;
-
         if(success) goto(redirect);
+        else submit_loading = false;
     }
 
     async function regenerate_token(identifier: any) {
@@ -78,7 +77,7 @@
             <input bind:this={uoe} type="text" placeholder="username or email">
             <input bind:this={password} type="password" placeholder="password">
             {#if error}
-                <p class="error">{error}</p>
+                <p class="error break">{error}</p>
             {/if}
             <p class="register">Don't have an account? <a href="/register">Register</a></p>
             <button class={submit_loading?"active":""} disabled={submit_loading}>
@@ -163,9 +162,6 @@
     .error {
         color: rgb(255, 42, 42);
         animation: error-blend-in 0.3s ease forwards;
-        word-wrap: break-word;
-        word-break: break-all;
-        line-break: strict;
         text-align: center;
     }
 </style>

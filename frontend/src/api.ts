@@ -97,7 +97,7 @@ export namespace Routes {
             ok_processor);
 
         export const REGISTER = Route.obody("POST", "/auth/register", 
-            (args: {username: string, email: string, password: string})=>args,
+            (args: {username: string, email: string, password: string, avatar: string})=>args,
             ok_processor);
     
         export namespace Token {

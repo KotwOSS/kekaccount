@@ -1,8 +1,10 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
-    import Loader from "../../components/loader.svelte"
+    import Loader from "../../components/loader.svelte";
+    import Setting from "../../components/setting.svelte";
     import { APIError, get_login_redirect, Routes } from "../../api";
     import { onMount } from "svelte";
+    import { default_avatar } from "../../config";
 
     let user;
 
@@ -24,6 +26,11 @@
             }
         } else goto(get_login_redirect())
     });
+
+    function hidden_email(email: string) {
+        let p = email.split("@");
+        return `${p[0].substring(0, 2)}${"*".repeat(p[0].length-2)}@${p[1]}`;
+    }
 </script>
 
 <div class="root">
@@ -34,10 +41,27 @@
         <main class="blend-in">
             <h1>Dashboard</h1>
             <p>This is the dashboard. Here you can manage your account!</p>
-            <div class="profile">
-                <p class="username">{user.name}</p>
-                <p class="email">{user.email}</p>
-                <p class="id">{user.id}</p>
+            <div class="profile border">
+                <div class="public">
+                    <img src={user.avatar==""?default_avatar:user.avatar} alt="Loading avatar..." class="avatar">
+                    <div>
+                        <h2 class="username break">{user.name}</h2>
+                        <p class="id break">{user.id}</p>
+                    </div>
+                </div>
+                
+                
+                <Setting 
+                    test_content={(content)=>content==="123"?"kekw":undefined}
+                    get_content={(hidden)=>hidden?hidden_email(user.email):user.email} 
+                    allow_hide={true}/>
+
+                <Setting 
+                    test_content={(content)=>content==="123"?"kekw":undefined}
+                    get_content={(hidden)=>hidden?hidden_email(user.email):user.email} 
+                    allow_hide={false}/>
+                <!-- <p class="email">{user.email}</p> -->
+                
                 {#if !user.verified}
                 <p class="not-verified">Your email is not yet verified! Non verified users may get deleted.</p>
                 {/if}
@@ -70,7 +94,31 @@
         align-items: center;
         flex-direction: column;
         width: 100%;
-        max-width: 1000px;
+        max-width: 600px;
+    }
+
+    .profile {
+        margin-top: 20px;
+        padding: 10px;
+    }
+
+    .profile>.public {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .profile>.public>.avatar {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+    }
+
+    .profile>.public>div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
     }
 
     main {

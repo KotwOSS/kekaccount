@@ -25,7 +25,8 @@
             Routes.Auth.REGISTER.send({
                 username: username.value, 
                 email: email.value, 
-                password: hashed_password
+                password: hashed_password,
+                avatar: ""
             }).then(()=>goto("/email_sent"))
             .catch(e=>{
                 if(e instanceof APIError) {
@@ -50,7 +51,7 @@
             <input bind:this={password} type="password" placeholder="password">
             <input bind:this={password_repeat} type="password" placeholder="repeat password">
             {#if error}
-                <p class="error">{error}</p>
+                <p class="error break">{error}</p>
             {/if}
             <p class="login">Already have an account? <a href="/login">Login</a></p>
             <button class={submit_loading?"active":""} disabled={submit_loading}>

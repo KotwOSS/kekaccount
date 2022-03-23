@@ -30,6 +30,7 @@ pub async fn search(search_data: web::Json<SearchData>, state: web::Data<State>)
     let mapped: Vec<serde_json::Value> = users.into_iter()
         .map(|user| json!({
             "id": user.id.encode_hex::<String>(),
+            "avatar": user.avatar,
             "name": user.name
         }))
         .collect();

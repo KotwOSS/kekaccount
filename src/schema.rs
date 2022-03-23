@@ -41,6 +41,7 @@ table! {
     users (id) {
         id -> Bytea,
         name -> Varchar,
+        avatar -> Varchar,
         email -> Varchar,
         password -> Bytea,
     }
