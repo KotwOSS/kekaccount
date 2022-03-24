@@ -5,39 +5,34 @@ export type Method = "GET"|"POST"|"PUT"|"DELETE";
 
 export class Route<A>{
     readonly method: Method;
-    readonly url: string;
     readonly body: (args: A)=>any;
     readonly headers: (args: A)=>HeadersInit;
     readonly process: (response: Response)=>any;
-    readonly get_url: (url: string, args: A)=>string;
+    readonly get_url: (args: A)=>string;
 
-    constructor(method: Method, url: string, body: (args: A)=>any, 
-    headers: (args: A)=>any, process: (response: Response)=>any, 
-    get_url: (url: string, args: A)=>string) {
+    constructor(method: Method, get_url: (args: A)=>string, body: (args: A)=>any, 
+    headers: (args: A)=>any, process: (response: Response)=>any) {
         this.method = method;
-        this.url = url;
         this.body = body;
         this.headers = headers;
         this.process = process;
         this.get_url = get_url;
     }
 
-    static obody<A>(method: Method, url: string, body: (args: A)=>any, 
-    process: (response: Response)=>any,
-    get_url: (url: string, args: A)=>string = (url)=>url) {
-        return new Route(method, url, body, ()=>({}), process, get_url);
+    static obody<A>(method: Method, get_url: (args: A)=>string, body: (args: A)=>any, 
+    process: (response: Response)=>any) {
+        return new Route(method, get_url, body, ()=>({}), process);
     }
 
-    static oheaders<A>(method: Method, url: string, headers: (args: A)=>any, 
-    process: (response: Response)=>any,
-    get_url: (url: string, args: A)=>string = (url)=>url) {
-        return new Route(method, url, ()=>({}), headers, process, get_url);
+    static oheaders<A>(method: Method, get_url: (args: A)=>string, headers: (args: A)=>any, 
+    process: (response: Response)=>any) {
+        return new Route(method, get_url, ()=>({}), headers, process);
     }
 
     async send(args: A) {
         const body = this.body(args);
         const headers = this.headers(args);
-        const url = this.get_url(this.url, args);
+        const url = this.get_url(args);
 
         let result = await fetch(`${api_base}${url}`, {
             method: this.method,
@@ -80,40 +75,49 @@ export namespace Routes {
     }
 
     export namespace User {
-        export const INFO = Route.oheaders("POST", "/user/info", 
+        export const INFO = Route.oheaders("POST", ()=>"/user/info", 
             (args: {token: string})=>({Authorization: args.token}),
+            ok_processor);
+        
+        export const UPDATE = new Route("POST", ()=>"/user/update",
+            (args)=>({...args.changes}),
+            (args: {token: string, changes: any})=>({Authorization: args.token}),
             ok_processor);
     }
 
     export namespace Users {
-        export const RETRIEVE = Route.obody("GET", "/users/", 
+        export const RETRIEVE = Route.obody("GET", (args)=>`/users/${args.id}`, 
             (_args: {id: string})=>undefined,
-            ok_processor, (url, args)=>url+args.id);
+            ok_processor);
     }
 
     export namespace Auth {
-        export const VERIFY = Route.obody("POST", "/auth/verify", 
+        export const VERIFY = Route.obody("POST", ()=>"/auth/verify", 
             (args: {id: string, identifier: any})=>({id: args.id, ...args.identifier}),
             ok_processor);
 
-        export const REGISTER = Route.obody("POST", "/auth/register", 
+        export const REGISTER = Route.obody("POST", ()=>"/auth/register", 
             (args: {username: string, email: string, password: string, avatar: string})=>args,
             ok_processor);
     
         export namespace Token {
-            export const CREATE = Route.obody("POST", "/auth/token/create", 
+            export const CREATE = Route.obody("POST", ()=>"/auth/token/create", 
                 (args: {name: string, permissions: number, identifier: any})=>({name: args.name, permissions: args.permissions, ...args.identifier}),
                 ok_processor);
             
-            export const DELETE = Route.obody("POST", "/auth/token/delete", 
+            export const DELETE = Route.obody("POST", ()=>"/auth/token/delete", 
                 (args: {id: string, identifier: any})=>({id: args.id, ...args.identifier}),
                 ok_processor);
 
-            export const INFO = Route.oheaders("POST", "/auth/token/info", 
+            export const INFO = Route.oheaders("POST", ()=>"/auth/token/info", 
                 (args: {token: string})=>({Authorization: args.token}),
                 ok_processor);
 
-            export const LIST = Route.oheaders("POST", "/auth/token/list", 
+            export const LIST = Route.oheaders("POST", ()=>"/auth/token/list", 
+                (args: {token: string})=>({Authorization: args.token}),
+                ok_processor);
+
+            export const TERMINATE = Route.oheaders("POST", ()=>"/auth/token/terminate", 
                 (args: {token: string})=>({Authorization: args.token}),
                 ok_processor);
         }
