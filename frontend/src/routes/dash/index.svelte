@@ -1,17 +1,15 @@
 <script lang="ts">
     import { goto } from "$app/navigation";
     import Loader from "../../components/loader.svelte";
-    import Setting from "../../components/setting.svelte";
-    import { APIError, get_login_redirect, Routes } from "../../api";
+    import { get_login_redirect, Routes } from "../../api";
     import { onMount } from "svelte";
-    import { default_avatar } from "../../config";
 
-    let user;
-
+    let user: any;
     let loading = true;
+    let token: string;
 
     onMount(async ()=>{
-        let token = localStorage.getItem("token")
+        token = localStorage.getItem("token");
         if(token) {
             try {
                 let info = await Routes.Auth.Token.INFO.send({token});
@@ -19,18 +17,12 @@
                 if(info.token.perms === -1) {
                     user = await Routes.User.INFO.send({token});
                     loading = false;
-                } else goto(get_login_redirect())
-            } catch(e) { 
-                console.log("ERROR:" + (e as APIError).get_message())
-                goto(get_login_redirect()) 
-            }
-        } else goto(get_login_redirect())
-    });
+                }
+            } catch(e) { }
+        }
 
-    function hidden_email(email: string) {
-        let p = email.split("@");
-        return `${p[0].substring(0, 2)}${"*".repeat(p[0].length-2)}@${p[1]}`;
-    }
+        if(loading) goto(get_login_redirect());
+    });
 </script>
 
 <div class="root">
@@ -41,31 +33,23 @@
         <main class="blend-in">
             <h1>Dashboard</h1>
             <p>This is the dashboard. Here you can manage your account!</p>
-            <div class="profile border">
-                <div class="public">
-                    <img src={user.avatar==""?default_avatar:user.avatar} alt="Loading avatar..." class="avatar">
-                    <div>
-                        <h2 class="username break">{user.name}</h2>
-                        <p class="id break">{user.id}</p>
-                    </div>
-                </div>
-                
-                
-                <Setting 
-                    test_content={(content)=>content==="123"?"kekw":undefined}
-                    get_content={(hidden)=>hidden?hidden_email(user.email):user.email} 
-                    allow_hide={true}/>
 
-                <Setting 
-                    test_content={(content)=>content==="123"?"kekw":undefined}
-                    get_content={(hidden)=>hidden?hidden_email(user.email):user.email} 
-                    allow_hide={false}/>
-                <!-- <p class="email">{user.email}</p> -->
-                
-                {#if !user.verified}
-                <p class="not-verified">Your email is not yet verified! Non verified users may get deleted.</p>
-                {/if}
+            {#if !user.verified}
+                <p class="not-verified hint">IMPORTANT: Your email is not yet verified! Non verified users may get deleted.</p>
+            {/if}
+
+            <div class="categories">
+                <a href="/dash/account" class="border category hhigh">
+                    <h1>Account</h1>
+                    <p>Manage private and public account details</p>
+                </a>
+    
+                <a href="/dash/tokens" class="border category hhigh">
+                    <h1>Tokens</h1>
+                    <p>Manage tokens</p>
+                </a>
             </div>
+        
         </main>
         {/if}
     </div>
@@ -97,33 +81,44 @@
         max-width: 600px;
     }
 
-    .profile {
-        margin-top: 20px;
-        padding: 10px;
-    }
-
-    .profile>.public {
-        display: flex;
-        align-items: center;
-        margin-bottom: 20px;
-    }
-
-    .profile>.public>.avatar {
-        width: 50px;
-        height: 50px;
-        margin-right: 10px;
-    }
-
-    .profile>.public>div {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: flex-start;
-    }
-
     main {
         display: flex;
         align-items: center;
+        flex-direction: column;
+    }
+
+    @keyframes error-blend-in {
+        0% { 
+            opacity: 0;
+            height: 0;
+        }
+        100% { 
+            opacity: 1;
+            height: 20px;
+            margin-top: 8px;
+            margin-bottom: 5px;
+        }
+    }
+
+    .not-verified {
+        margin: 0 10px;
+        margin-top: 10px;
+    }
+
+    p {
+        margin: 0 10px;
+    }
+
+    .category {
+        padding: 10px 10px;
+        text-decoration: none;
+        transition: 0.3s ease;
+        margin-top: 10px;
+    }
+
+    .categories {
+        margin-top: 5px;
+        display: flex;
         flex-direction: column;
     }
 </style>
