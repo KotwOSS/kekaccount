@@ -99,6 +99,17 @@ pub fn authorize(token: Vec<u8>, db_connection: &PgConnection) -> Result<(user::
     }
 }
 
+pub fn authorize_token(token: Vec<u8>, db_connection: &PgConnection) -> Result<token::Token, JsonError> {
+    let tokens = map_qres(token::Token::find_token(token, db_connection), "Error while selecting tokens")?;
+
+    match tokens.into_iter().next() {
+        Some(token) => Ok(token),
+        None => Err(JsonErrorType::BAD_CREDENTIALS.new_error(format!(
+            "Invalid token!"
+        )))
+    }
+}
+
 pub fn authorize_app(token: Vec<u8>, db_connection: &PgConnection) -> Result<(app::App, app_token::AppToken), JsonError> {
     let tokens = map_qres(app_token::AppToken::find_token(token, db_connection), "Error while selecting tokens")?;
 
