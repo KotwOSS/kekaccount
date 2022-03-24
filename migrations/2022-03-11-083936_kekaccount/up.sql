@@ -1,7 +1,7 @@
 -- Your SQL goes here
 CREATE TABLE users (
     id BYTEA PRIMARY KEY,
-    name VARCHAR(32) NOT NULL,
+    name VARCHAR(32) NOT NULL UNIQUE,
     avatar VARCHAR(255) NOT NULL,
     email VARCHAR(32) NOT NULL,
     password BYTEA NOT NULL
