@@ -23,8 +23,13 @@ body {
 }
 
 .root {
-    background-image: url("bg.jpg");
+    background-image: url("/bg.jpg");
     background-size: cover;
+}
+
+.border {
+    border: 1px solid rgba(150, 150, 150, 0.5);
+    border-radius: 10px; 
 }
 
 input, button {
@@ -34,6 +39,13 @@ input, button {
     padding: 5px 15px;
     font-size: 18px;
     transition: all 0.3s ease;
+}
+
+input:disabled,button:disabled {
+    cursor: not-allowed;
+    border: 1px solid rgb(255, 116, 23);
+    background-color: rgba(196, 88, 0, 0.8);
+    color: black;
 }
 
 input:focus {
@@ -59,7 +71,7 @@ input[type="submit"]:hover,button:hover {
     color: white;
 }
 
-input[type="submit"]:focus,input[type="submit"]:focus.active,button:focus,button.active {
+input[type="submit"]:focus,.active,button:focus {
     border: 1px solid rgb(255, 139, 62);
     background-color: rgba(196, 88, 0, 0.2);
     color: white;
@@ -69,11 +81,6 @@ input[type="submit"]:focus,input[type="submit"]:focus.active,button:focus,button
     border: 1px solid rgba(150, 150, 150, 0.5);
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.85);
-}
-
-.border {
-    border: 1px solid rgba(150, 150, 150, 0.5);
-    border-radius: 10px; 
 }
 
 @keyframes blend-in {
@@ -93,4 +100,16 @@ input[type="submit"]:focus,input[type="submit"]:focus.active,button:focus,button
     word-wrap: break-word;
     word-break: break-all;
     line-break: strict;
+}
+
+.error {
+    color: rgb(255, 42, 42);
+}
+
+.hint {
+    color: orange;
+}
+
+.hhigh:hover {
+    border: 1px solid rgb(255, 139, 62);
 }
