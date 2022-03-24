@@ -29,10 +29,10 @@
                 avatar: ""
             }).then(()=>goto("/email_sent"))
             .catch(e=>{
+                submit_loading = false;
                 if(e instanceof APIError) {
                     error = e.get_message();
-                    submit_loading = false;
-                }
+                } else error = "Connection issues";
             })
         } else {
             error = "Passwords don't match";
@@ -54,7 +54,7 @@
                 <p class="error break">{error}</p>
             {/if}
             <p class="login">Already have an account? <a href="/login">Login</a></p>
-            <button class={submit_loading?"active":""} disabled={submit_loading}>
+            <button class:active={submit_loading} disabled={submit_loading}>
             {#if submit_loading}
                 <Loader />
             {:else}
@@ -132,7 +132,7 @@
     }
 
     .error {
-        color: rgb(255, 42, 42);
         animation: error-blend-in 0.3s ease forwards;
+        text-align: center;
     }
 </style>
