@@ -11,15 +11,38 @@
 
     let success: boolean;
 
-    let submit_loading: boolean;
+    let token: string;
+    let valid: boolean = false;
+    let user: any;
+
+    let submit_loading: boolean = true;
 
     let params: URLSearchParams;
+    let redirect: string;
 
-    onMount(()=>{
+    let force: boolean = false;
+
+    onMount(async ()=>{
         params = new URLSearchParams(window.location.search);
+        redirect = params.get("r")??"/dash";
+        force = params.get("force")==="true";
 
         localStorage.removeItem("uoe");
         localStorage.removeItem("password");
+
+        token = localStorage.getItem("token");
+        if(token) {
+            try {
+                let info = await Routes.Auth.Token.INFO.send({token});
+                console.log(info);
+                if(info.token.perms === -1) {
+                    valid = true;
+                    user = await Routes.User.INFO.send({token});
+                }
+            } catch(e: any) {}
+        }
+
+        submit_loading = false;
     });
 
     async function login(e) {
@@ -29,31 +52,21 @@
         let hashed_password = hash_password(password.value);
         let identifier = get_identifier(uoe.value, hashed_password);
 
-        let redirect = params.get("r")??"/dash";
-
         if(localStorage.getItem("creds")) {
             localStorage.removeItem("creds");
             localStorage.setItem("uoe", uoe.value);
             localStorage.setItem("password", hashed_password);
         }
 
-        let token = localStorage.getItem("token");
-
-        if(token) {
-            try {
-                let info = await Routes.Auth.Token.INFO.send({token});
-                if(info.token.permission === -1) await regenerate_token(identifier);
-                else success = true;
-            } catch(e: any) {
-                await regenerate_token(identifier);
-            }
-        } else await regenerate_token(identifier);
+        success = true;
+        if(!valid || force) await regenerate_token(identifier);
 
         if(success) goto(redirect);
         else submit_loading = false;
     }
 
     async function regenerate_token(identifier: any) {
+        console.log("regenerate " + valid);
         localStorage.removeItem("token");
         try {
             let response = await Routes.Auth.Token.CREATE.send({
@@ -62,10 +75,10 @@
             localStorage.setItem("token", response.token);
             success = true;
         } catch(e: any) {
+            success = false;
             if(e instanceof APIError) {
-                success = false;
                 error = e.get_message();
-            }
+            } else error = "Connetion issues";
         }
     }
 </script>
@@ -80,7 +93,10 @@
                 <p class="error break">{error}</p>
             {/if}
             <p class="register">Don't have an account? <a href="/register">Register</a></p>
-            <button class={submit_loading?"active":""} disabled={submit_loading}>
+            {#if user && !force}
+            <p class="hint">There already exists a valid token for the user {user.name}! A new token wont be generated! <a href="/logout">Logout</a></p>
+            {/if}
+            <button class:active={submit_loading} disabled={submit_loading}>
             {#if submit_loading}
                 <Loader />
             {:else}
@@ -160,8 +176,11 @@
     }
 
     .error {
-        color: rgb(255, 42, 42);
         animation: error-blend-in 0.3s ease forwards;
         text-align: center;
+    }
+
+    .hint {
+        margin-bottom: 5px;
     }
 </style>
