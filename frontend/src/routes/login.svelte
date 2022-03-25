@@ -7,6 +7,9 @@
     let uoe;
     let password;
 
+    let username: string;
+    let creds: boolean = false;
+
     let error: undefined|string;
 
     let success: boolean;
@@ -25,10 +28,11 @@
     onMount(async ()=>{
         params = new URLSearchParams(window.location.search);
         redirect = params.get("r")??"/dash";
-        force = params.get("force")==="true";
 
-        localStorage.removeItem("uoe");
-        localStorage.removeItem("password");
+        username = localStorage.getItem("uoe");
+        creds = localStorage.getItem("creds")!==null;
+
+        force = params.get("force")==="true";
 
         token = localStorage.getItem("token");
         if(token) {
@@ -51,12 +55,6 @@
  
         let hashed_password = hash_password(password.value);
         let identifier = get_identifier(uoe.value, hashed_password);
-
-        if(localStorage.getItem("creds")) {
-            localStorage.removeItem("creds");
-            localStorage.setItem("uoe", uoe.value);
-            localStorage.setItem("password", hashed_password);
-        }
 
         success = true;
         if(!valid || force) await regenerate_token(identifier);
@@ -81,11 +79,27 @@
             } else error = "Connetion issues";
         }
     }
+
+    function confirm_access() {
+        let hashed_password = hash_password(password.value);
+        localStorage.setItem("uoe", uoe.value);
+        localStorage.setItem("password", hashed_password);
+
+        localStorage.removeItem("creds");
+
+        goto(redirect);
+    }
 </script>
 
 <div class="root">
     <form on:submit={login} class="inner">
         <main class="blend-in">
+            {#if creds}
+            <h1>Confirm access</h1>
+            <input bind:this={uoe} value={username??""} disabled={username!==null} type="text" placeholder="username or email">
+            <input bind:this={password} type="password" placeholder="password">
+            <button on:click={confirm_access}>Confirm</button>
+            {:else}
             <h1>Login</h1>
             <input bind:this={uoe} type="text" placeholder="username or email">
             <input bind:this={password} type="password" placeholder="password">
@@ -103,6 +117,7 @@
                 Login
             {/if}
             </button>
+            {/if}
         </main>
     </form>    
 </div>
