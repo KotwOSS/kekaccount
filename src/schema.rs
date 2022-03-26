@@ -21,6 +21,7 @@ table! {
         id -> Bytea,
         owner -> Bytea,
         name -> Varchar,
+        avatar -> Varchar,
         description -> Varchar,
         redirect_uri -> Varchar,
         homepage -> Varchar,

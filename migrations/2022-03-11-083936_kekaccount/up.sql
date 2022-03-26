@@ -27,6 +27,7 @@ CREATE TABLE apps (
     id BYTEA PRIMARY KEY,
     owner BYTEA NOT NULL,
     name VARCHAR(32) NOT NULL,
+    avatar VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
     redirect_uri VARCHAR(255) NOT NULL,
     homepage VARCHAR(255) NOT NULL

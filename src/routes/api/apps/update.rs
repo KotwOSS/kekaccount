@@ -10,6 +10,7 @@ use crate::util::checker::{self, map_qres, hex_header};
 pub struct UpdateData {
     id: String,
     name: Option<String>,
+    avatar: Option<String>,
     description: Option<String>,
     redirect_uri: Option<String>,
     homepage: Option<String>,
@@ -29,15 +30,27 @@ pub async fn update(update_data: web::Json<UpdateData>, state: web::Data<State>,
         update_count+=1;
     }
 
+    let avatar: Option<String> = update_data.avatar.clone();
+    if let Some(ref avatar) = avatar { 
+        checker::min_max_size("Length of avatar", avatar.len(), 0, 255)?;
+        update_count+=1;
+    }
+
     let description: Option<String> = update_data.description.clone();
     if let Some(ref description) = description { 
-        checker::min_max_size("Length of description", description.len(), 3, 255)?;
+        checker::min_max_size("Length of description", description.len(), 0, 255)?;
         update_count+=1;
     }
 
     let redirect_uri: Option<String> = update_data.redirect_uri.clone();
     if let Some(ref redirect_uri) = redirect_uri { 
-        checker::min_max_size("Length of redirect_uri", redirect_uri.len(), 3, 255)?;
+        checker::min_max_size("Length of redirect_uri", redirect_uri.len(), 0, 255)?;
+        update_count+=1;
+    }
+
+    let homepage: Option<String> = update_data.homepage.clone();
+    if let Some(ref homepage) = homepage { 
+        checker::min_max_size("Length of homepage", homepage.len(), 0, 255)?;
         update_count+=1;
     }
 
@@ -45,11 +58,6 @@ pub async fn update(update_data: web::Json<UpdateData>, state: web::Data<State>,
         return Err(JsonErrorType::BAD_REQUEST.new_error(format!(
             "You have to add atleast one field which you want to update"
         )).into());
-    }
-
-    let homepage: Option<String> = update_data.homepage.clone();
-    if let Some(ref homepage) = homepage { 
-        checker::min_max_size("Length of homepage", homepage.len(), 3, 255)?; 
     }
 
     let db_connection = &checker::get_con(&state.pool)?;
@@ -65,7 +73,8 @@ pub async fn update(update_data: web::Json<UpdateData>, state: web::Data<State>,
         return match map_qres(app::App::update_owner(id, user.id, &app::AppChangeSet {
             id: None,
             owner: None,
-            name: name,
+            name,
+            avatar,
             description: update_data.description.clone(),
             redirect_uri: update_data.redirect_uri.clone(),
             homepage: update_data.homepage.clone(),
