@@ -7,11 +7,13 @@ export class Permission {
     readonly name: string;
     readonly description: string;
     readonly id: number;
+    readonly bitmask: number;
 
     constructor(name: string, description: string, id: number) {
         this.name = name;
         this.description = description;
         this.id = id;
+        this.bitmask = 1 << id;
     }
 }
 
@@ -59,6 +61,12 @@ export namespace Permissions {
     export const TOKEN_TERMINATE = new Permission(
         "token_terminate", "Terminate self token", 10
     );
+
+    export const PERMISSIONS = [
+        TOKEN_LIST, APP_CREATE, APP_DELETE, APP_UPDATE, APP_LIST,
+        USER_INFO, USER_UPDATE, APP_TOKEN_CREATE, APP_TOKEN_DELETE, 
+        APP_TOKEN_LIST, TOKEN_TERMINATE
+    ];
 }
 
 export class Route<A>{
