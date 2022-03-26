@@ -1,14 +1,18 @@
 <script lang="ts">
+	import { onMount } from "svelte";
 	import { goto } from "$app/navigation";
 	import Loader from "../../components/loader.svelte";
 	import { get_login_redirect, Routes } from "../../api";
-	import { onMount } from "svelte";
 
 	let user: any;
 	let loading = true;
 	let token: string;
 
+	let show_token: any;
+
 	onMount(async () => {
+		let params = new URLSearchParams(window.location.search);
+
 		token = localStorage.getItem("token");
 		if (token) {
 			try {
@@ -31,8 +35,8 @@
 			<Loader />
 		{:else}
 			<main class="blend-in">
-				<h1>Dashboard</h1>
-				<p>This is the dashboard. Here you can manage your account!</p>
+				<h1>Apps</h1>
+				<p>Here you can see and manage all your apps. <a href="/dash">Dashboard</a></p>
 
 				{#if !user.verified}
 					<p class="not-verified hint">
@@ -40,22 +44,7 @@
 					</p>
 				{/if}
 
-				<div class="categories">
-					<a href="/dash/account" class="border category hhigh">
-						<h1>Account</h1>
-						<p>Manage private and public account details</p>
-					</a>
-
-					<a href="/dash/tokens" class="border category hhigh">
-						<h1>Tokens</h1>
-						<p>Manage tokens</p>
-					</a>
-
-					<a href="/dash/apps" class="border category hhigh">
-						<h1>Apps</h1>
-						<p>Manage apps</p>
-					</a>
-				</div>
+				<h2>Not implemented yet</h2>
 			</main>
 		{/if}
 	</div>
@@ -71,7 +60,6 @@
 
 	.root {
 		width: 100%;
-		height: 100%;
 		padding: 10px 0;
 		display: flex;
 		align-items: center;
@@ -88,6 +76,7 @@
 	}
 
 	main {
+		width: 100%;
 		display: flex;
 		align-items: center;
 		flex-direction: column;
@@ -113,18 +102,5 @@
 
 	p {
 		margin: 0 10px;
-	}
-
-	.category {
-		padding: 10px 10px;
-		text-decoration: none;
-		transition: 0.3s ease;
-		margin-top: 10px;
-	}
-
-	.categories {
-		margin-top: 5px;
-		display: flex;
-		flex-direction: column;
 	}
 </style>

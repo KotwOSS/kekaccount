@@ -243,9 +243,9 @@
 		margin-top: 10px;
 	}
 
-    .delete {
-        margin-top: 15px;
-    }
+	.delete {
+		margin-top: 15px;
+	}
 
 	p {
 		margin: 0 10px;
