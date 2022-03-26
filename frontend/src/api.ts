@@ -3,6 +3,64 @@ import { api_base } from "./config";
 
 export type Method = "GET"|"POST"|"PUT"|"DELETE";
 
+export class Permission {
+    readonly name: string;
+    readonly description: string;
+    readonly id: number;
+
+    constructor(name: string, description: string, id: number) {
+        this.name = name;
+        this.description = description;
+        this.id = id;
+    }
+}
+
+export namespace Permissions {
+    export const TOKEN_LIST = new Permission(
+        "token_list", "List tokens", 0
+    );
+
+    export const APP_CREATE = new Permission(
+        "app_create", "Create apps", 1
+    );
+
+    export const APP_DELETE = new Permission(
+        "app_delete", "Delete apps", 2
+    );
+
+    export const APP_UPDATE = new Permission(
+        "app_update", "Update apps", 3
+    );
+
+    export const APP_LIST = new Permission(
+        "app_list", "List apps", 4
+    );
+
+    export const USER_INFO = new Permission(
+        "user_info", "Show private self information", 5
+    );
+
+    export const USER_UPDATE = new Permission(
+        "user_update", "Update self user", 6
+    );
+    
+    export const APP_TOKEN_CREATE = new Permission(
+        "app_token_create", "Create app tokens", 7
+    );
+    
+    export const APP_TOKEN_DELETE = new Permission(
+        "app_token_delete", "Delete app tokens", 8
+    );
+    
+    export const APP_TOKEN_LIST = new Permission(
+        "app_token_list", "List app tokens", 9
+    );
+    
+    export const TOKEN_TERMINATE = new Permission(
+        "token_terminate", "Terminate self token", 10
+    );
+}
+
 export class Route<A>{
     readonly method: Method;
     readonly body: (args: A)=>any;
