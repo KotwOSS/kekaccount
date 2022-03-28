@@ -1,3 +1,9 @@
 {
-	"hello_world": "Hello world!"
+	"nav.title": "KekAccount",
+	"nav.dashboard": "Dashboard",
+	"nav.login": "Login",
+	"nav.register": "Register",
+	"nav.home": "Home",
+	"index.title": "KekAccount",
+	"index.description": "An account system for everyone"
 }
