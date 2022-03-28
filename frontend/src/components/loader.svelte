@@ -1,4 +1,4 @@
-<div id="loading">
+<div class="loader">
 	<svg viewBox="0 0 100 100">
 		<defs>
 			<filter id="shadow">
