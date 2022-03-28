@@ -5,6 +5,7 @@
 	box-sizing: border-box;
 	color: var(--color);
 	scrollbar-width: none;
+    overflow: hidden;
 }
 
 *::-webkit-scrollbar {
@@ -13,8 +14,13 @@
 
 body {
 	background-color: var(--background);
-	height: 100vh;
-	overflow: hidden;
+    /* height: 100vh;
+	overflow-y: scroll;
+    overflow-x: hidden; */
+}
+
+html {
+    overflow: scroll;
 }
 
 .hint {
@@ -66,6 +72,6 @@ a:hover {
 }
 
 .root {
-	min-height: calc(100% - 50px);
+	min-height: calc(100vh - 50px);
 	padding: 10px;
 }

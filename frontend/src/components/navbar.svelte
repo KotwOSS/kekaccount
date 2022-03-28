@@ -1,21 +1,39 @@
 <script lang="ts">
+    import { afterNavigate } from "$app/navigation";
+
 	import T from "$components/translate.svelte";
 
 	export let detach: boolean = false;
 
 	let path = window.location.pathname;
+
+    afterNavigate(function(navigation) {
+        path = navigation.to.pathname;
+    });
+
+    let expand_menu: boolean = false;
 </script>
 
 {#if detach}
 	<div class="spacer" />
 {/if}
+
+<div class:detach class="menu" class:expand={expand_menu}>
+    <a href="/" class:active={path === "/"}><T k="nav.home" /></a>
+    <a href="/dash" class:active={path.startsWith("/dash")}><T k="nav.dashboard" /></a>
+    <a href="/register" class:active={path.startsWith("/register")}><T k="nav.register" /></a>
+    <a href="/login" class:active={path.startsWith("/login")}><T k="nav.login" /></a>
+</div>
+
 <nav class:detach>
+    <div class="burger" on:click={()=>expand_menu=!expand_menu}><div/><div/><div/></div>
+    
 	<h1><T k="nav.title" /></h1>
 	<div class="links">
 		<a href="/" class:active={path === "/"}><T k="nav.home" /></a>
-		<a href="/dash"><T k="nav.dashboard" /></a>
-		<a href="/register"><T k="nav.register" /></a>
-		<a href="/login"><T k="nav.login" /></a>
+		<a href="/dash" class:active={path.startsWith("/dash")}><T k="nav.dashboard" /></a>
+		<a href="/register" class:active={path.startsWith("/register")}><T k="nav.register" /></a>
+		<a href="/login" class:active={path.startsWith("/login")}><T k="nav.login" /></a>
 	</div>
 </nav>
 
@@ -25,9 +43,8 @@
 		align-items: center;
 		padding: 0 15px;
 		height: 50px;
-		width: 100%;
-		z-index: 1;
-		transition: all 0.5s ease;
+		width: 100vw;
+		z-index: 2;
 	}
 
 	nav > .links {
@@ -49,10 +66,45 @@
 		animation: navdown 0.3s ease forwards;
 	}
 
+    nav > .burger {
+        display: none;
+    }
+
+    .menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        transform: translateX(-100%);
+        position: absolute;
+        top: 50px;
+        left: 0;
+        width: 100%;
+        max-width: 400px;
+        height: 100vh;
+        background-color: var(--nav-background);
+        z-index: 1;
+        padding-bottom: 50px;
+    }
+
+    .menu.expand.detach {
+        position: fixed;
+        height: 100vh;
+        animation: menudown 0.3s ease forwards;
+    }
+
+    .menu.expand {
+        transform: translateX(0);
+    }
+
 	.spacer {
 		height: 50px;
 		width: 100%;
 	}
+
+    @keyframes menudown {
+        0% {transform: translateY(-50px);}
+		100% {transform: translateY(0);}
+    }
 
 	@keyframes navdown {
 		0% {
@@ -64,4 +116,32 @@
 			transform: translateY(0);
 		}
 	}
+
+    @media (max-width: 600px) {
+        nav > .burger {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        nav > .burger > div {
+            width: 100%;
+            height: 2px;
+            background-color: white;
+        }
+
+        nav > .links {
+            display: none;
+        }
+    }
+
+    @media (min-width: 600px) {
+        .menu {
+            display: none;
+        }
+    }
 </style>
