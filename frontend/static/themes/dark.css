@@ -1,21 +1,21 @@
 @import url("base.css");
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
 
 :root {
-    --background: #000;
-    --color: white;
-    --hint: orange;
-    --warning: rgb(255, 72, 0);
-    --error: red;
-    --nav-border: rgba(255, 145, 0, 0.342);
-    --nav-background: rgba(0, 0, 0, 0.6);
-    --footer-border: rgba(255, 145, 0, 0.342);
-    --footer-background: rgba(0, 0, 0, 0.6);
-    --a-color: rgb(204, 99, 38);
-    --a-color-hover: rgb(212, 67, 0);
-    --active-color: rgb(245, 143, 27);
+	--background: #000;
+	--color: white;
+	--hint: orange;
+	--warning: rgb(255, 72, 0);
+	--error: red;
+	--nav-border: rgba(255, 145, 0, 0.342);
+	--nav-background: rgba(0, 0, 0, 0.6);
+	--footer-border: rgba(255, 145, 0, 0.342);
+	--footer-background: rgba(0, 0, 0, 0.6);
+	--a-color: rgb(204, 99, 38);
+	--a-color-hover: rgb(212, 67, 0);
+	--active-color: rgb(245, 143, 27);
 }
 
 * {
-    font-family: 'Roboto Mono', monospace;
+	font-family: "Roboto Mono", monospace;
 }

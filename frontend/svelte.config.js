@@ -13,14 +13,14 @@ const config = {
 		prerender: {
 			enabled: false
 		},
-        vite: {
-            resolve: {
-                alias: {
-                    $lib: path.resolve("src/lib"),
-                    $components: path.resolve("./src/components")
-                }
-            }
-        },
+		vite: {
+			resolve: {
+				alias: {
+					$lib: path.resolve("src/lib"),
+					$components: path.resolve("./src/components")
+				}
+			}
+		},
 		trailingSlash: "always"
 	}
 };

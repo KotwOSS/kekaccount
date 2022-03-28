@@ -243,9 +243,9 @@ export namespace Regex {
 }
 
 export async function authorize(): Promise<any> {
-    let token = localStorage.getItem("token");
-    if(!token) goto(get_login_redirect())
-    else return await Routes.User.INFO.send({ token }).catch(e=>goto(get_login_redirect()));
+	let token = localStorage.getItem("token");
+	if (!token) goto(get_login_redirect());
+	else return await Routes.User.INFO.send({ token }).catch((e) => goto(get_login_redirect()));
 }
 
 export function get_identifier(uoe: string, password: string): any {

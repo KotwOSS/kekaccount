@@ -1,67 +1,71 @@
 * {
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    color: var(--color);
-    scrollbar-width: none;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	color: var(--color);
+	scrollbar-width: none;
 }
 
 *::-webkit-scrollbar {
-    display: none;
+	display: none;
 }
 
 body {
-    background-color: var(--background);
-    height: 100vh;
-    overflow: hidden;
+	background-color: var(--background);
+	height: 100vh;
+	overflow: hidden;
 }
 
 .hint {
-    color: var(--hint);
+	color: var(--hint);
 }
 
 .warning {
-    color: var(--warning);
+	color: var(--warning);
 }
 
 .error {
-    color: var(--color);
+	color: var(--color);
 }
 
 @keyframes fadein {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
 }
 
 .fadein {
-    animation: 0.3s ease fadein forwards;
+	animation: 0.3s ease fadein forwards;
 }
 
 nav {
-    border-bottom: 1px solid var(--nav-border);
-    background-color: var(--nav-background);
+	border-bottom: 1px solid var(--nav-border);
+	background-color: var(--nav-background);
 }
 
 footer {
-    border-top: 1px solid var(--footer-border);
-    background-color: var(--footer-background);
+	border-top: 1px solid var(--footer-border);
+	background-color: var(--footer-background);
 }
 
 a {
-    text-decoration: none;
-    color: var(--a-color);
+	text-decoration: none;
+	color: var(--a-color);
 }
 
 a:hover {
-    color: var(--a-color-hover);
+	color: var(--a-color-hover);
 }
 
 .active {
-    color: var(--active-color);
+	color: var(--active-color);
 }
 
 .root {
-    min-height: calc(100% - 50px);
-    padding: 10px;
+	min-height: calc(100% - 50px);
+	padding: 10px;
 }
