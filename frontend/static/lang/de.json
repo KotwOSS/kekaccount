@@ -1,0 +1,9 @@
+{
+    "nav.title": "KekAccount",
+    "nav.dashboard": "Dashboard",
+    "nav.login": "Anmelden",
+    "nav.register": "Registrieren",
+    "nav.home": "Index",
+    "index.title": "KekAccount",
+    "index.description": "Ein account system für jeden"
+}
