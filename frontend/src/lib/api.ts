@@ -1,5 +1,6 @@
 import { goto } from "$app/navigation";
 import { api_base } from "$lib/config";
+import { regex } from "$lib/checker";
 import CryptoJS from "crypto-js";
 
 export type Method = "GET" | "POST" | "PUT" | "DELETE";
@@ -171,6 +172,13 @@ export namespace Routes {
 			(_args: { id: string }) => undefined,
 			ok_processor
 		);
+
+		export const SEARCH = Route.obody(
+			"POST",
+			() => `/users/search`,
+			(args: { name: string; exact?: boolean }) => args,
+			ok_processor
+		);
 	}
 
 	export namespace Auth {
@@ -238,29 +246,31 @@ export namespace Routes {
 	}
 }
 
-export namespace Regex {
-	export const EMAIL = /^\w+[\+\.\w-]*@([\w-]+\.)*\w+[\w-]*\.([a-z]{2,18}|\d+)$/g;
+export type ClientOptions = {};
+
+export class Client {
+	user: any;
+	identifier: any;
+	token: string;
+	authorized: boolean = false;
+	confirm_callback: () => void;
+
+	constructor(options: ClientOptions) {}
+
+	async login(token: string) {
+		this.user = await Routes.User.INFO.send({ token });
+		this.token = token;
+		this.authorized = true;
+	}
+
+	async confirm_access(confirm_callback: () => void) {
+		this.confirm_callback = confirm_callback;
+		goto(get_login_redirect());
+	}
 }
 
-export async function authorize(): Promise<any> {
-	let token = localStorage.getItem("token");
-	if (!token) goto(get_login_redirect());
-	else return await Routes.User.INFO.send({ token }).catch((e) => goto(get_login_redirect()));
-}
-
-export function get_identifier(uoe: string, password: string): any {
-	return Regex.EMAIL.test(uoe) ? { email: uoe, password } : { username: uoe, password };
-}
-
-export function get_identifier_ls(): any {
-	let uoe = localStorage.getItem("uoe");
-	let password = localStorage.getItem("password");
-	localStorage.removeItem("uoe");
-	localStorage.removeItem("password");
-	if (uoe && password) {
-		return Regex.EMAIL.test(uoe) ? { email: uoe, password } : { username: uoe, password };
-	} else return undefined;
-}
+export const client = new Client({});
+export let authorized: boolean = false;
 
 export function hash_password(password: string): string {
 	return CryptoJS.SHA512(password).toString();
@@ -271,16 +281,4 @@ export function get_login_redirect(eparams: { k: string; v: string }[] = []): st
 	params.set("r", window.location.pathname + window.location.search);
 	eparams.forEach((e) => params.set(e.k, e.v));
 	return "/login?" + params.toString();
-}
-
-export async function is_authorized(): Promise<boolean> {
-	let token = localStorage.getItem("token");
-	if (token) {
-		try {
-			let info = await Routes.Auth.Token.INFO.send({ token });
-			return info.token.perms === -1;
-		} catch (e) {
-			return false;
-		}
-	} else return false;
 }
