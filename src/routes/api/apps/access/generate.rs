@@ -33,7 +33,7 @@ pub async fn generate(path: web::Path<(String,)>, generate_data: web::Json<Gener
     let db_connection = &checker::get_con(&state.pool)?;
     
     let users = match generate_data.username.clone() {
-        Some(username) => map_qres(user::User::find_name(username, password, db_connection), "Error while selecting users"),
+        Some(username) => map_qres(user::User::find_name_password(username, password, db_connection), "Error while selecting users"),
         None => map_qres(user::User::find_email(generate_data.email.clone().unwrap(), password, db_connection), "Error while selecting users")
     }?;
 
