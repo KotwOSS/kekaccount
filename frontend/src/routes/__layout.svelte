@@ -3,12 +3,21 @@
 	import Navbar from "$components/navbar.svelte";
 	import Footer from "$components/footer.svelte";
 	import lang from "$lib/lang";
+	import { client, get_login_redirect } from "$lib/api";
+	import { goto } from "$app/navigation";
 
 	let loading: boolean = true;
 
 	async function main() {
 		await lang.init();
-		loading = false;
+
+		let token = localStorage.getItem("token");
+		if (token)
+			client
+				.login(token)
+				.then(() => (client.authorized = true))
+				.finally(() => (loading = false));
+		else loading = false;
 	}
 
 	main();
@@ -21,17 +30,17 @@
 	let detach_navbar = false;
 </script>
 
-<svelte:window on:scroll={onscroll}/>
+<svelte:window on:scroll={onscroll} />
 
 <div id="app" class="fadein">
 	{#if loading}
 		<Loader />
 	{:else}
-    <!-- <div class="inner"> -->
-        <Navbar detach={detach_navbar} />
+		<!-- <div class="inner"> -->
+		<Navbar detach={detach_navbar} />
 		<slot />
 		<Footer />
-    <!-- </div>	 -->
+		<!-- </div>	 -->
 	{/if}
 </div>
 
@@ -46,6 +55,6 @@
 	}
 
 	#app {
-        width: 100%;
+		width: 100%;
 	}
 </style>
