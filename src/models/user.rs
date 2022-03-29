@@ -49,7 +49,14 @@ impl User {
             .load::<User>(connection)
     }
 
-    pub fn find_name(name: String, password: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<User>>{
+    pub fn find_name(name: String, connection: &PgConnection) -> QueryResult<Vec<User>>{
+        users::table
+            .filter(users::dsl::name.eq(name))
+            .select((users::dsl::id, users::dsl::name, users::dsl::avatar, users::dsl::password, users::dsl::email))
+            .load::<User>(connection)
+    }
+
+    pub fn find_name_password(name: String, password: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<User>>{
         users::table
             .filter(users::dsl::name.eq(name).and(users::dsl::password.eq(password)))
             .select((users::dsl::id, users::dsl::name, users::dsl::avatar, users::dsl::password, users::dsl::email))
