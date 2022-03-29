@@ -1,12 +1,13 @@
 namespace lang {
 	export let language: any;
+	export let initialized: number = 0;
 
 	export const supported: string[] = ["en_us", "de"];
 	export const fallback: string = "en_us";
 
 	export function init() {
 		return new Promise((resolve) => {
-			if (!language) {
+			if (initialized++ === 0) {
 				let preference =
 					localStorage.getItem("lang") || navigator.language.replace("-", "_").toLowerCase();
 				let fallbacked = supported.includes(preference) ? preference : fallback;
