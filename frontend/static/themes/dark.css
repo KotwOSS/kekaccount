@@ -14,6 +14,14 @@
 	--a-color: rgb(204, 99, 38);
 	--a-color-hover: rgb(212, 67, 0);
 	--active-color: rgb(245, 143, 27);
+	--button-border: rgb(245, 143, 27);
+	--button-color: rgb(245, 143, 27);
+	--button-background: rgba(0, 0, 0, 0.2);
+	--button-hover-background: rgba(245, 143, 27, 0.2);
+	--input-border: rgb(255, 255, 255);
+	--input-color: rgb(255, 255, 255);
+	--input-background: rgba(0, 0, 0, 0.2);
+	--input-focus-border: rgb(245, 143, 27);
 }
 
 * {

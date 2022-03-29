@@ -5,7 +5,7 @@
 	box-sizing: border-box;
 	color: var(--color);
 	scrollbar-width: none;
-    overflow: hidden;
+	overflow: hidden;
 }
 
 *::-webkit-scrollbar {
@@ -14,13 +14,47 @@
 
 body {
 	background-color: var(--background);
-    /* height: 100vh;
+	/* height: 100vh;
 	overflow-y: scroll;
     overflow-x: hidden; */
 }
 
 html {
-    overflow: scroll;
+	overflow: scroll;
+}
+
+button {
+	border: 1px solid var(--button-border);
+	background-color: var(--button-background);
+	color: var(--button-color);
+	border-radius: 10px;
+	cursor: pointer;
+	padding: 5px;
+	outline: none;
+	transition: all 0.3s ease;
+}
+
+button:hover {
+	background-color: var(--button-hover-background);
+}
+
+input {
+	border: 1px solid var(--input-border);
+	background-color: var(--input-background);
+	color: var(--input-color);
+	border-radius: 10px;
+	cursor: pointer;
+	padding: 5px;
+	outline: none;
+	transition: all 0.3s ease;
+}
+
+input:focus {
+	border: 1px solid var(--input-focus-border);
+}
+
+*:disabled {
+	cursor: not-allowed;
 }
 
 .hint {
