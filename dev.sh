@@ -1,0 +1,1 @@
+cargo watch --ignore frontend -x run

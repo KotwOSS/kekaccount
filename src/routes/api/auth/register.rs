@@ -11,6 +11,7 @@ use crate::util::{self, random, checker::{self, map_qres}};
 pub struct RegisterData {
     username: String,
     email: String,
+    avatar: String,
     password: String
 }
 
@@ -29,6 +30,9 @@ pub async fn register(register_data: web::Json<RegisterData>, state: web::Data<S
     let email = register_data.email.clone();
     checker::min_max_size("Length of email", email.len(), 3, 32)?;
     checker::email("The field email", email.as_str())?;
+
+    let avatar = register_data.avatar.clone();
+    checker::min_max_size("The length of avatar", avatar.len(), 0, 255)?;
 
     let db_connection = &checker::get_con(&state.pool)?;
 
@@ -51,7 +55,7 @@ pub async fn register(register_data: web::Json<RegisterData>, state: web::Data<S
                 )))?;
 
 
-            let new_user = user::User { name: username, email, password, id };
+            let new_user = user::User { name: username, email, avatar, password, id };
             map_qres(new_user.create(db_connection), "Error while inserting user")?;
 
 

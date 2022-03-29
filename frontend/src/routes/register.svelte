@@ -1,137 +1,184 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
-    import Loader from '../components/loader.svelte';
-    import { APIError, hash_password, Routes } from "../api";
+	import { Routes } from "$lib/api";
 
-    let username;
-    let email;
-    let password;
-    let password_repeat;
+	import { regex } from "$lib/checker";
 
-    let error;
+	import lang from "$lib/lang";
 
-    let submit_loading;
+	const emojis = ["👋😄", "✌️😁", "🤔", "🤔", "😀👍"];
+	const emojis_invalid = ["👇😉", "👇😅"];
 
-    function register(e) {
-        submit_loading = true;
+	const steps = 4;
+	let step_index = 0;
 
-        e.preventDefault();
+	let talking: number = 0;
 
-        if(password.value == password_repeat.value) {
-            let hashed_password = hash_password(password.value);
+	let input: any;
+	let input_value: string;
 
-            console.log(hashed_password);
+	let error: string | undefined = undefined;
 
-            Routes.Auth.REGISTER.send({
-                username: username.value, 
-                email: email.value, 
-                password: hashed_password
-            }).then(()=>goto("/email_sent"))
-            .catch(e=>{
-                if(e instanceof APIError) {
-                    error = e.get_message();
-                    submit_loading = false;
-                }
-            })
-        } else {
-            error = "Passwords don't match";
-            submit_loading = false;
-        }
-    }
+	let text: string;
+	let emoji: string;
+	$: {
+		emoji = error
+			? emojis_invalid[Math.floor(Math.random() * emojis_invalid.length)]
+			: emojis[step_index];
+		text = error ? error : lang.language["register.keky.step" + step_index];
+		talk();
+	}
 
+	let text_index = 0;
+
+	function talk() {
+		text_index = 0;
+		if (talking++ == 0) {
+			const intv = setInterval(function () {
+				text_index++;
+				if (text_index == text.length) {
+					clearInterval(intv);
+					talking = 0;
+				}
+			}, 20);
+		}
+	}
+
+	async function check_email(msg: string) {
+		return regex.EMAIL.test(msg) ? undefined : lang.language["register.keky.email.invalid"];
+	}
+
+	async function check_username(msg: string) {
+		if (msg.length >= 3 && msg.length <= 32) {
+			if ((await Routes.Users.SEARCH.send({ name: msg, exact: true })).length != 0)
+				return lang.language["register.keky.username.exists"];
+		} else return lang.language["register.keky.username.invalid"];
+	}
+
+	async function next() {
+		error = undefined;
+
+		if (input && input.checker) {
+			error = await input.checker(input_value);
+			if (error) return;
+			input_value = "";
+		}
+
+		step_index++;
+		switch (step_index) {
+			case 2:
+				input = {
+					placeholder: lang.language["register.keky.email"],
+					checker: check_email
+				};
+				break;
+			case 3:
+				input = {
+					placeholder: lang.language["register.keky.username"],
+					checker: check_username
+				};
+				break;
+			default:
+				input = undefined;
+		}
+	}
 </script>
 
 <div class="root">
-    <form on:submit={register} class="inner">
-        <main class="blend-in">
-            <h1>Register</h1>
-            <input bind:this={username} type="text" placeholder="username">
-            <input bind:this={email} type="text" placeholder="email">
-            <input bind:this={password} type="password" placeholder="password">
-            <input bind:this={password_repeat} type="password" placeholder="repeat password">
-            {#if error}
-                <p class="error">{error}</p>
-            {/if}
-            <p class="login">Already have an account? <a href="/login">Login</a></p>
-            <button class={submit_loading?"active":""} disabled={submit_loading}>
-            {#if submit_loading}
-                <Loader />
-            {:else}
-                Register
-            {/if}
-            </button>
-        </main>
-    </form>    
+	<div class="speech">{text.substring(0, text_index)}</div>
+	<h1 class="emoji" class:talking>{emoji}</h1>
+	{#if input}
+		<input bind:value={input_value} type="text" placeholder={input.placeholder} />
+	{/if}
+	{#if step_index != steps}
+		<button on:click={next} disabled={talking != 0} class="continue">Continue</button>
+	{/if}
 </div>
 
 <style>
-    @import url("../themes/default.css");
+	.continue {
+		margin-top: 15px;
+	}
 
-    .login {
-        margin-top: 5px;
-        margin-bottom: 5px;
-    }
+	input {
+		margin-top: 10px;
+	}
 
-    .root :global(#loading) {
-        width: 22px;
-        height: 22px;
-    }
+	.root {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 1) 50%), url("/bg.jpg");
+		background-size: cover;
+	}
 
-    .root {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+	.speech {
+		border: 1px solid var(--color);
+		padding: 10px;
+		max-width: 400px;
+		border-radius: 15px;
+		margin-bottom: 15px;
+	}
 
-    h1 {
-        margin-bottom: 10px;
-    }
+	@keyframes talking {
+		0% {
+			transform: translateY(0);
+		}
+		10% {
+			transform: translateY(-3px);
+		}
+		20% {
+			transform: translateY(3px);
+		}
+		30% {
+			transform: translateY(1px);
+		}
+		40% {
+			transform: translateY(2px);
+		}
+		50% {
+			transform: translateY(-1px);
+		}
+		60% {
+			transform: translateY(-2px);
+		}
+		70% {
+			transform: translateY(-3px);
+		}
+		80% {
+			transform: translateY(0px);
+		}
+		90% {
+			transform: translateY(2px);
+		}
+		100% {
+			transform: translateY(1px);
+		}
+	}
 
-    input {
-        margin-bottom: 5px;
-        text-align: center;
-    }
+	@keyframes idle {
+		0% {
+			transform: rotate(0);
+		}
+		25% {
+			transform: rotate(5deg);
+		}
+		50% {
+			transform: rotate(0);
+		}
+		75% {
+			transform: rotate(-5deg);
+		}
+		100% {
+			transform: rotate(0);
+		}
+	}
 
-    button {
-        margin-top: 10px;
-    }
+	.emoji {
+		animation: 1s linear idle infinite;
+	}
 
-    form {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        max-width: 450px;
-        padding: 30px 10px;
-        
-    }
-
-    main {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-    }
-
-    @keyframes error-blend-in {
-        0% { 
-            height: 0;
-            opacity: 0;
-        }
-        100% { 
-            opacity: 1;
-            height: 20px;
-            margin-top: 8px;
-            margin-bottom: 5px;
-        }
-    }
-
-    .error {
-        color: rgb(255, 42, 42);
-        animation: error-blend-in 0.3s ease forwards;
-    }
+	.emoji.talking {
+		animation: 1s ease talking infinite;
+	}
 </style>

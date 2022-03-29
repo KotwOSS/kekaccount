@@ -15,6 +15,23 @@ This project is licensed under the [Mit License](https://mit-license.org/)
 
 ## Usage
 
+### Web
+
+#### Testing
+```
+cd frontend && npm run dev
+```
+
+#### Formating
+```
+npm run format
+```
+
+#### Building
+```
+npm run build
+```
+
 ### Prerequirements
 
 - Rust Nightly <br>
@@ -51,9 +68,9 @@ cargo run
 
 ## Goals
 
-- TCP api
-- WS api
-- REST api
+- TCP api - Second level priority
+- REST api - Finished
+- Frontend - Doing
 
 <br>
 

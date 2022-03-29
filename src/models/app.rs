@@ -8,6 +8,7 @@ pub struct App {
     pub id: Vec<u8>,
     pub owner: Vec<u8>,
     pub name: String,
+    pub avatar: String,
     pub description: String,
     pub redirect_uri: String,
     pub homepage: String,
@@ -19,6 +20,7 @@ pub struct AppChangeSet {
     pub id: Option<Vec<u8>>,
     pub owner: Option<Vec<u8>>,
     pub name: Option<String>,
+    pub avatar: Option<String>,
     pub description: Option<String>,
     pub redirect_uri: Option<String>,
     pub homepage: Option<String>,
@@ -34,21 +36,21 @@ impl App {
     pub fn find(id: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<App>> {
         apps::table
             .filter(apps::dsl::id.eq(id))
-            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
+            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::avatar, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
             .load::<App>(connection)
     }
 
     pub fn find_owner_all(owner: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<App>> {
         apps::table
             .filter(apps::dsl::owner.eq(owner))
-            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
+            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::avatar, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
             .load::<App>(connection)
     }
 
     pub fn find_owner(id: Vec<u8>, owner: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<App>> {
         apps::table
             .filter(apps::dsl::id.eq(id).and(apps::dsl::owner.eq(owner)))
-            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
+            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::avatar, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
             .load::<App>(connection)
     }
 
@@ -76,7 +78,7 @@ impl App {
             .filter(apps::dsl::name.ilike(name))
             .limit(limit)
             .offset(offset)
-            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
+            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::avatar, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
             .load::<App>(connection)
     }
 }

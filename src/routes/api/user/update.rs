@@ -12,7 +12,8 @@ use crate::util::random;
 #[derive(Deserialize)]
 pub struct UpdateData {
     name: Option<String>,
-    email: Option<String>
+    email: Option<String>,
+    avatar: Option<String>,
 }
 
 #[post("/api/user/update")]
@@ -43,6 +44,16 @@ pub async fn update(update_data: web::Json<UpdateData>, state: web::Data<State>,
             email = None;
         } else { update_count+=1;  }
     }
+
+    let mut avatar: Option<String> = update_data.avatar.clone();
+    if let Some(ref ravatar) = avatar { 
+        checker::min_max_size("Length of avatar", ravatar.len(), 0, 255)?;
+        checker::email("Email", ravatar.as_str())?;
+        if user.avatar.eq(ravatar) { 
+            avatar = None;
+        } else { update_count+=1;  }
+    }
+
 
     if update_count==0 {
         return Err(JsonErrorType::BAD_REQUEST.new_error(format!(
@@ -78,6 +89,7 @@ pub async fn update(update_data: web::Json<UpdateData>, state: web::Data<State>,
             id: None,
             password: None,
             email,
+            avatar,
             name
         }, db_connection), "Error while updating user")?;
 

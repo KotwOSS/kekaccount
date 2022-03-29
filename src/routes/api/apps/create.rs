@@ -10,6 +10,7 @@ use crate::util::{random, checker::{self, map_qres, hex_header}};
 #[derive(Deserialize)]
 pub struct CreateData {
     name: String,
+    avatar: String,
     description: String,
     redirect_uri: String,
     homepage: String
@@ -33,6 +34,10 @@ pub async fn create(create_data: web::Json<CreateData>, state: web::Data<State>,
     checker::min_max_size("Length of homepage", homepage.len(), 0, 255)?;
     // TODO: check validity using URL_REGEX
 
+    let avatar = create_data.avatar.clone();
+    checker::min_max_size("Length of avatar", avatar.len(), 0, 255)?;
+    // TODO: check validity using URL_REGEX
+
     let db_connection = &checker::get_con(&state.pool)?;
 
     let (user, token) = checker::authorize(token, db_connection)?;
@@ -49,6 +54,7 @@ pub async fn create(create_data: web::Json<CreateData>, state: web::Data<State>,
         let new_app = app::App {
             id,
             name,
+            avatar,
             description,
             redirect_uri,
             homepage,

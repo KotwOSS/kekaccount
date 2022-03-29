@@ -17,6 +17,7 @@ pub async fn retrieve(path: web::Path<(String,)>, state: web::Data<State>) -> Re
     match users.into_iter().next() {
         Some(user)=>Ok(web::Json(json!({
             "name": user.name,
+            "avatar": user.avatar,
             "id": id_hex
         }))),
         None=>Err(JsonErrorType::NOT_FOUND.new_error(format!(

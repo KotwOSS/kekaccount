@@ -32,6 +32,7 @@ pub async fn info(_info_data: web::Json<InfoData>, state: web::Data<State>, requ
         return Ok(web::Json(json!({
             "name": user.name,
             "email": user.email,
+            "avatar": user.avatar,
             "id": user.id.encode_hex::<String>(),
             "verified": verifications==0,
             "success": true

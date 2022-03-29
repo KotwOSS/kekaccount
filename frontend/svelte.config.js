@@ -1,5 +1,6 @@
-import adapter from '@sveltejs/adapter-auto';
-import preprocess from 'svelte-preprocess';
+import adapter from "@sveltejs/adapter-static";
+import preprocess from "svelte-preprocess";
+import path from "path";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -8,7 +9,19 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
+		prerender: {
+			enabled: false
+		},
+		vite: {
+			resolve: {
+				alias: {
+					$lib: path.resolve("src/lib"),
+					$components: path.resolve("./src/components")
+				}
+			}
+		},
+		trailingSlash: "always"
 	}
 };
 

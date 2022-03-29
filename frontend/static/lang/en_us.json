@@ -1,0 +1,19 @@
+{
+	"nav.title": "KekAccount",
+	"nav.dashboard": "Dashboard",
+	"nav.login": "Login",
+	"nav.register": "Register",
+	"nav.home": "Home",
+	"register.keky.step0": "Hallo, ich werde heute mit dir deinen eigenen KekAccount erstellen",
+	"register.keky.step1": "Ich bin keky und werde dich hier begleiten!",
+	"register.keky.step2": "Fangen wir mal ganz einfach an. Was ist deine email addresse? (z.B. kekontheworld@gmail.com)",
+	"register.keky.step3": "Gut gemacht! Wie willst du dich nennen?",
+	"register.keky.step4": "Super! Wir erstellen einen Account nur für dich...",
+	"register.keky.email": "Email Addresse",
+	"register.keky.email.invalid": "Du musst eine richtige Email Addresse angeben!",
+	"register.keky.username": "Benutzername",
+	"register.keky.username.invalid": "Der Nutzername sollte zwischen 3 und 32 Charakteren lang sein!",
+	"register.keky.username.exists": "Ein Benutzer mit diesem Namen existiert bereits. Wähle einen anderen",
+	"index.title": "KekAccount",
+	"index.description": "An account system for everyone"
+}

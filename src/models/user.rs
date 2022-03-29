@@ -6,6 +6,7 @@ use crate::schema::users;
 pub struct User {
     pub id: Vec<u8>,
     pub name: String,
+    pub avatar: String,
     pub password: Vec<u8>,
     pub email: String
 }
@@ -15,6 +16,7 @@ pub struct User {
 pub struct UserChangeSet {
     pub id: Option<Vec<u8>>,
     pub name: Option<String>,
+    pub avatar: Option<String>,
     pub password: Option<Vec<u8>>,
     pub email: Option<String>
 }
@@ -30,7 +32,7 @@ impl User {
     pub fn find(id: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<User>> {
         users::table
             .filter(users::dsl::id.eq(id))
-            .select((users::dsl::id, users::dsl::name, users::dsl::password, users::dsl::email))
+            .select((users::dsl::id, users::dsl::name, users::dsl::avatar, users::dsl::password, users::dsl::email))
             .load::<User>(connection)
     }
 
@@ -43,14 +45,21 @@ impl User {
     pub fn find_email(email: String, password: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<User>> {
         users::table
             .filter(users::dsl::email.eq(email).and(users::dsl::password.eq(password)))
-            .select((users::dsl::id, users::dsl::name, users::dsl::password, users::dsl::email))
+            .select((users::dsl::id, users::dsl::name, users::dsl::avatar, users::dsl::password, users::dsl::email))
             .load::<User>(connection)
     }
 
-    pub fn find_name(name: String, password: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<User>>{
+    pub fn find_name(name: String, connection: &PgConnection) -> QueryResult<Vec<User>>{
+        users::table
+            .filter(users::dsl::name.eq(name))
+            .select((users::dsl::id, users::dsl::name, users::dsl::avatar, users::dsl::password, users::dsl::email))
+            .load::<User>(connection)
+    }
+
+    pub fn find_name_password(name: String, password: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<User>>{
         users::table
             .filter(users::dsl::name.eq(name).and(users::dsl::password.eq(password)))
-            .select((users::dsl::id, users::dsl::name, users::dsl::password, users::dsl::email))
+            .select((users::dsl::id, users::dsl::name, users::dsl::avatar, users::dsl::password, users::dsl::email))
             .load::<User>(connection)
     }
 
@@ -80,7 +89,7 @@ impl User {
             .filter(users::dsl::name.ilike(name))
             .limit(limit)
             .offset(offset)
-            .select((users::dsl::id, users::dsl::name, users::dsl::password, users::dsl::email))
+            .select((users::dsl::id, users::dsl::name, users::dsl::avatar, users::dsl::password, users::dsl::email))
             .load::<User>(connection)
     }
 }

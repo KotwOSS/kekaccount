@@ -1,0 +1,111 @@
+* {
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	color: var(--color);
+	scrollbar-width: none;
+	overflow: hidden;
+}
+
+*::-webkit-scrollbar {
+	display: none;
+}
+
+body {
+	background-color: var(--background);
+	/* height: 100vh;
+	overflow-y: scroll;
+    overflow-x: hidden; */
+}
+
+html {
+	overflow: scroll;
+}
+
+button {
+	border: 1px solid var(--button-border);
+	background-color: var(--button-background);
+	color: var(--button-color);
+	border-radius: 10px;
+	cursor: pointer;
+	padding: 5px;
+	outline: none;
+	transition: all 0.3s ease;
+}
+
+button:hover {
+	background-color: var(--button-hover-background);
+}
+
+input {
+	border: 1px solid var(--input-border);
+	background-color: var(--input-background);
+	color: var(--input-color);
+	border-radius: 10px;
+	cursor: pointer;
+	padding: 5px;
+	outline: none;
+	transition: all 0.3s ease;
+}
+
+input:focus {
+	border: 1px solid var(--input-focus-border);
+}
+
+*:disabled {
+	cursor: not-allowed;
+}
+
+.hint {
+	color: var(--hint);
+}
+
+.warning {
+	color: var(--warning);
+}
+
+.error {
+	color: var(--color);
+}
+
+@keyframes fadein {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.fadein {
+	animation: 0.3s ease fadein forwards;
+}
+
+nav {
+	border-bottom: 1px solid var(--nav-border);
+	background-color: var(--nav-background);
+}
+
+footer {
+	border-top: 1px solid var(--footer-border);
+	background-color: var(--footer-background);
+}
+
+a {
+	text-decoration: none;
+	color: var(--a-color);
+}
+
+a:hover {
+	color: var(--a-color-hover);
+}
+
+.active {
+	color: var(--active-color);
+}
+
+.root {
+	min-height: calc(100vh - 50px);
+	padding: 10px;
+}
