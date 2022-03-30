@@ -2,7 +2,7 @@
 	import Loader from "$components/loader.svelte";
 	import Navbar from "$components/navbar.svelte";
 	import Footer from "$components/footer.svelte";
-	import lang from "$lib/lang";
+	import * as lang from "$lib/lang";
 	import { client, get_login_redirect } from "$lib/api";
 	import { goto } from "$app/navigation";
 
