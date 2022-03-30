@@ -60,7 +60,7 @@ The executable will be located at `target/release/kekaccount`
 ### Testing
 If you are developing and don't want to rebuild and run the client to release mode use
 ```sh
-cargo run
+./dev.sh
 ```
 
 <hr>
