@@ -1,19 +1,36 @@
 {
+	"index.title": "KekAccount",
+	"index.description": "Ein account system für jeden",
+
 	"nav.title": "KekAccount",
 	"nav.dashboard": "Dashboard",
 	"nav.login": "Anmelden",
 	"nav.register": "Registrieren",
 	"nav.home": "Index",
+
 	"register.keky.step0": "Hallo, ich werde heute mit dir deinen eigenen KekAccount erstellen",
 	"register.keky.step1": "Ich bin keky und werde dich hier begleiten!",
-	"register.keky.step2": "Fangen wir mal ganz einfach an. Was ist deine email addresse? (z.B. kekontheworld@gmail.com)",
-	"register.keky.step3": "Gut gemacht! Wie willst du dich nennen?",
-	"register.keky.step4": "Super! Wir erstellen einen Account nur für dich...",
+	"register.keky.step2": "Fangen wir mal ganz einfach an. Wie willst du dich nennen?",
+	"register.keky.step3": "Gut gemacht!",
+	"register.keky.step4": "Was ist deine email addresse? (z.B. kekontheworld@gmail.com)",
+	"register.keky.step5": "Das ist eine echt gute Wahl!",
+	"register.keky.step6": "Bitte gebe mir ein passwort das du für deine Anmeldung nutzen willst",
+	"register.keky.step7": "Ich habe dich nicht ganz verstanden. Kannst du das wiederholen?",
+	"register.keky.step8": "Super! Ich erstellen einen Account nur für dich...",
+	"register.keky.step9": "Jetzt fehlt nur noch die Verifikation. Du solltest eine Email bekommen haben. Du kannst dich aber trotzdem schon einloggen",
 	"register.keky.email": "Email Addresse",
+	"register.keky.email.exists": "Es existiert bereits ein Account mit dieser Email!",
 	"register.keky.email.invalid": "Du musst eine richtige Email Addresse angeben!",
 	"register.keky.username": "Benutzername",
 	"register.keky.username.invalid": "Der Nutzername sollte zwischen 3 und 32 Charakteren lang sein!",
 	"register.keky.username.exists": "Ein Benutzer mit diesem Namen existiert bereits. Wähle einen anderen",
-	"index.title": "KekAccount",
-	"index.description": "Ein account system für jeden"
+	"register.keky.password": "Passwort",
+	"register.keky.password.repeat": "Passwort wiederholen",
+	"register.keky.password.weak": "Dein passwort ist zu schwach!",
+	"register.keky.password.space": "Dein passwort darf keine Leerzeichen enthalten!",
+	"register.keky.password.match": "Die passwörter stimmen nicht überein!",
+	"register.keky.next": "Weiter",
+	"register.keky.back": "Zurück",
+
+	"error.connection": "Verbindungsfehler!"
 }
