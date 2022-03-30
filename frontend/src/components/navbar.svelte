@@ -3,6 +3,8 @@
 
 	import T from "$components/translate.svelte";
 
+	import { LangKey as lk } from "$lib/lang";
+
 	export let detach: boolean = false;
 
 	let path = window.location.pathname;
@@ -19,10 +21,10 @@
 {/if}
 
 <div class:detach class="menu" class:expand={expand_menu}>
-	<a href="/" class:active={path === "/"}><T k="nav.home" /></a>
-	<a href="/dash" class:active={path.startsWith("/dash")}><T k="nav.dashboard" /></a>
-	<a href="/register" class:active={path.startsWith("/register")}><T k="nav.register" /></a>
-	<a href="/login" class:active={path.startsWith("/login")}><T k="nav.login" /></a>
+	<a href="/" class:active={path === "/"}><T k={lk.NAV_HOME} /></a>
+	<a href="/dash" class:active={path.startsWith("/dash")}><T k={lk.NAV_DASHBOARD} /></a>
+	<a href="/register" class:active={path.startsWith("/register")}><T k={lk.NAV_REGISTER} /></a>
+	<a href="/login" class:active={path.startsWith("/login")}><T k={lk.NAV_LOGIN} /></a>
 </div>
 
 <nav class:detach>
@@ -32,12 +34,12 @@
 		<div />
 	</div>
 
-	<h1><T k="nav.title" /></h1>
+	<h1><T k={lk.NAV_TITLE} /></h1>
 	<div class="links">
-		<a href="/" class:active={path === "/"}><T k="nav.home" /></a>
-		<a href="/dash" class:active={path.startsWith("/dash")}><T k="nav.dashboard" /></a>
-		<a href="/register" class:active={path.startsWith("/register")}><T k="nav.register" /></a>
-		<a href="/login" class:active={path.startsWith("/login")}><T k="nav.login" /></a>
+		<a href="/" class:active={path === "/"}><T k={lk.NAV_HOME} /></a>
+		<a href="/dash" class:active={path.startsWith("/dash")}><T k={lk.NAV_DASHBOARD} /></a>
+		<a href="/register" class:active={path.startsWith("/register")}><T k={lk.NAV_REGISTER} /></a>
+		<a href="/login" class:active={path.startsWith("/login")}><T k={lk.NAV_LOGIN} /></a>
 	</div>
 </nav>
 
