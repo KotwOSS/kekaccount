@@ -1,20 +1,19 @@
 <script lang="ts">
-	import { Routes } from "$lib/api";
-
+	import { APIError, hash_password, Routes } from "$lib/api";
 	import { regex } from "$lib/checker";
+	import * as lang from "$lib/lang";
+	import { LangKey as lk } from "$lib/lang";
+	import T from "$components/translate.svelte";
 
-	import lang from "$lib/lang";
-
-	const emojis = ["👋😄", "✌️😁", "🤔", "🤔", "😀👍"];
+	const emojis = ["👋😄", "✌️😁", "🤔", "😁👍", "🤔", "😉👍", "😀", "😅", "😀👍", "😁"];
 	const emojis_invalid = ["👇😉", "👇😅"];
 
-	const steps = 4;
 	let step_index = 0;
 
 	let talking: number = 0;
 
 	let input: any;
-	let input_value: string;
+	let input_el;
 
 	let error: string | undefined = undefined;
 
@@ -43,43 +42,118 @@
 		}
 	}
 
+	let email: string;
+	let username: string;
+	let password: string;
+
 	async function check_email(msg: string) {
-		return regex.EMAIL.test(msg) ? undefined : lang.language["register.keky.email.invalid"];
+		if (!regex.EMAIL.test(msg)) return lang.language[lk.REGISTER_KEKY_EMAIL_INVALID];
+		email = msg;
 	}
 
 	async function check_username(msg: string) {
 		if (msg.length >= 3 && msg.length <= 32) {
 			if ((await Routes.Users.SEARCH.send({ name: msg, exact: true })).length != 0)
-				return lang.language["register.keky.username.exists"];
-		} else return lang.language["register.keky.username.invalid"];
+				return lang.language[lk.REGISTER_KEKY_USERNAME_EXISTS];
+		} else return lang.language[lk.REGISTER_KEKY_USERNAME_INVALID];
+		username = msg;
+	}
+
+	async function check_password(msg: string) {
+		let weak = regex.WEAK_PASSWORD.test(msg);
+		let strong = regex.STRONG_PASSWORD.test(msg);
+		let spaces = regex.WHITESPACE.test(msg);
+
+		if (spaces) return lang.language[lk.REGISTER_KEKY_PASSWORD_SPACE];
+		if (msg.length < 8 || (!strong && !weak)) return lang.language[lk.REGISTER_KEKY_PASSWORD_WEAK];
+		password = msg;
+	}
+
+	async function check_password_repeat(msg: string) {
+		if (msg != password) return lang.language[lk.REGISTER_KEKY_PASSWORD_MATCH];
+	}
+
+	function setup_input() {
+		switch (step_index) {
+			case 2:
+				input = {
+					placeholder: lang.language[lk.REGISTER_KEKY_USERNAME],
+					checker: check_username,
+					value: username
+				};
+				break;
+			case 4:
+				input = {
+					placeholder: lang.language[lk.REGISTER_KEKY_EMAIL],
+					checker: check_email,
+					value: email
+				};
+				break;
+			case 6:
+				input = {
+					placeholder: lang.language[lk.REGISTER_KEKY_PASSWORD],
+					checker: check_password,
+					type: "password",
+					value: password
+				};
+				break;
+			case 7:
+				input = {
+					placeholder: lang.language[lk.REGISTER_KEKY_PASSWORD_REPEAT],
+					checker: check_password_repeat,
+					type: "password"
+				};
+				break;
+			default:
+				input = undefined;
+		}
 	}
 
 	async function next() {
 		error = undefined;
 
 		if (input && input.checker) {
-			error = await input.checker(input_value);
+			error = await input.checker(input_el.value);
 			if (error) return;
-			input_value = "";
+			input_el.value = "";
 		}
 
 		step_index++;
-		switch (step_index) {
-			case 2:
-				input = {
-					placeholder: lang.language["register.keky.email"],
-					checker: check_email
-				};
-				break;
-			case 3:
-				input = {
-					placeholder: lang.language["register.keky.username"],
-					checker: check_username
-				};
-				break;
-			default:
-				input = undefined;
+		setup_input();
+
+		if (step_index === 8) {
+			let hashed_password = hash_password(password);
+			Routes.Auth.REGISTER.send({
+				username,
+				email,
+				password: hashed_password,
+				avatar: ""
+			})
+				.then(() => {
+					step_index++;
+					setup_input();
+				})
+				.catch((e) => {
+					if (e instanceof APIError) {
+						if (e.status === 409) {
+							error = lang.language[lk.REGISTER_KEKY_EMAIL_EXISTS];
+							step_index = 4;
+							setup_input();
+						}
+					} else {
+						error = lang.language[lk.ERROR_CONNECTION];
+					}
+				});
+
+			//goto("/login");
 		}
+	}
+
+	async function back() {
+		error = undefined;
+
+		step_index--;
+		setup_input();
 	}
 </script>
 
@@ -87,16 +161,35 @@
 	<div class="speech">{text.substring(0, text_index)}</div>
 	<h1 class="emoji" class:talking>{emoji}</h1>
 	{#if input}
-		<input bind:value={input_value} type="text" placeholder={input.placeholder} />
+		<input
+			bind:this={input_el}
+			value={input.value || ""}
+			type={input.type}
+			placeholder={input.placeholder}
+		/>
 	{/if}
-	{#if step_index != steps}
-		<button on:click={next} disabled={talking != 0} class="continue">Continue</button>
-	{/if}
+	<div class="controls">
+		{#if step_index < 8}
+			{#if step_index !== 0}
+				<button on:click={back} disabled={talking !== 0} class="back"
+					><T k={lk.REGISTER_KEKY_BACK} /></button
+				>
+			{/if}
+			<button on:click={next} disabled={talking !== 0} class="next"
+				><T k={lk.REGISTER_KEKY_NEXT} /></button
+			>
+		{/if}
+		{#if step_index === 9}
+			<a href="/login"><T k={lk.NAV_LOGIN} /></a>
+		{/if}
+	</div>
 </div>
 
 <style>
-	.continue {
+	.controls {
 		margin-top: 15px;
+		display: flex;
+		gap: 10px;
 	}
 
 	input {
