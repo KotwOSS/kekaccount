@@ -2,3 +2,4 @@
 .env
 req.hex
 Cargo.lock
+events.html
