@@ -157,7 +157,7 @@
 	}
 </script>
 
-<div class="root">
+<div class="root fadein">
 	<div class="speech">{text.substring(0, text_index)}</div>
 	<h1 class="emoji" class:talking>{emoji}</h1>
 	{#if input}
