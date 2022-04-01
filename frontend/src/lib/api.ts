@@ -1,6 +1,4 @@
-import { goto } from "$app/navigation";
 import { api_base } from "$lib/config";
-import { regex } from "$lib/checker";
 import CryptoJS from "crypto-js";
 
 export type Method = "GET" | "POST" | "PUT" | "DELETE";
@@ -245,32 +243,6 @@ export namespace Routes {
 		}
 	}
 }
-
-export type ClientOptions = {};
-
-export class Client {
-	user: any;
-	identifier: any;
-	token: string;
-	authorized: boolean = false;
-	confirm_callback: () => void;
-
-	constructor(options: ClientOptions) {}
-
-	async login(token: string) {
-		this.user = await Routes.User.INFO.send({ token });
-		this.token = token;
-		this.authorized = true;
-	}
-
-	async confirm_access(confirm_callback: () => void) {
-		this.confirm_callback = confirm_callback;
-		goto(get_login_redirect());
-	}
-}
-
-export const client = new Client({});
-export let authorized: boolean = false;
 
 export function hash_password(password: string): string {
 	return CryptoJS.SHA512(password).toString();
