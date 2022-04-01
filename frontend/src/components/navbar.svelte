@@ -3,7 +3,8 @@
 
 	import T from "$components/translate.svelte";
 
-	import { LangKey as lk } from "$lib/lang";
+	import { LangKey as lk, language } from "$lib/lang";
+	import { client } from "$lib/client";
 
 	export let detach: boolean = false;
 
@@ -14,6 +15,8 @@
 	});
 
 	let expand_menu: boolean = false;
+
+	let authorized = client.authorized;
 </script>
 
 {#if detach}
@@ -22,9 +25,13 @@
 
 <div class:detach class="menu" class:expand={expand_menu}>
 	<a href="/" class:active={path === "/"}><T k={lk.NAV_HOME} /></a>
-	<a href="/dash" class:active={path.startsWith("/dash")}><T k={lk.NAV_DASHBOARD} /></a>
-	<a href="/register" class:active={path.startsWith("/register")}><T k={lk.NAV_REGISTER} /></a>
-	<a href="/login" class:active={path.startsWith("/login")}><T k={lk.NAV_LOGIN} /></a>
+	{#if $authorized}
+		<a href="/dash" class:active={path.startsWith("/dash")}><T k={lk.NAV_DASHBOARD} /></a>
+		<a href="/logout" class:active={path.startsWith("/logout")}><T k={lk.NAV_LOGOUT} /></a>
+	{:else}
+		<a href="/register" class:active={path.startsWith("/register")}><T k={lk.NAV_REGISTER} /></a>
+		<a href="/login" class:active={path.startsWith("/login")}><T k={lk.NAV_LOGIN} /></a>
+	{/if}
 </div>
 
 <nav class:detach>
@@ -37,9 +44,13 @@
 	<h1><T k={lk.NAV_TITLE} /></h1>
 	<div class="links">
 		<a href="/" class:active={path === "/"}><T k={lk.NAV_HOME} /></a>
-		<a href="/dash" class:active={path.startsWith("/dash")}><T k={lk.NAV_DASHBOARD} /></a>
-		<a href="/register" class:active={path.startsWith("/register")}><T k={lk.NAV_REGISTER} /></a>
-		<a href="/login" class:active={path.startsWith("/login")}><T k={lk.NAV_LOGIN} /></a>
+		{#if $authorized}
+			<a href="/dash" class:active={path.startsWith("/dash")}><T k={lk.NAV_DASHBOARD} /></a>
+			<a href="/logout" class:active={path.startsWith("/logout")}><T k={lk.NAV_LOGOUT} /></a>
+		{:else}
+			<a href="/register" class:active={path.startsWith("/register")}><T k={lk.NAV_REGISTER} /></a>
+			<a href="/login" class:active={path.startsWith("/login")}><T k={lk.NAV_LOGIN} /></a>
+		{/if}
 	</div>
 </nav>
 
