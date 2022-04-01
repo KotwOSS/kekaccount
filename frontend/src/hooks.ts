@@ -1,5 +1,3 @@
-// ./src/hooks.js
-
 import { dev } from "$app/env";
 
 export async function handle({ event, resolve }) {
