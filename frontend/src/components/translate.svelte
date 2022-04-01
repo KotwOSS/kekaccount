@@ -4,4 +4,4 @@
 	export let k: LangKey;
 </script>
 
-{language[k]}
+{@html language[k]}
