@@ -41,6 +41,8 @@ export enum LangKey {
 	NAV_LOGIN = "nav.login",
 	NAV_REGISTER = "nav.register",
 	NAV_HOME = "nav.home",
+	NAV_ACCOUNT = "nav.account",
+	NAV_LOGOUT = "nav.logout",
 	// REGISTER
 	REGISTER_KEKY_NEXT = "register.keky.next",
 	REGISTER_KEKY_BACK = "register.keky.back",
@@ -64,6 +66,18 @@ export enum LangKey {
 	REGISTER_KEKY_PASSWORD_WEAK = "register.keky.password.weak",
 	REGISTER_KEKY_PASSWORD_SPACE = "register.keky.password.space",
 	REGISTER_KEKY_PASSWORD_MATCH = "register.keky.password.match",
+	// LOGIN
+	LOGIN_TITLE = "login.title",
+	LOGIN_DESCRIPTION = "login.description",
+	LOGIN_UOE = "login.uoe",
+	LOGIN_PASSWORD = "login.password",
+	LOGIN_SUBMIT = "login.submit",
+	LOGIN_REGISTER = "login.register",
+	// DASHBOARD
+	DASHBOARD_TITLE = "dashboard.title",
 	// ERRORS
-	ERROR_CONNECTION = "api.error.connection"
+	ERROR_CONNECTION = "error.connection",
+	ERROR_CREDENTIALS = "error.credentials",
+	// HINTS
+	HINT_VERIFY = "hint.verify"
 }
