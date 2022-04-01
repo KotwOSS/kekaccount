@@ -3,8 +3,7 @@
 	import Navbar from "$components/navbar.svelte";
 	import Footer from "$components/footer.svelte";
 	import * as lang from "$lib/lang";
-	import { client, get_login_redirect } from "$lib/api";
-	import { goto } from "$app/navigation";
+	import { client } from "$lib/client";
 
 	let loading: boolean = true;
 
@@ -15,7 +14,7 @@
 		if (token)
 			client
 				.login(token)
-				.then(() => (client.authorized = true))
+				.catch(() => localStorage.removeItem("token"))
 				.finally(() => (loading = false));
 		else loading = false;
 	}
