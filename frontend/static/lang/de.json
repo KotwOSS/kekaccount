@@ -10,6 +10,9 @@
 	"nav.account": "Account",
 	"nav.logout": "Ausloggen",
 
+    "footer.privacy": "Datenschutz",
+	"footer.imprint": "Impressum",
+
 	"register.keky.step0": "Hallo, ich werde heute mit dir deinen eigenen KekAccount erstellen",
 	"register.keky.step1": "Ich bin keky und werde dich hier begleiten!",
 	"register.keky.step2": "Fangen wir mal ganz einfach an. Wie willst du dich nennen?",

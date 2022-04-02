@@ -43,6 +43,9 @@ export enum LangKey {
 	NAV_HOME = "nav.home",
 	NAV_ACCOUNT = "nav.account",
 	NAV_LOGOUT = "nav.logout",
+    // FOOTER
+    FOOTER_PRIVACY = "footer.privacy",
+    FOOTER_IMPRINT = "footer.imprint",
 	// REGISTER
 	REGISTER_KEKY_NEXT = "register.keky.next",
 	REGISTER_KEKY_BACK = "register.keky.back",
