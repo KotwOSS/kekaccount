@@ -139,108 +139,122 @@ export namespace Routes {
 		} else throw new APIError(await r.text(), r.status);
 	}
 
-    export namespace Apps {
-        export const LIST = Route.oheaders(
-            "POST",
-            ()=>"/apps/list",
-            (args: { token: string }) => ({ Authorization: args.token }),
-            ok_processor
-        );
+	export namespace Apps {
+		export const LIST = Route.oheaders(
+			"POST",
+			() => "/apps/list",
+			(args: { token: string }) => ({ Authorization: args.token }),
+			ok_processor
+		);
 
-        export const CREATE = new Route(
-            "POST",
-            ()=>"/apps/create",
-            (args) => ({ Authorization: args.token }),
-            (args: { token: string, name: string, avatar: string, description: string, redirect_uri: string, homepage: string }) => ({
-                name: args.name,
-                avatar: args.avatar,
-                description: args.description,
-                redirect_uri: args.redirect_uri,
-                homepage: args.homepage
-            }),
-            ok_processor
-        );
+		export const CREATE = new Route(
+			"POST",
+			() => "/apps/create",
+			(args) => ({ Authorization: args.token }),
+			(args: {
+				token: string;
+				name: string;
+				avatar: string;
+				description: string;
+				redirect_uri: string;
+				homepage: string;
+			}) => ({
+				name: args.name,
+				avatar: args.avatar,
+				description: args.description,
+				redirect_uri: args.redirect_uri,
+				homepage: args.homepage
+			}),
+			ok_processor
+		);
 
-        export const DELETE = new Route(
-            "POST",
-            ()=>"/apps/delete",
-            (args) => ({ Authorization: args.token }),
-            (args: { token: string, id: string }) => ({ id: args.id }),
-            ok_processor
-        );
+		export const DELETE = new Route(
+			"POST",
+			() => "/apps/delete",
+			(args) => ({ Authorization: args.token }),
+			(args: { token: string; id: string }) => ({ id: args.id }),
+			ok_processor
+		);
 
-        export const RETRIEVE = Route.obody(
-            "GET",
-            (args)=>`/apps/${args.id}`,
-            (_args: { id: string }) => undefined,
-            ok_processor
-        );
+		export const RETRIEVE = Route.obody(
+			"GET",
+			(args) => `/apps/${args.id}`,
+			(_args: { id: string }) => undefined,
+			ok_processor
+		);
 
-        export const UPDATE = new Route(
-            "POST",
-            ()=>"/apps/update",
-            (args: { token: string, id: string, changes: any }) => ({ Authorization: args.token }),
-            (args) => ({ id: args.id, ...args.changes }),
-            ok_processor
-        );
+		export const UPDATE = new Route(
+			"POST",
+			() => "/apps/update",
+			(args: { token: string; id: string; changes: any }) => ({ Authorization: args.token }),
+			(args) => ({ id: args.id, ...args.changes }),
+			ok_processor
+		);
 
-        export const SEARCH = Route.obody(
-            "POST",
-            ()=>"/apps/search",
-            (args: { name: string, offset?: number, limit?: number }) => args,
-            ok_processor
-        );
+		export const SEARCH = Route.obody(
+			"POST",
+			() => "/apps/search",
+			(args: { name: string; offset?: number; limit?: number }) => args,
+			ok_processor
+		);
 
-        export namespace Token {
-            export const CREATE = new Route(
-                "POST",
-                (args)=>`/apps/${args.id}/token/create`,
-                (args) => ({ Authorization: args.token }),
-                (args: { id: string, permissions: string, name: string, token: string }) => ({
-                    name: args.name,
-                    permissions: args.permissions,
-                }),
-                ok_processor
-            );
+		export namespace Token {
+			export const CREATE = new Route(
+				"POST",
+				(args) => `/apps/${args.id}/token/create`,
+				(args) => ({ Authorization: args.token }),
+				(args: { id: string; permissions: string; name: string; token: string }) => ({
+					name: args.name,
+					permissions: args.permissions
+				}),
+				ok_processor
+			);
 
-            export const DELETE = new Route(
-                "POST",
-                (args)=>`/apps/${args.id}/token/delete`,
-                (args) => ({ Authorization: args.token }),
-                (args: { id: string, token_id: string, token: string }) => ({ id: args.token_id }),
-                ok_processor
-            );
+			export const DELETE = new Route(
+				"POST",
+				(args) => `/apps/${args.id}/token/delete`,
+				(args) => ({ Authorization: args.token }),
+				(args: { id: string; token_id: string; token: string }) => ({ id: args.token_id }),
+				ok_processor
+			);
 
-            export const LIST = Route.oheaders(
-                "POST",
-                (args)=>`/apps/${args.id}/token/info`,
-                (args: { token: string, id: string }) => ({ Authorization: args.token }),
-                ok_processor
-            );
+			export const LIST = Route.oheaders(
+				"POST",
+				(args) => `/apps/${args.id}/token/info`,
+				(args: { token: string; id: string }) => ({ Authorization: args.token }),
+				ok_processor
+			);
 
-            export const INFO = Route.oheaders(
-                "POST",
-                ()=>"/apps/token/info",
-                (args: { token: string }) => ({ Authorization: args.token }),
-                ok_processor
-            );
-        }
+			export const INFO = Route.oheaders(
+				"POST",
+				() => "/apps/token/info",
+				(args: { token: string }) => ({ Authorization: args.token }),
+				ok_processor
+			);
+		}
 
-        export namespace Access {
-            export const GENERATE = Route.obody(
-                "POST",
-                (args)=>`/apps/${args.id}/access/generate`,
-                (args: { id: string, username: string, email: string, password: string, name: string, permissions: string }) => ({
-                    username: args.username,
-                    email: args.email,
-                    password: args.password,
-                    name: args.name,
-                    permissions: args.permissions,
-                }),
-                ok_processor
-            );
-        }
-    }
+		export namespace Access {
+			export const GENERATE = Route.obody(
+				"POST",
+				(args) => `/apps/${args.id}/access/generate`,
+				(args: {
+					id: string;
+					username: string;
+					email: string;
+					password: string;
+					name: string;
+					permissions: string;
+				}) => ({
+					username: args.username,
+					email: args.email,
+					password: args.password,
+					name: args.name,
+					permissions: args.permissions
+				}),
+				ok_processor
+			);
+		}
+	}
 
 	export namespace User {
 		export const INFO = Route.oheaders(
@@ -277,7 +291,7 @@ export namespace Routes {
 		export const SEARCH = Route.obody(
 			"POST",
 			() => `/users/search`,
-			(args: { name: string; exact?: boolean, offset?: number, limit?: number }) => args,
+			(args: { name: string; exact?: boolean; offset?: number; limit?: number }) => args,
 			ok_processor
 		);
 	}

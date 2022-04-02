@@ -47,17 +47,17 @@
 	"error.credentials": "Falsche Anmeldedaten!",
 
 	"hint.verify": "Bitte verifiziere deinen Account! Nicht verifizierte accounts können gelöscht werden!",
- 
-    "account.title": "Account",
-    "account.description": "Hier können Sie Ihre persönlichen Daten ändern.",
 
-    "apps.title": "Apps",
-    "apps.description": "Hier können Sie Ihre Apps verwalten.",
-    "apps.create": "Neue App erstellen",
+	"account.title": "Account",
+	"account.description": "Hier können Sie Ihre persönlichen Daten ändern.",
 
-    "tokens.title": "Tokens",
-    "tokens.description": "Hier können Sie Ihre Tokens verwalten.",
-    "tokens.create": "Neuen Token erstellen",
+	"apps.title": "Apps",
+	"apps.description": "Hier können Sie Ihre Apps verwalten.",
+	"apps.create": "Neue App erstellen",
 
-    "back.to.dashboard": "Zurück zum <a href='/dash'>Dashboard</a>"
+	"tokens.title": "Tokens",
+	"tokens.description": "Hier können Sie Ihre Tokens verwalten.",
+	"tokens.create": "Neuen Token erstellen",
+
+	"back.to.dashboard": "Zurück zum <a href='/dash'>Dashboard</a>"
 }
