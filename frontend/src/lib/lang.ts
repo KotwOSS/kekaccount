@@ -79,5 +79,19 @@ export enum LangKey {
 	ERROR_CONNECTION = "error.connection",
 	ERROR_CREDENTIALS = "error.credentials",
 	// HINTS
-	HINT_VERIFY = "hint.verify"
+	HINT_VERIFY = "hint.verify",
+    // ACCOUNT
+    ACCOUNT_TITLE  = "account.title",
+    ACCOUNT_DESCRIPTION = "account.description",
+    // APPS
+    APPS_TITLE  = "apps.title",
+    APPS_DESCRIPTION = "apps.description",
+    APPS_CREATE = "apps.create",
+    // TOKENS
+    TOKENS_TITLE = "tokens.title",
+    TOKENS_DESCRIPTION = "tokens.description",
+    TOKENS_CREATE = "tokens.create",
+
+    // MISC
+    BACK_TO_DASHBOARD = "back.to.dashboard",
 }
