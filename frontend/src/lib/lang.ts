@@ -2,8 +2,8 @@ export let language: any;
 export let initialized: number = 0;
 
 export const supported: any = {
-    "en_us": "English",
-    "de": "Deutsch"
+    "en_us": "🇬🇧 English",
+    "de": "🇩🇪 Deutsch"
 };
 export const fallback: string = "en_us";
 
@@ -50,6 +50,9 @@ export enum LangKey {
 	FOOTER_PRIVACY = "footer.privacy",
 	FOOTER_IMPRINT = "footer.imprint",
 	FOOTER_NOTICE = "footer.notice",
+	FOOTER_LANGUAGE = "footer.language",
+	FOOTER_LEGAL = "footer.legal",
+	FOOTER_EVENTS = "footer.events",
 	// REGISTER
 	REGISTER_KEKY_NEXT = "register.keky.next",
 	REGISTER_KEKY_BACK = "register.keky.back",

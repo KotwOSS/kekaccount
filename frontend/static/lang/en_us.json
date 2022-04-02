@@ -13,6 +13,9 @@
     "footer.privacy": "Privacy",
 	"footer.imprint": "Imprint",
 	"footer.notice": "This awesome opensource account system was made with ❤️ by KekOnTheWorld and it's contributers. Check it out on <a href='https://github.com/KotwOSS/kekaccount' target='_blank'>Github</a>!",
+    "footer.language": "Language",
+	"footer.events": "Events",
+	"footer.legal": "Legal",
 
     "register.keky.step0": "Hello, today we will create an account for you.",
 	"register.keky.step1": "I am keky and will help you.",

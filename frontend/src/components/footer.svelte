@@ -22,13 +22,13 @@
 		</div>
 		<div class="categories">
 			<div class="legal category">
-				<h4>Legal</h4>
-				{#if privacy}<a href={privacy}><T k={lk.FOOTER_PRIVACY} /></a>{/if}
-				{#if imprint}<a href={imprint}><T k={lk.FOOTER_IMPRINT} /></a>{/if}
+				<h4>⚖️ <T k={lk.FOOTER_LEGAL} /></h4>
+				{#if privacy}<a href={privacy}>🔒 <T k={lk.FOOTER_PRIVACY} /></a>{/if}
+				{#if imprint}<a href={imprint}>📖 <T k={lk.FOOTER_IMPRINT} /></a>{/if}
 			</div>
 
             <div class="language category">
-                <h4>Language</h4>
+                <h4>🗣️ <T k={lk.FOOTER_LANGUAGE} /></h4>
                 {#each Object.entries(supported) as lang}
                     <!-- svelte-ignore a11y-invalid-attribute -->
                     <a class:active={fallbacked === lang[0]} on:click={function(e) {
@@ -43,7 +43,7 @@
 
 			{#if events}
 				<div class="events category">
-					<h4>Events</h4>
+					<h4>🏅 <T k={lk.FOOTER_EVENTS} /></h4>
 					{#each events as event}
 						<div class="event">
 							<a href={event.link} target="_blank">{event.name}</a>
