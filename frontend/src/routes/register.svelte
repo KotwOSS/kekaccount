@@ -53,8 +53,15 @@
 
 	async function check_username(msg: string) {
 		if (msg.length >= 3 && msg.length <= 32) {
-			if ((await Routes.Users.SEARCH.send({ name: msg, exact: true })).length != 0)
-				return lang.language[lk.REGISTER_KEKY_USERNAME_EXISTS];
+			try {
+				if ((await Routes.Users.SEARCH.send({ name: msg, exact: true })).length === 0) {
+					return lang.language[lk.REGISTER_KEKY_USERNAME_EXISTS];
+				}
+			} catch (e) {
+				if (e instanceof APIError) {
+					return e.get_message();
+				} else return lang.language[lk.ERROR_CONNECTION];
+			}
 		} else return lang.language[lk.REGISTER_KEKY_USERNAME_INVALID];
 		username = msg;
 	}
@@ -139,10 +146,8 @@
 							error = lang.language[lk.REGISTER_KEKY_EMAIL_EXISTS];
 							step_index = 4;
 							setup_input();
-						}
-					} else {
-						error = lang.language[lk.ERROR_CONNECTION];
-					}
+						} else error = e.get_message();
+					} else error = lang.language[lk.ERROR_CONNECTION];
 				});
 
 			//goto("/login");
