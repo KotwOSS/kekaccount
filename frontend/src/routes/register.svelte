@@ -54,7 +54,7 @@
 	async function check_username(msg: string) {
 		if (msg.length >= 3 && msg.length <= 32) {
 			try {
-				if ((await Routes.Users.SEARCH.send({ name: msg, exact: true })).length === 0) {
+				if ((await Routes.Users.SEARCH.send({ name: msg, exact: true })).length !== 0) {
 					return lang.language[lk.REGISTER_KEKY_USERNAME_EXISTS];
 				}
 			} catch (e) {
