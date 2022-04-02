@@ -43,7 +43,6 @@ input {
 	background-color: var(--input-background);
 	color: var(--input-color);
 	border-radius: 10px;
-	cursor: pointer;
 	padding: 5px;
 	outline: none;
 	transition: all 0.3s ease;
@@ -66,7 +65,14 @@ input:focus {
 }
 
 .error {
-	color: var(--color);
+	color: var(--error);
+}
+
+.card {
+	border: 1px solid var(--card-border);
+	background-color: var(--card-background);
+	border-radius: 20px;
+	padding: 20px;
 }
 
 @keyframes fadein {
@@ -107,5 +113,14 @@ a:hover {
 
 .root {
 	min-height: calc(100vh - 50px);
-	padding: 10px;
+}
+
+.short {
+	max-width: 500px;
+}
+
+.break {
+	word-break: break-all;
+	line-break: strict;
+	white-space: pre-wrap;
 }

@@ -3,7 +3,7 @@
 
 :root {
 	--background: #000;
-	--color: white;
+	--color: rgb(221, 221, 221);
 	--hint: orange;
 	--warning: rgb(255, 72, 0);
 	--error: red;
@@ -18,10 +18,12 @@
 	--button-color: rgb(245, 143, 27);
 	--button-background: rgba(0, 0, 0, 0.2);
 	--button-hover-background: rgba(245, 143, 27, 0.2);
-	--input-border: rgb(255, 255, 255);
+	--input-border: rgba(255, 255, 255, 0.5);
 	--input-color: rgb(255, 255, 255);
 	--input-background: rgba(0, 0, 0, 0.2);
 	--input-focus-border: rgb(245, 143, 27);
+	--card-border: rgba(255, 255, 255, 0.2);
+	--card-background: rgba(0, 0, 0, 0.2);
 }
 
 * {

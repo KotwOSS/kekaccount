@@ -1,19 +1,70 @@
 {
+    "index.title": "KekAccount",
+	"index.description": "An account system for everyone",
+
 	"nav.title": "KekAccount",
 	"nav.dashboard": "Dashboard",
 	"nav.login": "Login",
 	"nav.register": "Register",
 	"nav.home": "Home",
-	"register.keky.step0": "Hallo, ich werde heute mit dir deinen eigenen KekAccount erstellen",
-	"register.keky.step1": "Ich bin keky und werde dich hier begleiten!",
-	"register.keky.step2": "Fangen wir mal ganz einfach an. Was ist deine email addresse? (z.B. kekontheworld@gmail.com)",
-	"register.keky.step3": "Gut gemacht! Wie willst du dich nennen?",
-	"register.keky.step4": "Super! Wir erstellen einen Account nur für dich...",
-	"register.keky.email": "Email Addresse",
-	"register.keky.email.invalid": "Du musst eine richtige Email Addresse angeben!",
-	"register.keky.username": "Benutzername",
-	"register.keky.username.invalid": "Der Nutzername sollte zwischen 3 und 32 Charakteren lang sein!",
-	"register.keky.username.exists": "Ein Benutzer mit diesem Namen existiert bereits. Wähle einen anderen",
-	"index.title": "KekAccount",
-	"index.description": "An account system for everyone"
+    "nav.account": "Account",
+	"nav.logout": "Logout",
+
+    "footer.privacy": "Privacy",
+	"footer.imprint": "Imprint",
+	"footer.notice": "This awesome opensource account system was made with ❤️ by KekOnTheWorld and it's contributers. Check it out on <a href='https://github.com/KotwOSS/kekaccount' target='_blank'>Github</a>!",
+    "footer.language": "Language",
+	"footer.events": "Events",
+	"footer.legal": "Legal",
+
+    "register.keky.step0": "Hello, today we will create an account for you.",
+	"register.keky.step1": "I am keky and will help you.",
+	"register.keky.step2": "Let's start simple. What's your name?",
+	"register.keky.step3": "Good choice!",
+	"register.keky.step4": "Now what's your email address? (as example kekontheworld@gmail.com)",
+	"register.keky.step5": "Nice job!",
+	"register.keky.step6": "Please enter a password which you will use to login.",
+	"register.keky.step7": "I haven't quite understood you. Can you repeat it?",
+	"register.keky.step8": "Faboulous! I'll create an account for you...",
+	"register.keky.step9": "Now just the verification is missing. You should receive an email with a verification code. You can already login",
+	"register.keky.email": "Emeil address",
+	"register.keky.email.exists": "There already exists an account with that email address.",
+	"register.keky.email.invalid": "You have to enter a valid email address.",
+	"register.keky.username": "Username",
+	"register.keky.username.invalid": "The username must be in between 3 and 32 characters long.",
+	"register.keky.username.exists": "A user with that username already exists. Please choose another one.",
+	"register.keky.password": "Password",
+	"register.keky.password.repeat": "Repeat Password",
+	"register.keky.password.weak": "Your password is too weak. It must be at least 8 characters long and contain at least one number and one letter.",
+	"register.keky.password.space": "Your password may not contain spaces!",
+	"register.keky.password.match": "The passwords do not match!",
+	"register.keky.next": "Next",
+	"register.keky.back": "Back",
+
+    "login.title": "Login",
+	"login.description": "Here you can login to your account.",
+	"login.uoe": "Username or email",
+	"login.password": "Password",
+	"login.submit": "Submit",
+	"login.register": "No account yet? <a href='register'>Register</a> now!",
+
+	"dashboard.title": "Dashboard",
+
+	"error.connection": "Connection Error",
+	"error.credentials": "Invalid credentials!",
+
+	"hint.verify": "Please verify your account! Non verified accounts may get deleted!",
+
+	"account.title": "Account",
+	"account.description": "Here you can change your account settings",
+
+	"apps.title": "Apps",
+	"apps.description": "Here you can manage your apps.",
+	"apps.create": "Create app",
+
+	"tokens.title": "Tokens",
+	"tokens.description": "Here you can manage your tokens.",
+	"tokens.create": "Create token",
+
+	"back.to.dashboard": "Back to the <a href='/dash'>Dashboard</a>"
 }

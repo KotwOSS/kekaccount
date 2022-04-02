@@ -1,11 +1,13 @@
 <script>
 	import T from "$components/translate.svelte";
+
+	import { LangKey as lk } from "$lib/lang";
 </script>
 
 <div class="root fadein">
-	<h1><T k="index.title" /></h1>
-	<p><T k="index.description" /></p>
-	<p>
+	<h1><T k={lk.INDEX_TITLE} /></h1>
+	<p><T k={lk.INDEX_DESCRIPTION} /></p>
+	<p class="short">
 		Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe ad dolor fuga distinctio facilis
 		tempore praesentium molestias harum eligendi, esse inventore, molestiae quos ut enim in fugit
 		totam minima numquam. Aliquid repudiandae assumenda quia, itaque rerum voluptatum ducimus quam
@@ -25,6 +27,7 @@
 
 <style>
 	.root {
+        padding: 50px 0;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;

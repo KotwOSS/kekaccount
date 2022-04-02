@@ -1,7 +1,7 @@
 <script lang="ts">
-	import lang from "$lib/lang";
+	import { LangKey, language } from "$lib/lang";
 
-	export let k: lang.key;
+	export let k: LangKey;
 </script>
 
-{lang.language[k]}
+{@html language[k]}
