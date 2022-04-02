@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { imprint, privacy } from "$lib/config";
 	import T from "$components/translate.svelte";
-	import { LangKey as lk } from "$lib/lang";
+	import { fallback, LangKey as lk, supported } from "$lib/lang";
+    import { goto } from "$app/navigation";
+
+    let preference =
+        localStorage.getItem("lang") || navigator.language.replace("-", "_").toLowerCase();
+    let fallbacked = supported[preference] ? preference : fallback;
 
 	let events: any;
 	fetch("https://events.kotw.dev/recent.json")
@@ -21,6 +26,20 @@
 				{#if privacy}<a href={privacy}><T k={lk.FOOTER_PRIVACY} /></a>{/if}
 				{#if imprint}<a href={imprint}><T k={lk.FOOTER_IMPRINT} /></a>{/if}
 			</div>
+
+            <div class="language category">
+                <h4>Language</h4>
+                {#each Object.entries(supported) as lang}
+                    <!-- svelte-ignore a11y-invalid-attribute -->
+                    <a class:active={fallbacked === lang[0]} on:click={function(e) {
+                        e.preventDefault();
+                        if(fallbacked === lang[0]) return;
+
+                        localStorage.setItem("lang", lang[0]);
+                        window.location = window.location; // Causes the page to reload 
+                    }} href="#">{lang[1]}</a>
+                {/each}
+            </div>
 
 			{#if events}
 				<div class="events category">

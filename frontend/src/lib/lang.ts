@@ -1,7 +1,10 @@
 export let language: any;
 export let initialized: number = 0;
 
-export const supported: string[] = ["en_us", "de"];
+export const supported: any = {
+    "en_us": "English",
+    "de": "Deutsch"
+};
 export const fallback: string = "en_us";
 
 export function init() {
@@ -9,7 +12,7 @@ export function init() {
 		if (initialized++ === 0) {
 			let preference =
 				localStorage.getItem("lang") || navigator.language.replace("-", "_").toLowerCase();
-			let fallbacked = supported.includes(preference) ? preference : fallback;
+			let fallbacked = supported[preference] ? preference : fallback;
 
 			console.log(fallbacked);
 
