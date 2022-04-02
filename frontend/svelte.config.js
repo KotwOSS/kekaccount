@@ -12,7 +12,7 @@ const config = {
 		adapter: adapter(),
 		prerender: {
 			enabled: false,
-            default: true
+			default: true
 		},
 		vite: {
 			resolve: {
