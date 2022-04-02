@@ -10,8 +10,9 @@
 	"nav.account": "Account",
 	"nav.logout": "Ausloggen",
 
-    "footer.privacy": "Datenschutz",
+	"footer.privacy": "Datenschutz",
 	"footer.imprint": "Impressum",
+	"footer.notice": "Hey! Dieses fantastische opensource Account system wurde mit viel ❤️ von KekOnTheWorld und seinen Contributern gemacht. Schau es dir auf <a href='https://github.com/KotwOSS/kekaccount' target='_blank'>Github</a> an!",
 
 	"register.keky.step0": "Hallo, ich werde heute mit dir deinen eigenen KekAccount erstellen",
 	"register.keky.step1": "Ich bin keky und werde dich hier begleiten!",
