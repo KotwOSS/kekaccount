@@ -3,7 +3,7 @@
 
 	import T from "$components/translate.svelte";
 
-	import { LangKey as lk, language } from "$lib/lang";
+	import { LangKey as lk } from "$lib/lang";
 	import { client } from "$lib/client";
 
 	export let detach: boolean = false;
