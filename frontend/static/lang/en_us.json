@@ -1,5 +1,5 @@
 {
-    "index.title": "KekAccount",
+	"index.title": "KekAccount",
 	"index.description": "An account system for everyone",
 
 	"nav.title": "KekAccount",
@@ -7,17 +7,17 @@
 	"nav.login": "Login",
 	"nav.register": "Register",
 	"nav.home": "Home",
-    "nav.account": "Account",
+	"nav.account": "Account",
 	"nav.logout": "Logout",
 
-    "footer.privacy": "Privacy",
+	"footer.privacy": "Privacy",
 	"footer.imprint": "Imprint",
 	"footer.notice": "This awesome opensource account system was made with ❤️ by KekOnTheWorld and it's contributers. Check it out on <a href='https://github.com/KotwOSS/kekaccount' target='_blank'>Github</a>!",
-    "footer.language": "Language",
+	"footer.language": "Language",
 	"footer.events": "Events",
 	"footer.legal": "Legal",
 
-    "register.keky.step0": "Hello, today we will create an account for you.",
+	"register.keky.step0": "Hello, today we will create an account for you.",
 	"register.keky.step1": "I am keky and will help you.",
 	"register.keky.step2": "Let's start simple. What's your name?",
 	"register.keky.step3": "Good choice!",
@@ -41,7 +41,7 @@
 	"register.keky.next": "Next",
 	"register.keky.back": "Back",
 
-    "login.title": "Login",
+	"login.title": "Login",
 	"login.description": "Here you can login to your account.",
 	"login.uoe": "Username or email",
 	"login.password": "Password",

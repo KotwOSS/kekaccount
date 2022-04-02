@@ -1,0 +1,38 @@
+@import url("base.css");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+
+:root {
+	--background: rgb(255, 255, 255);
+	--color: #222;
+	--hint: rgb(155, 101, 0);
+	--warning: rgb(255, 72, 0);
+	--error: red;
+	--nav-border: rgb(177, 100, 0);
+	--nav-background: rgba(226, 156, 109, 0.85);
+	--footer-border: rgba(255, 145, 0, 1);
+	--footer-background: rgb(226, 156, 109);
+	--a-color: rgb(107, 52, 20);
+	--a-color-hover: rgb(153, 48, 0);
+	--active-color: rgb(158, 92, 17);
+	--button-border: rgb(129, 75, 13);
+	--button-color: rgb(129, 76, 15);
+	--button-background: rgba(255, 255, 255, 0.2);
+	--button-hover-background: rgba(252, 149, 31, 0.2);
+	--input-border: rgba(0, 0, 0, 0.5);
+	--input-color: rgb(0, 0, 0);
+	--input-background: rgba(255, 255, 255, 0.2);
+	--input-focus-border: rgb(177, 103, 19);
+	--card-border: rgba(0, 0, 0, 0.5);
+	--card-background: rgba(255, 255, 255, 0.01);
+}
+
+* {
+	font-family: "Roboto Mono", monospace;
+}
+
+.root {
+	/* background-color: white; */
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgb(255, 255, 255) 40%),
+		url("/bg.jpg");
+	background-size: cover;
+}

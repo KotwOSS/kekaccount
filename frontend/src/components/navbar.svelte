@@ -152,7 +152,7 @@
 		nav > .burger > div {
 			width: 100%;
 			height: 2px;
-			background-color: white;
+			background-color: var(--color);
 		}
 
 		nav > .links {

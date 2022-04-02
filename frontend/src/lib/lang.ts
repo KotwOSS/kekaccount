@@ -2,8 +2,8 @@ export let language: any;
 export let initialized: number = 0;
 
 export const supported: any = {
-    "en_us": "🇬🇧 English",
-    "de": "🇩🇪 Deutsch"
+	en_us: "🇬🇧 English",
+	de: "🇩🇪 Deutsch"
 };
 export const fallback: string = "en_us";
 
