@@ -55,21 +55,27 @@
 </nav>
 
 <style>
+    nav>h1 {
+        font-size: 1.6em;
+        letter-spacing: 1px;
+    }
+
 	nav {
 		display: flex;
 		align-items: center;
 		padding: 0 15px;
-		height: 50px;
+		height: 63px;
 		width: 100vw;
 		z-index: 2;
 	}
 
 	nav > .links {
+        font-size: 18px;
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
 		width: calc(100% - 149px);
-		gap: 15px;
+		gap: 20px;
 	}
 
 	nav > .links > a {
@@ -88,19 +94,20 @@
 	}
 
 	.menu {
+        font-size: 20px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;
 		transform: translateX(-100%);
 		position: absolute;
-		top: 50px;
+		top: 63px;
 		left: 0;
 		width: 100%;
 		max-width: 400px;
 		height: 100vh;
 		background-color: var(--nav-background);
 		z-index: 1;
-		padding-bottom: 50px;
+		padding-bottom: 63px;
 	}
 
 	.menu.expand.detach {
@@ -114,13 +121,13 @@
 	}
 
 	.spacer {
-		height: 50px;
+		height: 63px;
 		width: 100%;
 	}
 
 	@keyframes menudown {
 		0% {
-			transform: translateY(-50px);
+			transform: translateY(-63px);
 		}
 		100% {
 			transform: translateY(0);
