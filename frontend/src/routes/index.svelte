@@ -27,6 +27,7 @@
 
 <style>
 	.root {
+        padding: 50px 0;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
