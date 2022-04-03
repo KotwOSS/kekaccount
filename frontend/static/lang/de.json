@@ -73,5 +73,7 @@
     "confirm.submit": "Weiter",
     "confirm.type_to_confirm": "Bitte schreibe folgendes um fortzufahren:",
 
+    "verify.confirm.hint": "Dies wird diesen Account verifizieren.",
+
 	"back.to.dashboard": "Zurück zum <a href='/dash'>Dashboard</a>"
 }

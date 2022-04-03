@@ -108,6 +108,8 @@ export enum LangKey {
     CONFIRM_DESCRIPTION = "confirm.description",
     CONFIRM_SUBMIT = "confirm.submit",
     CONFIRM_TYPE_TO_CONFIRM = "confirm.type_to_confirm",
+    // VERIFY
+    VERIFY_CONFIRM_HINT = "verify.confirm.hint",
 
 	// MISC
 	BACK_TO_DASHBOARD = "back.to.dashboard"
