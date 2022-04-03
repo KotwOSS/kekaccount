@@ -17,16 +17,17 @@
     let authorized = client.authorized;
 
     let confirm: Confirm = client.confirm;
+    console.log(confirm);
 
     let type_to_confirm: string;
 
     let disabled: boolean = false;
     $: disabled = confirm && confirm.type_to_confirm && confirm.type_to_confirm !== type_to_confirm;
 
-	let uoe: string = $user.name;
+	let uoe: string = $user?$user.name:null;
 	let password: string;
 
-	function submit(e) {
+	async function submit(e) {
 		e.preventDefault();
 
 		loading = true;
@@ -37,20 +38,16 @@
 			? { email: uoe, password: hashed_password }
 			: { username: uoe, password: hashed_password };
 
-		Routes.Auth.INFO.send({
-			identifier
-		})
-			.then(async function () {
-                confirm.callback(identifier);
-			})
-			.catch((e) => {
-				if (e instanceof APIError) {
-					if (e.status === 401) error = language[lk.ERROR_CREDENTIALS];
-					else error = e.get_message();
-				} else error = language[lk.ERROR_CONNECTION];
-
-				loading = false;
-			});
+        try {
+            await confirm.callback(identifier);
+        } catch(e) {
+            if (e instanceof APIError) {
+                if (e.status === 401) error = language[lk.ERROR_CREDENTIALS];
+                else error = e.get_message();
+            } else if(e instanceof TypeError) error = language[lk.ERROR_CONNECTION];
+            else error = e.message;
+            loading = false;
+        }
 	}
 
     if(!confirm) goto("/dash");
@@ -75,6 +72,7 @@
         {:else if confirm.description.warning}
             <p class="warning short">{confirm.description.warning}</p>
         {/if}
+
         {#if confirm.type_to_confirm}
             <div class="type_to_confirm">
                 <p class="short"><span class="hint"><T k={lk.CONFIRM_TYPE_TO_CONFIRM} /></span> {confirm.type_to_confirm}</p>
