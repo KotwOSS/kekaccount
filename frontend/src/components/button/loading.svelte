@@ -15,7 +15,7 @@
 
 <style>
 	button > :global(.loader) {
-		width: 18px;
-		height: 18px;
+		width: 19px;
+		height: 19px;
 	}
 </style>
