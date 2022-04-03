@@ -1,3 +1,5 @@
+use hex::ToHex;
+
 use actix_web::{post, web, Result, Responder};
 use serde::Deserialize;
 
@@ -32,7 +34,7 @@ pub async fn info(info_data: web::Json<InfoData>, state: web::Data<State>) -> Re
         Some(user) => {
             return Ok(web::Json(json!({
                 "success": true,
-                "id": user.id,
+                "id": user.id.encode_hex::<String>(),
                 "name": user.name,
                 "email": user.email
             })))
