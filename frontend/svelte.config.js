@@ -9,9 +9,10 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({
+            fallback: "404.html"
+        }),
 		prerender: {
-			enabled: false,
 			default: true
 		},
 		vite: {
