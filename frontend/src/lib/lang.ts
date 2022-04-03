@@ -93,6 +93,8 @@ export enum LangKey {
 	// ACCOUNT
 	ACCOUNT_TITLE = "account.title",
 	ACCOUNT_DESCRIPTION = "account.description",
+    ACCOUNT_DELETE = "account.delete",
+    ACCOUNT_DELETE_CONFIRM = "account.delete.confirm",
 	// APPS
 	APPS_TITLE = "apps.title",
 	APPS_DESCRIPTION = "apps.description",
@@ -101,6 +103,11 @@ export enum LangKey {
 	TOKENS_TITLE = "tokens.title",
 	TOKENS_DESCRIPTION = "tokens.description",
 	TOKENS_CREATE = "tokens.create",
+    // CONFIRM
+    CONFIRM_TITLE = "confirm.title",
+    CONFIRM_DESCRIPTION = "confirm.description",
+    CONFIRM_SUBMIT = "confirm.submit",
+    CONFIRM_TYPE_TO_CONFIRM = "confirm.type_to_confirm",
 
 	// MISC
 	BACK_TO_DASHBOARD = "back.to.dashboard"

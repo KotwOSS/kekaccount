@@ -57,6 +57,8 @@
 
 	"account.title": "Account",
 	"account.description": "Hier können Sie Ihre persönlichen Daten ändern.",
+    "account.delete": "Account löschen",
+    "account.delete.confirm": "Dies wird deinen Account und alle seine Daten unwiderruflich löschen.",
 
 	"apps.title": "Apps",
 	"apps.description": "Hier können Sie Ihre Apps verwalten.",
@@ -65,6 +67,11 @@
 	"tokens.title": "Tokens",
 	"tokens.description": "Hier können Sie Ihre Tokens verwalten.",
 	"tokens.create": "Neuen Token erstellen",
+
+    "confirm.title": "Bestätigung",
+    "confirm.description": "Bitte bestätige, dass du der Inhaber dieses Accounts bist.",
+    "confirm.submit": "Weiter",
+    "confirm.type_to_confirm": "Bitte schreibe folgendes um fortzufahren:",
 
 	"back.to.dashboard": "Zurück zum <a href='/dash'>Dashboard</a>"
 }
