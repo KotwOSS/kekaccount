@@ -5,3 +5,8 @@ export const default_avatar = "https://u.gamepowerx.com/d/boTKXj_";
 export const perm_docs = "https://oss.kotw.dev/kekaccount/docs/PERMISSIONS";
 export const privacy = "https://legal.kotw.dev/detect?page=privacy";
 export const imprint = "https://legal.kotw.dev/detect?page=imprint";
+
+// UPLOAD API
+export const upload_api = "https://u.kotw.dev/api/";
+export const upload_file_chunk = 1024 * 1024 * 32; // 32 MiB
+export const upload_chunk = 1024 * 1024 * 2; // 2 MiB
