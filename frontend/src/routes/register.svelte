@@ -4,6 +4,7 @@
 	import * as lang from "$lib/lang";
 	import { LangKey as lk } from "$lib/lang";
 	import T from "$components/translate.svelte";
+import { goto } from "$app/navigation";
 
 	const emojis = ["👋😄", "✌️😁", "🤔", "😁👍", "🤔", "😉👍", "😀", "😅", "😀👍", "😁"];
 	const emojis_invalid = ["👇😉", "👇😅"];
@@ -149,8 +150,6 @@
 						} else error = e.get_message();
 					} else error = lang.language[lk.ERROR_CONNECTION];
 				});
-
-			//goto("/login");
 		}
 	}
 
@@ -160,6 +159,10 @@
 		step_index--;
 		setup_input();
 	}
+
+    function login() {
+        goto("/login");
+    }
 </script>
 
 <div class="root fadein">
@@ -185,7 +188,7 @@
 			>
 		{/if}
 		{#if step_index === 9}
-			<a href="/login"><T k={lk.NAV_LOGIN} /></a>
+        <button on:click={login}><T k={lk.NAV_LOGIN} /></button>
 		{/if}
 	</div>
 </div>
