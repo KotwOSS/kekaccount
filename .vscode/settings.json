@@ -1,0 +1,4 @@
+{
+    "liveServer.settings.file": "404.html",
+    "liveServer.settings.mount": [["/", "frontend/build"]]
+}
