@@ -3,8 +3,8 @@ export const default_avatar = "https://u.gamepowerx.com/d/boTKXj_";
 // Falls craftingdragon seine seite down macht
 //export const default_avatar = "https://u.kotw.dev/e/dq0cy3b";
 export const perm_docs = "https://oss.kotw.dev/kekaccount/docs/PERMISSIONS";
-export const privacy = "https://legal.kotw.dev/detect?page=privacy";
-export const imprint = "https://legal.kotw.dev/detect?page=imprint";
+export const privacy = "https://legal.kotw.dev/detect?page=privacy"; // https://rb.gy/qadafz
+export const imprint = "https://legal.kotw.dev/detect?page=imprint"; // https://rb.gy/frbrfn
 
 // UPLOAD API
 export const upload_api = "https://u.kotw.dev/api/";
