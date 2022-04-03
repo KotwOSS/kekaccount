@@ -1,11 +1,23 @@
-<script>
+<script lang="ts">
 	import { client } from "$lib/client";
-	import { LangKey as lk } from "$lib/lang";
+	import { LangKey as lk, language } from "$lib/lang";
 	import T from "$components/translate.svelte";
+    import { goto } from "$app/navigation";
 
 	let user = client.user;
 
-	console.log($user);
+    function delete_account() {
+        client.confirm_access({
+            callback: function(identifier) {
+                goto("/dash/account");
+                console.log(identifier);
+            }, 
+            description: {
+                warning: language[lk.ACCOUNT_DELETE_CONFIRM]
+            },
+            type_to_confirm: `delete/${$user.name}`
+        });
+    }
 </script>
 
 <div class="root fadein">
@@ -17,6 +29,8 @@
 	<p>{$user.name}</p>
 	<p class="break">{$user.id}</p>
 	<p>{$user.email}</p>
+
+    <button on:click={delete_account}><T k={lk.ACCOUNT_DELETE} /></button>
 </div>
 
 <style>
