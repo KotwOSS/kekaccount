@@ -2,15 +2,18 @@
 	import { client } from "$lib/client";
 	import { LangKey as lk, language } from "$lib/lang";
 	import T from "$components/translate.svelte";
+    import { Routes } from "$lib/api";
     import { goto } from "$app/navigation";
 
 	let user = client.user;
 
     function delete_account() {
         client.confirm_access({
-            callback: function(identifier) {
-                goto("/dash/account");
-                console.log(identifier);
+            callback: async function(identifier) {
+                await Routes.User.DELETE.send({identifier});
+                client.logout();
+                localStorage.removeItem("token");
+                goto("/");
             }, 
             description: {
                 warning: language[lk.ACCOUNT_DELETE_CONFIRM]
