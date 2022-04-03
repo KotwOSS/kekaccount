@@ -38,6 +38,12 @@ button:hover {
 	background-color: var(--button-hover-background);
 }
 
+button:disabled {
+    border: 1px solid var(--button-disabled-border);
+	background-color: var(--button-disabled-background);
+	color: var(--button-disabled-color);
+}
+
 input {
 	border: 1px solid var(--input-border);
 	background-color: var(--input-background);
@@ -50,6 +56,12 @@ input {
 
 input:focus {
 	border: 1px solid var(--input-focus-border);
+}
+
+input:disabled {
+    border: 1px solid var(--input-disabled-border);
+    background-color: var(--input-disabled-background);
+    color: var(--input-disabled-color);
 }
 
 *:disabled {
