@@ -11,7 +11,7 @@ export type Description = {
 };
 
 export type Confirm = {
-    callback: (identifier: any) => void,
+    callback: (identifier: any) => Promise<void>,
     description: Description,
     type_to_confirm?: string
 }
@@ -40,6 +40,12 @@ export class Client {
 			this.authorized.set(false);
 			this.user.set(undefined);
 		}
+	}
+
+    async logout() {
+        this.user.set(undefined);
+        this.authorized.set(false);
+		this.token = null;
 	}
 
 	async confirm_access(confirm: Confirm) {
