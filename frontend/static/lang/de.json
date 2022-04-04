@@ -46,7 +46,7 @@
 	"login.uoe": "Nutzername oder E-Mail",
 	"login.password": "Passwort",
 	"login.submit": "Weiter",
-	"login.register": "Noch keinen Account? <a href='register'>Registrieren</a> Sie sich jetzt!",
+	"login.register": "Noch keinen Account? <a href='/register'>Registrieren</a> Sie sich jetzt!",
 
 	"dashboard.title": "Dashboard",
 
@@ -67,6 +67,10 @@
 	"tokens.title": "Tokens",
 	"tokens.description": "Hier können Sie Ihre Tokens verwalten.",
 	"tokens.create": "Neuen Token erstellen",
+	"tokens.create.description": "Hier können Sie einen neuen Token erstellen. <a href='..'>Zurück</a>",
+	"tokens.create.name": "Name",
+	"tokens.create.submit": "Erstellen",
+	"tokens.delete": "Token löschen",
 
     "confirm.title": "Bestätigung",
     "confirm.description": "Bitte bestätige, dass du der Inhaber dieses Accounts bist.",

@@ -103,6 +103,10 @@ export enum LangKey {
 	TOKENS_TITLE = "tokens.title",
 	TOKENS_DESCRIPTION = "tokens.description",
 	TOKENS_CREATE = "tokens.create",
+    TOKENS_CREATE_DESCRIPTION = "tokens.create.description",
+    TOKENS_CREATE_NAME = "tokens.create.name",
+    TOKENS_CREATE_SUBMIT = "tokens.create.submit",
+	TOKENS_DELETE = "tokens.delete",
     // CONFIRM
     CONFIRM_TITLE = "confirm.title",
     CONFIRM_DESCRIPTION = "confirm.description",
