@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { client } from "$lib/client";
-	import { LangKey as lk, language } from "$lib/lang";
-	import T from "$components/translate.svelte";
+	import { LangKey as lk, language as ln} from "$lib/lang";
 	import { APIError, Routes } from "$lib/api";
+
 	import Loader from "$components/loader.svelte";
-	import Error from "$components/error.svelte";
+
 	import { goto } from "$app/navigation";
 
 	let user = client.user;
@@ -17,7 +17,7 @@
 		.then((r) => (apps = r))
 		.catch((e) => {
 			if (e instanceof APIError) error = e.get_message();
-			else error = language[lk.ERROR_CONNECTION];
+			else error = ln[lk.ERROR_CONNECTION];
 		});
 
 	function create() {
@@ -26,12 +26,12 @@
 </script>
 
 <div class="root fadein">
-	<h1 class="title"><T k={lk.APPS_TITLE} /></h1>
+	<h1 class="title">{ln[lk.APPS_TITLE]}</h1>
 	{#if !$user.verified}
-		<p class="hint short"><T k={lk.HINT_VERIFY} /></p>
+		<p class="hint short">{ln[lk.HINT_VERIFY]}</p>
 	{/if}
-	<p class="description"><T k={lk.APPS_DESCRIPTION} /> <T k={lk.BACK_TO_DASHBOARD} /></p>
-	<Error {error} />
+	<p class="description">{ln[lk.APPS_DESCRIPTION]} {@html ln[lk.BACK_TO_DASHBOARD]}</p>
+	{#if error}<p class="error break short">{error}</p>{/if}
 
 	{#if apps}
 		<div class="apps">
@@ -45,7 +45,7 @@
 	{:else}
 		<Loader />
 	{/if}
-	<button on:click={create}><T k={lk.APPS_CREATE} /></button>
+	<button on:click={create}>{ln[lk.APPS_CREATE]}</button>
 </div>
 
 <style>
