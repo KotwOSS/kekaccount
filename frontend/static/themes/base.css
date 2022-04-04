@@ -31,7 +31,8 @@ button {
 	cursor: pointer;
 	padding: 5px;
 	outline: none;
-	transition: all 0.3s ease;
+	transition: background 0.3s, border 0.3s;
+    transition-timing-function: ease;
 }
 
 button:hover {
