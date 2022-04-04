@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { imprint, privacy } from "$lib/config";
-	import T from "$components/translate.svelte";
-	import { fallback, LangKey as lk, supported } from "$lib/lang";
-	import { goto } from "$app/navigation";
+	import { fallback, LangKey as lk, language as ln, supported } from "$lib/lang";
 
 	let preference =
 		localStorage.getItem("lang") || navigator.language.replace("-", "_").toLowerCase();
@@ -18,17 +16,17 @@
 	<div class="wrapper">
 		<div class="big">
 			<p class="emoji">👋</p>
-			<p class="short"><T k={lk.FOOTER_NOTICE} /></p>
+			<p class="short">{@html ln[lk.FOOTER_NOTICE]}</p>
 		</div>
 		<div class="categories">
 			<div class="legal category">
-				<h4>⚖️ <T k={lk.FOOTER_LEGAL} /></h4>
-				{#if privacy}<a href={privacy}>🔒 <T k={lk.FOOTER_PRIVACY} /></a>{/if}
-				{#if imprint}<a href={imprint}>📖 <T k={lk.FOOTER_IMPRINT} /></a>{/if}
+				<h4>⚖️ {ln[lk.FOOTER_LEGAL]}</h4>
+				{#if privacy}<a href={privacy}>🔒 {ln[lk.FOOTER_PRIVACY]}</a>{/if}
+				{#if imprint}<a href={imprint}>📖 {ln[lk.FOOTER_IMPRINT]}</a>{/if}
 			</div>
 
 			<div class="language category">
-				<h4>🗣️ <T k={lk.FOOTER_LANGUAGE} /></h4>
+				<h4>🗣️ {ln[lk.FOOTER_LANGUAGE]}</h4>
 				{#each Object.entries(supported) as lang}
 					<!-- svelte-ignore a11y-invalid-attribute -->
 					<a
@@ -47,7 +45,7 @@
 
 			{#if events}
 				<div class="events category">
-					<h4>🏅 <T k={lk.FOOTER_EVENTS} /></h4>
+					<h4>🏅 {ln[lk.FOOTER_EVENTS]}</h4>
 					{#each events as event}
 						<div class="event">
 							<a href={event.link} target="_blank">{event.name}</a>

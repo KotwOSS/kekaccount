@@ -1,11 +1,9 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 
-	import T from "$components/translate.svelte";
-	import Error from "$components/error.svelte";
 	import LoadingButton from "$components/button/loading.svelte";
 
-	import { LangKey as lk, language } from "$lib/lang";
+	import { LangKey as lk, language as ln } from "$lib/lang";
 	import { APIError, hash_password, Routes } from "$lib/api";
 	import { client } from "$lib/client";
 	import { regex } from "$lib/checker";
@@ -58,9 +56,9 @@
 			})
 			.catch((e) => {
 				if (e instanceof APIError) {
-					if (e.status === 401) error = language[lk.ERROR_CREDENTIALS];
+					if (e.status === 401) error = ln[lk.ERROR_CREDENTIALS];
 					else error = e.get_message();
-				} else error = language[lk.ERROR_CONNECTION];
+				} else error = ln[lk.ERROR_CONNECTION];
 
 				loading = false;
 			});
@@ -69,20 +67,20 @@
 
 <div class="root fadein">
 	<form class="card" on:submit={submit}>
-		<h1 class="title"><T k={lk.LOGIN_TITLE} /></h1>
-		<p class="description"><T k={lk.LOGIN_DESCRIPTION} /></p>
-		<Error bind:error />
-		<input bind:value={uoe} type="text" id="uoe" placeholder={language[lk.LOGIN_UOE]} />
+		<h1 class="title">{ln[lk.LOGIN_TITLE]}</h1>
+		<p class="description">{ln[lk.LOGIN_DESCRIPTION]}</p>
+		{#if error}<p class="error break short">{error}</p>{/if}
+		<input bind:value={uoe} type="text" id="uoe" placeholder={ln[lk.LOGIN_UOE]} />
 		<input
 			bind:value={password}
 			type="password"
 			id="password"
-			placeholder={language[lk.LOGIN_PASSWORD]}
+			placeholder={ln[lk.LOGIN_PASSWORD]}
 		/>
 
-		<p class="register"><T k={lk.LOGIN_REGISTER} /></p>
+		<p class="register">{@html ln[lk.LOGIN_REGISTER]}</p>
 
-		<LoadingButton bind:loading><T k={lk.LOGIN_SUBMIT} /></LoadingButton>
+		<LoadingButton bind:loading>{ln[lk.LOGIN_SUBMIT]}</LoadingButton>
 	</form>
 </div>
 

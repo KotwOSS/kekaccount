@@ -1,7 +1,6 @@
 <script>
 	import { client } from "$lib/client";
-	import { LangKey as lk, language } from "$lib/lang";
-	import T from "$components/translate.svelte";
+	import { LangKey as lk, language as ln } from "$lib/lang";
 
 	let user = client.user;
 
@@ -9,27 +8,27 @@
 
 	const categories = [
 		{
-			title: language[lk.ACCOUNT_TITLE],
-			description: language[lk.ACCOUNT_DESCRIPTION],
+			title: ln[lk.ACCOUNT_TITLE],
+			description: ln[lk.ACCOUNT_DESCRIPTION],
 			link: "/dash/account"
 		},
 		{
-			title: language[lk.APPS_TITLE],
-			description: language[lk.APPS_DESCRIPTION],
+			title: ln[lk.APPS_TITLE],
+			description: ln[lk.APPS_DESCRIPTION],
 			link: "/dash/apps"
 		},
 		{
-			title: language[lk.TOKENS_TITLE],
-			description: language[lk.TOKENS_DESCRIPTION],
+			title: ln[lk.TOKENS_TITLE],
+			description: ln[lk.TOKENS_DESCRIPTION],
 			link: "/dash/tokens"
 		}
 	];
 </script>
 
 <div class="root fadein">
-	<h1 class="title"><T k={lk.DASHBOARD_TITLE} /></h1>
+	<h1 class="title">{ln[lk.DASHBOARD_TITLE]}</h1>
 	{#if !$user.verified}
-		<p class="hint short"><T k={lk.HINT_VERIFY} /></p>
+		<p class="hint short">{ln[lk.HINT_VERIFY]}</p>
 	{/if}
 
 	<div class="categories">

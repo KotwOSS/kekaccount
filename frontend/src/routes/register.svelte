@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { APIError, hash_password, Routes } from "$lib/api";
 	import { regex } from "$lib/checker";
-	import * as lang from "$lib/lang";
-	import { LangKey as lk } from "$lib/lang";
-	import T from "$components/translate.svelte";
-import { goto } from "$app/navigation";
+	import { LangKey as lk, language as ln } from "$lib/lang";
+
+    import { goto } from "$app/navigation";
 
 	const emojis = ["👋😄", "✌️😁", "🤔", "😁👍", "🤔", "😉👍", "😀", "😅", "😀👍", "😁"];
 	const emojis_invalid = ["👇😉", "👇😅"];
@@ -24,7 +23,7 @@ import { goto } from "$app/navigation";
 		emoji = error
 			? emojis_invalid[Math.floor(Math.random() * emojis_invalid.length)]
 			: emojis[step_index];
-		text = error ? error : lang.language["register.keky.step" + step_index];
+		text = error ? error : ln["register.keky.step" + step_index];
 		talk();
 	}
 
@@ -48,7 +47,7 @@ import { goto } from "$app/navigation";
 	let password: string;
 
 	async function check_email(msg: string) {
-		if (!regex.EMAIL.test(msg)) return lang.language[lk.REGISTER_KEKY_EMAIL_INVALID];
+		if (!regex.EMAIL.test(msg)) return ln[lk.REGISTER_KEKY_EMAIL_INVALID];
 		email = msg;
 	}
 
@@ -56,14 +55,14 @@ import { goto } from "$app/navigation";
 		if (msg.length >= 3 && msg.length <= 32) {
 			try {
 				if ((await Routes.Users.SEARCH.send({ name: msg, exact: true })).length !== 0) {
-					return lang.language[lk.REGISTER_KEKY_USERNAME_EXISTS];
+					return ln[lk.REGISTER_KEKY_USERNAME_EXISTS];
 				}
 			} catch (e) {
 				if (e instanceof APIError) {
 					return e.get_message();
-				} else return lang.language[lk.ERROR_CONNECTION];
+				} else return ln[lk.ERROR_CONNECTION];
 			}
-		} else return lang.language[lk.REGISTER_KEKY_USERNAME_INVALID];
+		} else return ln[lk.REGISTER_KEKY_USERNAME_INVALID];
 		username = msg;
 	}
 
@@ -72,34 +71,34 @@ import { goto } from "$app/navigation";
 		let strong = regex.STRONG_PASSWORD.test(msg);
 		let spaces = regex.WHITESPACE.test(msg);
 
-		if (spaces) return lang.language[lk.REGISTER_KEKY_PASSWORD_SPACE];
-		if (msg.length < 8 || (!strong && !weak)) return lang.language[lk.REGISTER_KEKY_PASSWORD_WEAK];
+		if (spaces) return ln[lk.REGISTER_KEKY_PASSWORD_SPACE];
+		if (msg.length < 8 || (!strong && !weak)) return ln[lk.REGISTER_KEKY_PASSWORD_WEAK];
 		password = msg;
 	}
 
 	async function check_password_repeat(msg: string) {
-		if (msg != password) return lang.language[lk.REGISTER_KEKY_PASSWORD_MATCH];
+		if (msg != password) return ln[lk.REGISTER_KEKY_PASSWORD_MATCH];
 	}
 
 	function setup_input() {
 		switch (step_index) {
 			case 2:
 				input = {
-					placeholder: lang.language[lk.REGISTER_KEKY_USERNAME],
+					placeholder: ln[lk.REGISTER_KEKY_USERNAME],
 					checker: check_username,
 					value: username
 				};
 				break;
 			case 4:
 				input = {
-					placeholder: lang.language[lk.REGISTER_KEKY_EMAIL],
+					placeholder: ln[lk.REGISTER_KEKY_EMAIL],
 					checker: check_email,
 					value: email
 				};
 				break;
 			case 6:
 				input = {
-					placeholder: lang.language[lk.REGISTER_KEKY_PASSWORD],
+					placeholder: ln[lk.REGISTER_KEKY_PASSWORD],
 					checker: check_password,
 					type: "password",
 					value: password
@@ -107,7 +106,7 @@ import { goto } from "$app/navigation";
 				break;
 			case 7:
 				input = {
-					placeholder: lang.language[lk.REGISTER_KEKY_PASSWORD_REPEAT],
+					placeholder: ln[lk.REGISTER_KEKY_PASSWORD_REPEAT],
 					checker: check_password_repeat,
 					type: "password"
 				};
@@ -144,11 +143,11 @@ import { goto } from "$app/navigation";
 				.catch((e) => {
 					if (e instanceof APIError) {
 						if (e.status === 409) {
-							error = lang.language[lk.REGISTER_KEKY_EMAIL_EXISTS];
+							error = ln[lk.REGISTER_KEKY_EMAIL_EXISTS];
 							step_index = 4;
 							setup_input();
 						} else error = e.get_message();
-					} else error = lang.language[lk.ERROR_CONNECTION];
+					} else error = ln[lk.ERROR_CONNECTION];
 				});
 		}
 	}
@@ -180,15 +179,15 @@ import { goto } from "$app/navigation";
 		{#if step_index < 8}
 			{#if step_index !== 0}
 				<button on:click={back} disabled={talking !== 0} class="back"
-					><T k={lk.REGISTER_KEKY_BACK} /></button
+					>{ln[lk.REGISTER_KEKY_BACK]}</button
 				>
 			{/if}
 			<button on:click={next} disabled={talking !== 0} class="next"
-				><T k={lk.REGISTER_KEKY_NEXT} /></button
+				>{ln[lk.REGISTER_KEKY_NEXT]}</button
 			>
 		{/if}
 		{#if step_index === 9}
-        <button on:click={login}><T k={lk.NAV_LOGIN} /></button>
+        <button on:click={login}>{ln[lk.NAV_LOGIN]}</button>
 		{/if}
 	</div>
 </div>

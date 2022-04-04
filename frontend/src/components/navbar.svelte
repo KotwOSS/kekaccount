@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { afterNavigate } from "$app/navigation";
 
-	import T from "$components/translate.svelte";
-
-	import { LangKey as lk } from "$lib/lang";
+	import { LangKey as lk, language as ln } from "$lib/lang";
 	import { client } from "$lib/client";
 
 	export let detach: boolean = false;
@@ -24,13 +22,13 @@
 {/if}
 
 <div class:detach class="menu" class:expand={expand_menu}>
-	<a href="/" class:active={path === "/"}><T k={lk.NAV_HOME} /></a>
+	<a href="/" class:active={path === "/"}>{ln[lk.NAV_HOME]}</a>
 	{#if $authorized}
-		<a href="/dash" class:active={path.startsWith("/dash")}><T k={lk.NAV_DASHBOARD} /></a>
-		<a href="/logout" class:active={path.startsWith("/logout")}><T k={lk.NAV_LOGOUT} /></a>
+		<a href="/dash" class:active={path.startsWith("/dash")}>{ln[lk.NAV_DASHBOARD]}</a>
+		<a href="/logout" class:active={path.startsWith("/logout")}>{ln[lk.NAV_LOGOUT]}</a>
 	{:else}
-		<a href="/register" class:active={path.startsWith("/register")}><T k={lk.NAV_REGISTER} /></a>
-		<a href="/login" class:active={path.startsWith("/login")}><T k={lk.NAV_LOGIN} /></a>
+		<a href="/register" class:active={path.startsWith("/register")}>{ln[lk.NAV_REGISTER]}</a>
+		<a href="/login" class:active={path.startsWith("/login")}>{ln[lk.NAV_LOGIN]}</a>
 	{/if}
 </div>
 
@@ -41,15 +39,15 @@
 		<div />
 	</div>
 
-	<h1><T k={lk.NAV_TITLE} /></h1>
+	<h1>{ln[lk.NAV_TITLE]}</h1>
 	<div class="links">
-		<a href="/" class:active={path === "/"}><T k={lk.NAV_HOME} /></a>
+		<a href="/" class:active={path === "/"}>{ln[lk.NAV_HOME]}</a>
 		{#if $authorized}
-			<a href="/dash" class:active={path.startsWith("/dash")}><T k={lk.NAV_DASHBOARD} /></a>
-			<a href="/logout" class:active={path.startsWith("/logout")}><T k={lk.NAV_LOGOUT} /></a>
+			<a href="/dash" class:active={path.startsWith("/dash")}>{ln[lk.NAV_DASHBOARD]}</a>
+			<a href="/logout" class:active={path.startsWith("/logout")}>{ln[lk.NAV_LOGOUT]}</a>
 		{:else}
-			<a href="/register" class:active={path.startsWith("/register")}><T k={lk.NAV_REGISTER} /></a>
-			<a href="/login" class:active={path.startsWith("/login")}><T k={lk.NAV_LOGIN} /></a>
+			<a href="/register" class:active={path.startsWith("/register")}>{ln[lk.NAV_REGISTER]}</a>
+			<a href="/login" class:active={path.startsWith("/login")}>{ln[lk.NAV_LOGIN]}</a>
 		{/if}
 	</div>
 </nav>

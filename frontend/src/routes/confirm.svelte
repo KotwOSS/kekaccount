@@ -1,13 +1,11 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 
-	import T from "$components/translate.svelte";
-	import Error from "$components/error.svelte";
 	import LoadingButton from "$components/button/loading.svelte";
 
-	import { LangKey as lk, language } from "$lib/lang";
-	import { APIError, hash_password, Routes } from "$lib/api";
-	import { client, type Confirm, type Description } from "$lib/client";
+	import { LangKey as lk, language as ln } from "$lib/lang";
+	import { APIError, hash_password } from "$lib/api";
+	import { client, type Confirm } from "$lib/client";
 	import { regex } from "$lib/checker";
 
 	let loading: boolean = false;
@@ -42,9 +40,9 @@
             await confirm.callback(identifier);
         } catch(e) {
             if (e instanceof APIError) {
-                if (e.status === 401) error = language[lk.ERROR_CREDENTIALS];
+                if (e.status === 401) error = ln[lk.ERROR_CREDENTIALS];
                 else error = e.get_message();
-            } else if(e instanceof TypeError) error = language[lk.ERROR_CONNECTION];
+            } else if(e instanceof TypeError) error = ln[lk.ERROR_CONNECTION];
             else error = e.message;
             loading = false;
         }
@@ -56,15 +54,15 @@
 <div class="root fadein">
 	<form class="card" on:submit={submit}>
         {#if confirm}
-		<h1 class="title"><T k={lk.CONFIRM_TITLE} /></h1>
-		<p class="description"><T k={lk.CONFIRM_DESCRIPTION} /></p>
-		<Error bind:error />
-		<input disabled={$authorized} bind:value={uoe} type="text" id="uoe" placeholder={language[lk.LOGIN_UOE]} />
+		<h1 class="title">{ln[lk.CONFIRM_TITLE]}</h1>
+		<p class="description">{ln[lk.CONFIRM_DESCRIPTION]}</p>
+		{#if error}<p class="error break short">{error}</p>{/if}
+		<input disabled={$authorized} bind:value={uoe} type="text" id="uoe" placeholder={ln[lk.LOGIN_UOE]} />
 		<input
 			bind:value={password}
 			type="password"
 			id="password"
-			placeholder={language[lk.LOGIN_PASSWORD]}
+			placeholder={ln[lk.LOGIN_PASSWORD]}
 		/>
 
         {#if confirm.description.hint}
@@ -75,14 +73,14 @@
 
         {#if confirm.type_to_confirm}
             <div class="type_to_confirm">
-                <p class="short"><span class="hint"><T k={lk.CONFIRM_TYPE_TO_CONFIRM} /></span> {confirm.type_to_confirm}</p>
+                <p class="short"><span class="hint">{ln[lk.CONFIRM_TYPE_TO_CONFIRM]}</span> {confirm.type_to_confirm}</p>
                 <input bind:value={type_to_confirm} type="text">
             </div>
         {/if}
 
         <div class="spacer"></div>
 
-		<LoadingButton bind:loading bind:disabled><T k={lk.CONFIRM_SUBMIT} /></LoadingButton>
+		<LoadingButton bind:loading bind:disabled>{ln[lk.CONFIRM_SUBMIT]}</LoadingButton>
         {/if}
 	</form>
 </div>

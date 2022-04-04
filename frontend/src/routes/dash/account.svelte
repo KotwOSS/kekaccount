@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { client } from "$lib/client";
-	import { LangKey as lk, language } from "$lib/lang";
-	import T from "$components/translate.svelte";
+	import { LangKey as lk, language as ln } from "$lib/lang";
     import { Routes } from "$lib/api";
+
     import { goto } from "$app/navigation";
 
 	let user = client.user;
@@ -16,7 +16,7 @@
                 goto("/");
             }, 
             description: {
-                warning: language[lk.ACCOUNT_DELETE_CONFIRM]
+                warning: ln[lk.ACCOUNT_DELETE_CONFIRM]
             },
             type_to_confirm: `delete/${$user.name}`
         });
@@ -24,16 +24,16 @@
 </script>
 
 <div class="root fadein">
-	<h1 class="title"><T k={lk.ACCOUNT_TITLE} /></h1>
+	<h1 class="title">{ln[lk.ACCOUNT_TITLE]}</h1>
 	{#if !$user.verified}
-		<p class="hint short"><T k={lk.HINT_VERIFY} /></p>
+		<p class="hint short">{ln[lk.HINT_VERIFY]}</p>
 	{/if}
-	<p class="description"><T k={lk.ACCOUNT_DESCRIPTION} /> <T k={lk.BACK_TO_DASHBOARD} /></p>
+	<p class="description">{ln[lk.ACCOUNT_DESCRIPTION]} {@html ln[lk.BACK_TO_DASHBOARD]}</p>
 	<p>{$user.name}</p>
 	<p class="break">{$user.id}</p>
 	<p>{$user.email}</p>
 
-    <button on:click={delete_account}><T k={lk.ACCOUNT_DELETE} /></button>
+    <button on:click={delete_account}>{ln[lk.ACCOUNT_DELETE]}</button>
 </div>
 
 <style>
