@@ -1,11 +1,16 @@
 -- Your SQL goes here
 CREATE TABLE users (
     id BYTEA PRIMARY KEY,
-    name VARCHAR(32) NOT NULL UNIQUE,
+    name VARCHAR(32) NOT NULL,
     avatar VARCHAR(255) NOT NULL,
     email VARCHAR(32) NOT NULL,
     password BYTEA NOT NULL
 );
+
+-- Add case insensitive unique name
+CREATE UNIQUE INDEX name_idx ON users ((lower(name)));
+-- Add case insensitive unique email
+CREATE UNIQUE INDEX email_idx ON users ((lower(email)));
 
 CREATE TABLE tokens (
     id BYTEA PRIMARY KEY,
