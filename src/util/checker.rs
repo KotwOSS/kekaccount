@@ -6,7 +6,21 @@ use tokio::sync::OnceCell;
 use crate::{errors::actix::{JsonError, JsonErrorType}, util, colors, models::{user, token, app_token, app}, database::PgPool};
 
 static EMAIL_REGEX: OnceCell<Regex> = OnceCell::const_new();
+static USERNAME_REGEX: OnceCell<Regex> = OnceCell::const_new();
 //static URL_REGEX: OnceCell<Regex> = OnceCell::const_new();
+
+pub fn init() {
+    println!(
+        "{}INIT{} checker.rs",
+        colors::GREEN,
+        colors::RESET
+    );
+
+    EMAIL_REGEX.set(Regex::new(r"^\w+[\+\.\w-]*@([\w-]+\.)*\w+[\w-]*\.([a-z]{2,18}|\d+)$").unwrap()).unwrap();
+    USERNAME_REGEX.set(Regex::new(r"^[a-zA-Z0-9_\-]+$").unwrap()).unwrap();
+    // TODO: write a regex that parses
+    //URL_REGEX.set(Regex::new(r"^(ht|f)tps?:\/\/(localhost|((\w+-+)*\w+\.){1,}[a-zA-Z]{2,18}|(\b25[0-5]|\b2[0-4][0-9]|\b[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})(:(4915[01]|491[0-4][0-9]|490[0-9]{2}|4[0-8][0-9]{3}|[0-3]?[0-9]?[0-9]?[0-9]?[0-9]))?(\/([\w%\- ]+\/?)*(\?[\w-]+=[\w-]+(&[\w-]+=[\w-]+)*)?)?$").unwrap()).unwrap();
+}
 
 pub fn min_max_size<'a>(name: &'a str, len: usize, min: usize, max: usize) -> Result<(), JsonError> {
     if len < min || len > max {
@@ -29,17 +43,17 @@ pub fn email<'a, 'b>(name: &'a str, email: &'b str) -> Result<(), JsonError> {
     Ok(())
 }
 
-pub fn init() {
-    println!(
-        "{}INIT{} checker.rs",
-        colors::GREEN,
-        colors::RESET
-    );
-
-    EMAIL_REGEX.set(Regex::new(r"^\w+[\+\.\w-]*@([\w-]+\.)*\w+[\w-]*\.([a-z]{2,18}|\d+)$").unwrap()).unwrap();
-    // TODO: write a regex that parses
-    //URL_REGEX.set(Regex::new(r"^(ht|f)tps?:\/\/(localhost|((\w+-+)*\w+\.){1,}[a-zA-Z]{2,18}|(\b25[0-5]|\b2[0-4][0-9]|\b[01]?[0-9][0-9]?)(\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3})(:(4915[01]|491[0-4][0-9]|490[0-9]{2}|4[0-8][0-9]{3}|[0-3]?[0-9]?[0-9]?[0-9]?[0-9]))?(\/([\w%\- ]+\/?)*(\?[\w-]+=[\w-]+(&[\w-]+=[\w-]+)*)?)?$").unwrap()).unwrap();
+pub fn username<'a, 'b>(name: &'a str, username: &'b str) -> Result<(), JsonError> {
+    let regex = USERNAME_REGEX.get().unwrap();
+    if !regex.is_match(username) {
+        return Err(JsonErrorType::BAD_REQUEST.new_error(format!(
+            "{} must be a valid username!",
+            name
+        )));
+    }
+    Ok(())
 }
+
 
 pub fn map_qres<'a, T>(qres: QueryResult<T>, text: &'a str) -> Result<T, JsonError> {
     qres.map_err(|e| JsonErrorType::DATABASE_ERROR.new_error(format!(
