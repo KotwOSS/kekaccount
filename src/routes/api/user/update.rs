@@ -31,6 +31,8 @@ pub async fn update(update_data: web::Json<UpdateData>, state: web::Data<State>,
     let mut name: Option<String> = update_data.name.clone();
     if let Some(ref rname) = name { 
         checker::min_max_size("Length of name", rname.len(), 3, 32)?;
+        checker::username("The field name", rname.as_str())?;
+
         if user.name.eq(rname) { 
             name = None;
         } else { update_count+=1;  }
