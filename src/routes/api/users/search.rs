@@ -28,9 +28,8 @@ pub async fn search(search_data: web::Json<SearchData>, state: web::Data<State>)
 
     let db_connection = &checker::get_con(&state.pool)?;
 
-    let users = map_qres(
-        if exact { user::User::find_name(name, db_connection) } 
-            else { user::User::ilike_name_ol(format!("%{}%", name), offset, limit, db_connection) }
+    let users = map_qres(user::User::ilike_name_ol(
+        if exact { name } else { format!("%{}%", name) }, offset, limit, db_connection)
     , "Error while selecting users")?;
 
     let mapped: Vec<serde_json::Value> = users.into_iter()
