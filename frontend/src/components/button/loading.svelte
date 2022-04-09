@@ -2,10 +2,10 @@
 	import Loader from "$components/loader.svelte";
 
 	export let loading: boolean = false;
-    export let disabled: boolean = false;
+	export let disabled: boolean = false;
 </script>
 
-<button disabled={disabled}>
+<button {disabled}>
 	{#if loading}
 		<Loader />
 	{:else}
