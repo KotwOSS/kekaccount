@@ -1,4 +1,4 @@
-<div class="root fadein"></div>
+<div class="root fadein" />
 
 <style>
 	.root > :global(.loader) {

@@ -53,10 +53,10 @@
 </nav>
 
 <style>
-    nav>h1 {
-        font-size: 1.6em;
-        letter-spacing: 1px;
-    }
+	nav > h1 {
+		font-size: 1.6em;
+		letter-spacing: 1px;
+	}
 
 	nav {
 		display: flex;
@@ -68,7 +68,7 @@
 	}
 
 	nav > .links {
-        font-size: 18px;
+		font-size: 18px;
 		display: flex;
 		justify-content: flex-end;
 		align-items: center;
@@ -92,7 +92,7 @@
 	}
 
 	.menu {
-        font-size: 20px;
+		font-size: 20px;
 		display: flex;
 		flex-direction: column;
 		justify-content: space-around;

@@ -1,26 +1,26 @@
 <script lang="ts">
 	import { client } from "$lib/client";
 	import { LangKey as lk, language as ln } from "$lib/lang";
-    import { Routes } from "$lib/api";
+	import { Routes } from "$lib/api";
 
-    import { goto } from "$app/navigation";
+	import { goto } from "$app/navigation";
 
 	let user = client.user;
 
-    function delete_account() {
-        client.confirm_access({
-            callback: async function(identifier) {
-                await Routes.User.DELETE.send({identifier});
-                client.logout();
-                localStorage.removeItem("token");
-                goto("/");
-            }, 
-            description: {
-                warning: ln[lk.ACCOUNT_DELETE_CONFIRM]
-            },
-            type_to_confirm: `delete/${$user.name}`
-        });
-    }
+	function delete_account() {
+		client.confirm_access({
+			callback: async function (identifier) {
+				await Routes.User.DELETE.send({ identifier });
+				client.logout();
+				localStorage.removeItem("token");
+				goto("/");
+			},
+			description: {
+				warning: ln[lk.ACCOUNT_DELETE_CONFIRM]
+			},
+			type_to_confirm: `delete/${$user.name}`
+		});
+	}
 </script>
 
 <div class="root fadein">
@@ -33,7 +33,7 @@
 	<p class="break">{$user.id}</p>
 	<p>{$user.email}</p>
 
-    <button on:click={delete_account}>{ln[lk.ACCOUNT_DELETE]}</button>
+	<button on:click={delete_account}>{ln[lk.ACCOUNT_DELETE]}</button>
 </div>
 
 <style>

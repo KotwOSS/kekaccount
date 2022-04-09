@@ -4,9 +4,9 @@
 	import { APIError, Routes } from "$lib/api";
 
 	import Loader from "$components/loader.svelte";
-    import TokensTable from "$components/table/tokens.svelte";
-	
-    import { goto } from "$app/navigation";
+	import TokensTable from "$components/table/tokens.svelte";
+
+	import { goto } from "$app/navigation";
 
 	let user = client.user;
 
@@ -32,14 +32,14 @@
 		<p class="hint short">{ln[lk.HINT_VERIFY]}</p>
 	{/if}
 	<p class="description">{ln[lk.TOKENS_DESCRIPTION]} {@html ln[lk.BACK_TO_DASHBOARD]}</p>
-	{#if error}<p class="error break short">{error}</p>{/if}
 
-    {#if tokens}
-        <TokensTable data={tokens} />
-    {:else}
-        <Loader />
-    {/if}
-
+	{#if error}
+		<p class="error break short">{error}</p>
+	{:else if tokens}
+		<TokensTable data={tokens} />
+	{:else}
+		<Loader />
+	{/if}
 	<button class="create" on:click={create}>{ln[lk.TOKENS_CREATE]}</button>
 </div>
 
@@ -49,9 +49,9 @@
 		height: 50px;
 	}
 
-    .create {
-        margin-top: 15px;
-    }
+	.create {
+		margin-top: 15px;
+	}
 
 	.root {
 		display: flex;

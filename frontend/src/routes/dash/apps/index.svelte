@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { client } from "$lib/client";
-	import { LangKey as lk, language as ln} from "$lib/lang";
+	import { LangKey as lk, language as ln } from "$lib/lang";
 	import { APIError, Routes } from "$lib/api";
 
 	import Loader from "$components/loader.svelte";
