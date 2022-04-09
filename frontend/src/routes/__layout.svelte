@@ -4,19 +4,32 @@
 	import Footer from "$components/footer.svelte";
 	import * as lang from "$lib/lang";
 	import { client } from "$lib/client";
+	import { Routes } from "$lib/api";
+	import ApiError from "$components/error/api.svelte";
 
 	let loading: boolean = true;
+	let api_error: boolean = false;
 
 	async function main() {
 		await lang.init();
 
-		let token = localStorage.getItem("token");
-		if (token)
-			client
-				.login(token)
-				.catch(() => localStorage.removeItem("token"))
-				.finally(() => (loading = false));
-		else loading = false;
+		Routes.PING.send({})
+			.then(function () {
+				let token = localStorage.getItem("token");
+				if (token)
+					client
+						.login(token)
+						.catch(function () {
+							localStorage.removeItem("token");
+						})
+						.finally(function () {
+							loading = false;
+						});
+				else loading = false;
+			})
+			.catch(function (e) {
+				api_error = true;
+			});
 	}
 
 	main();
@@ -32,14 +45,14 @@
 <svelte:window on:scroll={onscroll} />
 
 <div id="app" class="fadein">
-	{#if loading}
+	{#if api_error}
+		<ApiError />
+	{:else if loading}
 		<Loader />
 	{:else}
-		<!-- <div class="inner"> -->
 		<Navbar detach={detach_navbar} />
 		<slot />
 		<Footer />
-		<!-- </div>	 -->
 	{/if}
 </div>
 
