@@ -10,3 +10,5 @@ export const imprint = "https://legal.kotw.dev/detect?page=imprint"; // https://
 export const upload_api = "https://u.kotw.dev/api/";
 export const upload_file_chunk = 1024 * 1024 * 32; // 32 MiB
 export const upload_chunk = 1024 * 1024 * 2; // 2 MiB
+
+export const support = "mailto:support@kotw.dev";
