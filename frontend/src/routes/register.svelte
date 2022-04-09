@@ -3,7 +3,7 @@
 	import { regex } from "$lib/checker";
 	import { LangKey as lk, language as ln } from "$lib/lang";
 
-    import { goto } from "$app/navigation";
+	import { goto } from "$app/navigation";
 
 	const emojis = ["👋😄", "✌️😁", "🤔", "😁👍", "🤔", "😉👍", "😀", "😅", "😀👍", "😁"];
 	const emojis_invalid = ["👇😉", "👇😅"];
@@ -53,6 +53,7 @@
 
 	async function check_username(msg: string) {
 		if (msg.length >= 3 && msg.length <= 32) {
+			if (!regex.USERNAME.test(msg)) return ln[lk.REGISTER_KEKY_USERNAME_INVALID];
 			try {
 				if ((await Routes.Users.SEARCH.send({ name: msg, exact: true })).length !== 0) {
 					return ln[lk.REGISTER_KEKY_USERNAME_EXISTS];
@@ -131,7 +132,7 @@
 		if (step_index === 8) {
 			let hashed_password = hash_password(password);
 			Routes.Auth.REGISTER.send({
-				username,
+				name: username,
 				email,
 				password: hashed_password,
 				avatar: ""
@@ -159,9 +160,9 @@
 		setup_input();
 	}
 
-    function login() {
-        goto("/login");
-    }
+	function login() {
+		goto("/login");
+	}
 </script>
 
 <div class="root fadein">
@@ -187,7 +188,7 @@
 			>
 		{/if}
 		{#if step_index === 9}
-        <button on:click={login}>{ln[lk.NAV_LOGIN]}</button>
+			<button on:click={login}>{ln[lk.NAV_LOGIN]}</button>
 		{/if}
 	</div>
 </div>
