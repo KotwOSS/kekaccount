@@ -72,7 +72,7 @@ impl User {
 
     pub fn count_name_or_email(name: String, email: String, connection: &PgConnection) -> QueryResult<i64> {
         users::table
-            .filter(users::dsl::name.eq(name).or(users::dsl::email.eq(email)))
+            .filter(users::dsl::name.ilike(name).or(users::dsl::email.ilike(email)))
             .count()
             .get_result::<i64>(connection)
     }
