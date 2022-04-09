@@ -139,6 +139,15 @@ export namespace Routes {
 		} else throw new APIError(await r.text(), r.status);
 	}
 
+	export const PING = Route.obody(
+		"GET",
+		() => "",
+		() => undefined,
+		function (r: Response) {
+			if (r.status !== 200) throw new APIError("", r.status);
+		}
+	);
+
 	export namespace Apps {
 		export const LIST = Route.oheaders(
 			"POST",
@@ -307,7 +316,7 @@ export namespace Routes {
 		export const REGISTER = Route.obody(
 			"POST",
 			() => "/auth/register",
-			(args: { username: string; email: string; password: string; avatar: string }) => args,
+			(args: { name: string; email: string; password: string; avatar: string }) => args,
 			ok_processor
 		);
 
