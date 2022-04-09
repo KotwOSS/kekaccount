@@ -6,22 +6,22 @@ import { writable, type Writable } from "svelte/store";
 export type ClientOptions = {};
 
 export type Description = {
-    hint?: string,
-    warning?: string
+	hint?: string;
+	warning?: string;
 };
 
 export type Confirm = {
-    callback: (identifier: any) => Promise<void>,
-    description: Description,
-    type_to_confirm?: string
-}
+	callback: (identifier: any) => Promise<void>;
+	description: Description;
+	type_to_confirm?: string;
+};
 
 export class Client {
 	user: Writable<any>;
 	identifier: any;
 	token: string;
 	authorized: Writable<boolean>;
-    confirm: Confirm;
+	confirm: Confirm;
 
 	constructor(_options: ClientOptions) {
 		this.user = writable(undefined);
@@ -42,9 +42,9 @@ export class Client {
 		}
 	}
 
-    async logout() {
-        this.user.set(undefined);
-        this.authorized.set(false);
+	async logout() {
+		this.user.set(undefined);
+		this.authorized.set(false);
 		this.token = null;
 	}
 
