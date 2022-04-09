@@ -41,11 +41,14 @@ pub async fn register(register_data: web::Json<RegisterData>, state: web::Data<S
             let id = random::random_byte_array(16);
             let id_hex = id.encode_hex::<String>();
 
+            let new_user = user::User { name: username.clone(), email: email.clone(), avatar, password, id: id.clone() };
+            map_qres(new_user.create(db_connection), "Error while inserting user")?;
+
 
             let verification_id = random::random_byte_array(128);
             let verification_id_hex = verification_id.encode_hex::<String>();
 
-            let new_verification = verification::Verification { id: verification_id, owner: id.clone() };
+            let new_verification = verification::Verification { id: verification_id, owner: id };
             map_qres(new_verification.create(db_connection), "Error while creating verification entry")?;
 
             smtp::send_verification(username.as_str(), email.as_str(), verification_id_hex)
@@ -53,11 +56,6 @@ pub async fn register(register_data: web::Json<RegisterData>, state: web::Data<S
                     "Sending verification email failed: {}",
                     e
                 )))?;
-
-
-            let new_user = user::User { name: username, email, avatar, password, id };
-            map_qres(new_user.create(db_connection), "Error while inserting user")?;
-
 
             Ok(web::Json(json!({
                 "success": true,

@@ -55,6 +55,13 @@ table! {
     }
 }
 
+joinable!(access_codes -> apps (app_id));
+joinable!(access_codes -> tokens (token_id));
+joinable!(app_tokens -> apps (app_id));
+joinable!(apps -> users (owner));
+joinable!(tokens -> users (user_id));
+joinable!(verifications -> users (owner));
+
 allow_tables_to_appear_in_same_query!(
     access_codes,
     app_tokens,

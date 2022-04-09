@@ -4,7 +4,7 @@ use serde::Deserialize;
 use crate::errors::actix::JsonErrorType;
 use crate::models::{user, token};
 use crate::api::http::State;
-use crate::util::{checker::{self, map_qres}};
+use crate::util::checker::{self, map_qres};
 
 #[derive(Deserialize)]
 pub struct DeleteData {
