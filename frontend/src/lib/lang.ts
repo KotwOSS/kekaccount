@@ -93,8 +93,8 @@ export enum LangKey {
 	// ACCOUNT
 	ACCOUNT_TITLE = "account.title",
 	ACCOUNT_DESCRIPTION = "account.description",
-    ACCOUNT_DELETE = "account.delete",
-    ACCOUNT_DELETE_CONFIRM = "account.delete.confirm",
+	ACCOUNT_DELETE = "account.delete",
+	ACCOUNT_DELETE_CONFIRM = "account.delete.confirm",
 	// APPS
 	APPS_TITLE = "apps.title",
 	APPS_DESCRIPTION = "apps.description",
@@ -103,18 +103,30 @@ export enum LangKey {
 	TOKENS_TITLE = "tokens.title",
 	TOKENS_DESCRIPTION = "tokens.description",
 	TOKENS_CREATE = "tokens.create",
-    TOKENS_CREATE_DESCRIPTION = "tokens.create.description",
-    TOKENS_CREATE_NAME = "tokens.create.name",
-    TOKENS_CREATE_SUBMIT = "tokens.create.submit",
+	TOKENS_CREATE_DESCRIPTION = "tokens.create.description",
+	TOKENS_CREATE_NAME = "tokens.create.name",
+	TOKENS_CREATE_SUBMIT = "tokens.create.submit",
 	TOKENS_DELETE = "tokens.delete",
-    // CONFIRM
-    CONFIRM_TITLE = "confirm.title",
-    CONFIRM_DESCRIPTION = "confirm.description",
-    CONFIRM_SUBMIT = "confirm.submit",
-    CONFIRM_TYPE_TO_CONFIRM = "confirm.type_to_confirm",
-    // VERIFY
-    VERIFY_CONFIRM_HINT = "verify.confirm.hint",
+	TOKENS_DELETE_CONFIRM = "tokens.delete.confirm",
+	// CONFIRM
+	CONFIRM_TITLE = "confirm.title",
+	CONFIRM_DESCRIPTION = "confirm.description",
+	CONFIRM_SUBMIT = "confirm.submit",
+	CONFIRM_TYPE_TO_CONFIRM = "confirm.type_to_confirm",
+	// VERIFY
+	VERIFY_CONFIRM_HINT = "verify.confirm.hint",
+
+	// API ERROR
+	API_ERROR_DESCRIPTION = "api_error.description",
+	API_ERROR_CONTACT = "api_error.contact",
 
 	// MISC
-	BACK_TO_DASHBOARD = "back.to.dashboard"
+	BACK_TO_DASHBOARD = "back.to.dashboard",
+
+	// USERS
+	USERS_TITLE = "users.title",
+	USERS_DESCRIPTION = "users.description",
+	USERS_SEARCH = "users.search",
+	USERS_USERNAME = "users.username",
+	USERS_REFRESH = "users.refresh"
 }

@@ -55,12 +55,12 @@
 
 	"hint.verify": "Please verify your account! Non verified accounts may get deleted!",
 
-    "account.title": "Account",
+	"account.title": "Account",
 	"account.description": "Here you can change your account settings",
-    "account.delete": "Delete account",
-    "account.delete.confirm": "This will delete your account and erase all your data.",
+	"account.delete": "Delete account",
+	"account.delete.confirm": "This will delete your account and erase all your data.",
 
-    "apps.title": "Apps",
+	"apps.title": "Apps",
 	"apps.description": "Here you can manage your apps.",
 	"apps.create": "Create new app",
 
@@ -71,13 +71,22 @@
 	"tokens.create.name": "Name",
 	"tokens.create.submit": "Create",
 	"tokens.delete": "Delete token",
+	"tokens.delete.confirm": "This will delete a token.",
 
-    "confirm.title": "Confirm",
-    "confirm.description": "Please confirm that you're the owner of this Account.",
-    "confirm.submit": "Next",
-    "confirm.type_to_confirm": "Please type following to continue:",
+	"confirm.title": "Confirm",
+	"confirm.description": "Please confirm that you're the owner of this Account.",
+	"confirm.submit": "Next",
+	"confirm.type_to_confirm": "Please type following to continue:",
 
-    "verify.confirm.hint": "This will verify this account.",
+	"verify.confirm.hint": "This will verify this account.",
 
-	"back.to.dashboard": "Back to the <a href='/dash'>Dashboard</a>"
+	"back.to.dashboard": "Back to the <a href='/dash'>Dashboard</a>",
+
+	"api_error.description": "An error occured while contacting the api. Please try again later.",
+	"api_error.contact": "Support",
+
+	"users.title": "Users",
+	"users.description": "Search a user by its' name.",
+	"users.search": "Search",
+	"users.username": "Username"
 }

@@ -31,7 +31,7 @@
 	"register.keky.email.exists": "Es existiert bereits ein Account mit dieser Email!",
 	"register.keky.email.invalid": "Du musst eine richtige Email Addresse angeben!",
 	"register.keky.username": "Benutzername",
-	"register.keky.username.invalid": "Der Nutzername sollte zwischen 3 und 32 Charakteren lang sein!",
+	"register.keky.username.invalid": "Der Nutzername muss zwischen 3 und 32 Charakteren lang sein und darf nur aus a-z, A-Z, 0-9, - und _ bestehen!",
 	"register.keky.username.exists": "Ein Benutzer mit diesem Namen existiert bereits. Wähle einen anderen",
 	"register.keky.password": "Passwort",
 	"register.keky.password.repeat": "Passwort wiederholen",
@@ -57,8 +57,8 @@
 
 	"account.title": "Account",
 	"account.description": "Hier können Sie Ihre persönlichen Daten ändern.",
-    "account.delete": "Account löschen",
-    "account.delete.confirm": "Dies wird deinen Account und alle seine Daten unwiderruflich löschen.",
+	"account.delete": "Account löschen",
+	"account.delete.confirm": "Dies wird deinen Account und alle seine Daten unwiderruflich löschen.",
 
 	"apps.title": "Apps",
 	"apps.description": "Hier können Sie Ihre Apps verwalten.",
@@ -71,13 +71,22 @@
 	"tokens.create.name": "Name",
 	"tokens.create.submit": "Erstellen",
 	"tokens.delete": "Token löschen",
+	"tokens.delete.confirm": "Dies wird einen token löschen.",
 
-    "confirm.title": "Bestätigung",
-    "confirm.description": "Bitte bestätige, dass du der Inhaber dieses Accounts bist.",
-    "confirm.submit": "Weiter",
-    "confirm.type_to_confirm": "Bitte schreibe folgendes um fortzufahren:",
+	"confirm.title": "Bestätigung",
+	"confirm.description": "Bitte bestätige, dass du der Inhaber dieses Accounts bist.",
+	"confirm.submit": "Weiter",
+	"confirm.type_to_confirm": "Bitte schreibe folgendes um fortzufahren:",
 
-    "verify.confirm.hint": "Dies wird diesen Account verifizieren.",
+	"verify.confirm.hint": "Dies wird diesen Account verifizieren.",
 
-	"back.to.dashboard": "Zurück zum <a href='/dash'>Dashboard</a>"
+	"back.to.dashboard": "Zurück zum <a href='/dash'>Dashboard</a>",
+
+	"api_error.description": "Es ist ein Fehler beim kontaktieren der API aufgetreten. Bitte versuche es später noch einmal.",
+	"api_error.contact": "Support",
+
+	"users.title": "Benutzer",
+	"users.description": "Suche einen Nutzer nach seinem Account namen",
+	"users.search": "Suche",
+	"users.username": "Benutzername"
 }
