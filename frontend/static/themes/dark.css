@@ -21,10 +21,10 @@
 	--button-disabled-color: rgb(182, 107, 21);
 	--button-disabled-background: rgba(0, 0, 0, 0.2);
 	--button-hover-background: rgba(245, 143, 27, 0.2);
-	--input-border: rgba(255, 255, 255, 0.5);
+	--input-border: rgba(255, 255, 255, 0.3);
 	--input-color: rgb(255, 255, 255);
 	--input-background: rgba(0, 0, 0, 0.2);
-	--input-disabled-border: rgba(126, 126, 126, 0.5);
+	--input-disabled-border: rgba(126, 126, 126, 0.3);
 	--input-disabled-color: rgb(143, 143, 143);
 	--input-disabled-background: rgba(0, 0, 0, 0.2);
 	--input-focus-border: rgb(245, 143, 27);
