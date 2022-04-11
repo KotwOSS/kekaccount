@@ -4,9 +4,10 @@
 	import { client } from "$lib/client";
 	import { Tokens } from "$lib/store";
 	import { LangKey as lk, language as ln } from "$lib/lang";
+    import PermissionSelect from "$components/table/permission/selector.svelte";
 
 	let name: string;
-	let permissions: number;
+	let permissions: number = 0;
 
 	function create(e) {
 		e.preventDefault();
@@ -39,8 +40,8 @@
 <form class="root fadein" on:submit={create}>
 	<h1 class="title">{ln[lk.TOKENS_CREATE]}</h1>
 	<p class="description">{@html ln[lk.TOKENS_CREATE_DESCRIPTION]}</p>
-	<input type="text" bind:value={name} placeholder={ln[lk.TOKENS_CREATE_NAME]} />
-	<input type="number" bind:value={permissions} placeholder="Permissions" />
+	<input class="name" type="text" bind:value={name} placeholder={ln[lk.TOKENS_CREATE_NAME]} />
+	<PermissionSelect bind:permissions={permissions} />
 	<button class="create">{ln[lk.TOKENS_CREATE_SUBMIT]}</button>
 </form>
 
@@ -56,6 +57,10 @@
 		justify-content: center;
 		align-items: center;
 	}
+
+    .name {
+        margin-bottom: 10px;
+    }
 
 	.description {
 		margin-bottom: 10px;
