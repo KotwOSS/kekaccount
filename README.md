@@ -1,8 +1,16 @@
 # KekAccount
+![](https://tokei.rs/b1/github/KotwOSS/kekaccount)
+![](https://tokei.rs/b1/github/KotwOSS/kekaccount?category=blanks)
+![](https://tokei.rs/b1/github/KotwOSS/kekaccount?category=code)
+![](https://tokei.rs/b1/github/KotwOSS/kekaccount?category=comments)
+![](https://tokei.rs/b1/github/KotwOSS/kekaccount?category=files)
+<br>
+
 KekHost is an application written in [rust](https://www.rust-lang.org/) for hosting files. 
 
 <br>
 
+**Comming soon**
 [Documentation](https://oss.kotw.dev/kekaccount/docs/)
 
 <br>
