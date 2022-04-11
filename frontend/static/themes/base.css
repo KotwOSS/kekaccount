@@ -120,7 +120,7 @@ a:hover {
 	color: var(--a-color-hover);
 }
 
-.active {
+.active, .active * {
 	color: var(--active-color);
 }
 
