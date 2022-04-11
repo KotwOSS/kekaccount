@@ -128,5 +128,10 @@ export enum LangKey {
 	USERS_DESCRIPTION = "users.description",
 	USERS_SEARCH = "users.search",
 	USERS_USERNAME = "users.username",
-	USERS_REFRESH = "users.refresh"
+	USERS_REFRESH = "users.refresh",
+
+    // TABLES
+    TABLE_PERMISSION_TITLE = "table.permission.title",
+    TABLE_PERMISSION_SELECT_ALL = "table.permission.select_all",
+    TABLE_PERMISSION_DESELECT_ALL = "table.permission.deselect_all",
 }
