@@ -1,11 +1,14 @@
+use actix_web::{post, web, HttpRequest, Responder, Result};
 use hex::ToHex;
-use actix_web::{post, web, Result, HttpRequest, Responder};
 use serde::Deserialize;
 
+use crate::api::http::State;
 use crate::errors::actix::JsonErrorType;
 use crate::models::app;
-use crate::api::http::State;
-use crate::util::{random, checker::{self, map_qres, hex_header}};
+use crate::util::{
+    checker::{self, hex_header, map_qres},
+    random,
+};
 
 #[derive(Deserialize)]
 pub struct CreateData {
@@ -13,11 +16,15 @@ pub struct CreateData {
     avatar: String,
     description: String,
     redirect_uri: String,
-    homepage: String
+    homepage: String,
 }
 
 #[post("/api/apps/create")]
-pub async fn create(create_data: web::Json<CreateData>, state: web::Data<State>, request: HttpRequest) -> Result<impl Responder> {
+pub async fn create(
+    create_data: web::Json<CreateData>,
+    state: web::Data<State>,
+    request: HttpRequest,
+) -> Result<impl Responder> {
     let token = hex_header("Authorization", 256, request.headers())?;
 
     let name = create_data.name.clone();
@@ -43,14 +50,16 @@ pub async fn create(create_data: web::Json<CreateData>, state: web::Data<State>,
     let (user, token) = checker::authorize(token, db_connection)?;
 
     if token.permissions & 0b10 == 0 {
-        return Err(JsonErrorType::FORBIDDEN.new_error(format!(
-            "You don't have the permissions to create apps. (Your permission level: {})",
-            token.permissions
-        )).into());
+        return Err(JsonErrorType::FORBIDDEN
+            .new_error(format!(
+                "You don't have the permissions to create apps. (Your permission level: {})",
+                token.permissions
+            ))
+            .into());
     } else {
         let id = random::random_byte_array(20);
         let id_hex = id.encode_hex::<String>();
-    
+
         let new_app = app::App {
             id,
             name,

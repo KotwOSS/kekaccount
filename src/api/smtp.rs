@@ -1,6 +1,10 @@
 use lettre::{
-    AsyncTransport, Message, AsyncSmtpTransport, Tokio1Executor, 
-    transport::smtp::{authentication::Credentials, client::{Tls, TlsParametersBuilder}}, message::MultiPart
+    message::MultiPart,
+    transport::smtp::{
+        authentication::Credentials,
+        client::{Tls, TlsParametersBuilder},
+    },
+    AsyncSmtpTransport, AsyncTransport, Message, Tokio1Executor,
 };
 
 use tokio::sync::OnceCell;
@@ -13,15 +17,18 @@ static MAIL_OPTIONS: OnceCell<MailOptions> = OnceCell::const_new();
 pub struct MailOptions {
     mailer: AsyncSmtpTransport<Tokio1Executor>,
     from: String,
-    verification_base: String
+    verification_base: String,
 }
 
-pub fn init(host: String, port: u16, user: String, password: String, from: String, verification_base: String) {
-    println!(
-        "{}INIT{} smtp.rs",
-        colors::GREEN,
-        colors::RESET
-    );
+pub fn init(
+    host: String,
+    port: u16,
+    user: String,
+    password: String,
+    from: String,
+    verification_base: String,
+) {
+    println!("{}INIT{} smtp.rs", colors::GREEN, colors::RESET);
 
     let credentials = Credentials::new(user, password);
 
@@ -34,14 +41,21 @@ pub fn init(host: String, port: u16, user: String, password: String, from: Strin
         .tls(Tls::Required(tls_params.build().unwrap()))
         .build();
 
-    MAIL_OPTIONS.set(MailOptions {
-        mailer,
-        from,
-        verification_base
-    }).unwrap();
+    MAIL_OPTIONS
+        .set(MailOptions {
+            mailer,
+            from,
+            verification_base,
+        })
+        .unwrap();
 }
 
-pub async fn send<'a,'b,'c>(subject: &'a str, body: String, to: &'b str, reply_to: &'c str) -> Result<(), Box<dyn std::error::Error>> {
+pub async fn send<'a, 'b, 'c>(
+    subject: &'a str,
+    body: String,
+    to: &'b str,
+    reply_to: &'c str,
+) -> Result<(), Box<dyn std::error::Error>> {
     let mail_opts = MAIL_OPTIONS.get().unwrap();
 
     let mailer = &mail_opts.mailer;
@@ -58,7 +72,12 @@ pub async fn send<'a,'b,'c>(subject: &'a str, body: String, to: &'b str, reply_t
     Ok(())
 }
 
-pub async fn send_multipart<'a,'b,'c>(subject: &'a str, multipart: MultiPart, to: &'b str, reply_to: &'c str) -> Result<(), Box<dyn std::error::Error>> {
+pub async fn send_multipart<'a, 'b, 'c>(
+    subject: &'a str,
+    multipart: MultiPart,
+    to: &'b str,
+    reply_to: &'c str,
+) -> Result<(), Box<dyn std::error::Error>> {
     let mail_opts = MAIL_OPTIONS.get().unwrap();
 
     let mailer = &mail_opts.mailer;
@@ -75,22 +94,30 @@ pub async fn send_multipart<'a,'b,'c>(subject: &'a str, multipart: MultiPart, to
     Ok(())
 }
 
-pub async fn send_verification<'a,'b>(username: &'a str, email: &'b str, verification_id: String) -> Result<(), Box<dyn std::error::Error>> {
+pub async fn send_verification<'a, 'b>(
+    username: &'a str,
+    email: &'b str,
+    verification_id: String,
+) -> Result<(), Box<dyn std::error::Error>> {
     let mail_opts = MAIL_OPTIONS.get().unwrap();
 
     let html = format!(
-        r#"<h3>Hello, {}</h3><p>Please verify your email <a href="{}{}">here</a>!"#, 
+        r#"<h3>Hello, {}</h3><p>Please verify your email <a href="{}{}">here</a>!"#,
         username, mail_opts.verification_base, verification_id
     );
 
     let plain = format!(
-r#"Hello, {}
+        r#"Hello, {}
 
-Please verify your email at {}{}"#, 
+Please verify your email at {}{}"#,
         username, mail_opts.verification_base, verification_id
     );
 
-    send_multipart("Email verification", 
-        MultiPart::alternative_plain_html(plain, html), format!("{} <{}>", username, email).as_str(), "noreply@noreply.com"
-    ).await
+    send_multipart(
+        "Email verification",
+        MultiPart::alternative_plain_html(plain, html),
+        format!("{} <{}>", username, email).as_str(),
+        "noreply@noreply.com",
+    )
+    .await
 }

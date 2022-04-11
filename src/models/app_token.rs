@@ -1,15 +1,17 @@
-use diesel::{PgConnection, QueryResult, QueryDsl, RunQueryDsl, ExpressionMethods, BoolExpressionMethods};
+use diesel::{
+    BoolExpressionMethods, ExpressionMethods, PgConnection, QueryDsl, QueryResult, RunQueryDsl,
+};
 
 use crate::schema::app_tokens;
 
 #[derive(Queryable, Insertable)]
-#[table_name="app_tokens"]
+#[table_name = "app_tokens"]
 pub struct AppToken {
     pub id: Vec<u8>,
     pub token: Vec<u8>,
     pub app_id: Vec<u8>,
     pub name: String,
-    pub permissions: i16
+    pub permissions: i16,
 }
 
 impl AppToken {
@@ -22,7 +24,13 @@ impl AppToken {
     pub fn find(id: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<AppToken>> {
         app_tokens::table
             .filter(app_tokens::dsl::id.eq(id))
-            .select((app_tokens::dsl::id, app_tokens::dsl::token, app_tokens::dsl::app_id, app_tokens::dsl::name, app_tokens::dsl::permissions))
+            .select((
+                app_tokens::dsl::id,
+                app_tokens::dsl::token,
+                app_tokens::dsl::app_id,
+                app_tokens::dsl::name,
+                app_tokens::dsl::permissions,
+            ))
             .load::<AppToken>(connection)
     }
 
@@ -32,9 +40,17 @@ impl AppToken {
             .execute(connection)
     }
 
-    pub fn delete_app(id: Vec<u8>, app_id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
+    pub fn delete_app(
+        id: Vec<u8>,
+        app_id: Vec<u8>,
+        connection: &PgConnection,
+    ) -> QueryResult<usize> {
         diesel::delete(app_tokens::table)
-            .filter(app_tokens::dsl::id.eq(id).and(app_tokens::dsl::app_id.eq(app_id)))
+            .filter(
+                app_tokens::dsl::id
+                    .eq(id)
+                    .and(app_tokens::dsl::app_id.eq(app_id)),
+            )
             .execute(connection)
     }
 
@@ -47,14 +63,26 @@ impl AppToken {
     pub fn find_app(app_id: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<AppToken>> {
         app_tokens::table
             .filter(app_tokens::dsl::app_id.eq(app_id))
-            .select((app_tokens::dsl::id, app_tokens::dsl::token, app_tokens::dsl::app_id, app_tokens::dsl::name, app_tokens::dsl::permissions))
+            .select((
+                app_tokens::dsl::id,
+                app_tokens::dsl::token,
+                app_tokens::dsl::app_id,
+                app_tokens::dsl::name,
+                app_tokens::dsl::permissions,
+            ))
             .load::<AppToken>(connection)
     }
 
     pub fn find_token(token: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<AppToken>> {
         app_tokens::table
             .filter(app_tokens::dsl::token.eq(token))
-            .select((app_tokens::dsl::id, app_tokens::dsl::token, app_tokens::dsl::app_id, app_tokens::dsl::name, app_tokens::dsl::permissions))
+            .select((
+                app_tokens::dsl::id,
+                app_tokens::dsl::token,
+                app_tokens::dsl::app_id,
+                app_tokens::dsl::name,
+                app_tokens::dsl::permissions,
+            ))
             .load::<AppToken>(connection)
     }
 }

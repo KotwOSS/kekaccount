@@ -5,11 +5,7 @@ use std::io::Error;
 use crate::{colors, database::PgPool};
 
 pub async fn main(_pool: &PgPool, _interval: u64) -> Result<(), Error> {
-    println!(
-        "{}START{} db cleaner",
-        colors::LIGHT_BLUE,
-        colors::RESET
-    );
+    println!("{}START{} db cleaner", colors::LIGHT_BLUE, colors::RESET);
 
     // loop {
     //     sleep(Duration::from_millis(interval)).await;

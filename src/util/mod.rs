@@ -1,3 +1,3 @@
-pub mod random;
-pub mod hex;
 pub mod checker;
+pub mod hex;
+pub mod random;
