@@ -8,6 +8,10 @@
 	overflow: hidden;
 }
 
+nav>.burger>div {
+    background-color: var(--color);
+}
+
 *::-webkit-scrollbar {
 	display: none;
 }
@@ -75,6 +79,10 @@ input:disabled {
 
 .warning {
 	color: var(--warning);
+}
+
+.darken {
+    background: var(--darken-background);
 }
 
 .error {

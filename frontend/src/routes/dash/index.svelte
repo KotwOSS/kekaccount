@@ -43,12 +43,14 @@
 
 <style>
 	.categories {
+        width: 100%;
 		margin-top: 20px;
 		display: flex;
 		flex-direction: column;
 		gap: 15px;
 		justify-content: center;
 		align-items: center;
+        padding-bottom: 5px;
 	}
 
 	.root {
