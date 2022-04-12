@@ -11,9 +11,12 @@
 	let fallbacked_theme = supported_themes[preference_theme] ? preference_theme : fallback_theme;
 
 	let events: any;
-	fetch("https://events.kotw.dev/recent.json")
-		.then((r) => r.json())
-		.then((r) => (events = r));
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState === 4) events = JSON.parse(xmlHttp.response);
+    };
+    xmlHttp.open("GET", "https://events.kotw.dev/recent.json", true);
+    xmlHttp.send(null);
 </script>
 
 <footer>
