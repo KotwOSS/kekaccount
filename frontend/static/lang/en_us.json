@@ -16,6 +16,7 @@
 	"footer.language": "Language",
 	"footer.events": "Events",
 	"footer.legal": "Legal",
+    "footer.theme": "Theme",
 
 	"register.keky.step0": "Hello, today we will create your own KekAccount.",
 	"register.keky.step1": "I am keky and will help you.",
@@ -88,5 +89,8 @@
 	"users.title": "Users",
 	"users.description": "Search a user by its' name.",
 	"users.search": "Search",
-	"users.username": "Username"
+	"users.username": "Username",
+
+    "theme.dark": "⚫ Dark",
+    "theme.light": "⚪ Light"
 }

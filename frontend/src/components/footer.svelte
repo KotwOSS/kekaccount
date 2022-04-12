@@ -1,10 +1,14 @@
 <script lang="ts">
 	import { imprint, privacy } from "$lib/config";
-	import { fallback, LangKey as lk, language as ln, supported } from "$lib/lang";
+	import { fallback as fallback_lang, LangKey as lk, language as ln, supported as supported_langs } from "$lib/lang";
+    import { supported as supported_themes, fallback as fallback_theme } from "$lib/themes";
 
-	let preference =
+	let preference_lang =
 		localStorage.getItem("lang") || navigator.language.replace("-", "_").toLowerCase();
-	let fallbacked = supported[preference] ? preference : fallback;
+	let fallbacked_lang = supported_langs[preference_lang] ? preference_lang : fallback_lang;
+
+    let preference_theme = localStorage.getItem("theme");
+	let fallbacked_theme = supported_themes[preference_theme] ? preference_theme : fallback_theme;
 
 	let events: any;
 	fetch("https://events.kotw.dev/recent.json")
@@ -27,18 +31,36 @@
 
 			<div class="language category">
 				<h4>🗣️ {ln[lk.FOOTER_LANGUAGE]}</h4>
-				{#each Object.entries(supported) as lang}
+				{#each Object.entries(supported_langs) as lang}
 					<!-- svelte-ignore a11y-invalid-attribute -->
 					<a
-						class:active={fallbacked === lang[0]}
+						class:active={fallbacked_lang === lang[0]}
 						on:click={function (e) {
 							e.preventDefault();
-							if (fallbacked === lang[0]) return;
+							if (fallbacked_lang === lang[0]) return;
 
 							localStorage.setItem("lang", lang[0]);
 							window.location = window.location; // Causes the page to reload
 						}}
 						href="#">{lang[1]}</a
+					>
+				{/each}
+			</div>
+
+            <div class="theme category">
+				<h4>🌈 {ln[lk.FOOTER_THEME]}</h4>
+				{#each Object.entries(supported_themes) as theme}
+					<!-- svelte-ignore a11y-invalid-attribute -->
+					<a
+						class:active={fallbacked_theme === theme[0]}
+						on:click={function (e) {
+							e.preventDefault();
+							if (fallbacked_theme === theme[0]) return;
+
+							localStorage.setItem("theme", theme[0]);
+							window.location = window.location; // Causes the page to reload
+						}}
+						href="#">{ln[theme[1]]}</a
 					>
 				{/each}
 			</div>

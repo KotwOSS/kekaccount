@@ -53,6 +53,7 @@ export enum LangKey {
 	FOOTER_LANGUAGE = "footer.language",
 	FOOTER_LEGAL = "footer.legal",
 	FOOTER_EVENTS = "footer.events",
+    FOOTER_THEME = "footer.theme",
 	// REGISTER
 	REGISTER_KEKY_NEXT = "register.keky.next",
 	REGISTER_KEKY_BACK = "register.keky.back",
@@ -134,4 +135,8 @@ export enum LangKey {
     TABLE_PERMISSION_TITLE = "table.permission.title",
     TABLE_PERMISSION_SELECT_ALL = "table.permission.select_all",
     TABLE_PERMISSION_DESELECT_ALL = "table.permission.deselect_all",
+
+    // THEMES
+    THEME_DARK = "theme.dark",
+    THEME_LIGHT = "theme.light",
 }

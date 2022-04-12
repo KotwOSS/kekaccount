@@ -16,6 +16,7 @@
 	"footer.language": "Sprache",
 	"footer.events": "Events",
 	"footer.legal": "Legales",
+    "footer.theme": "Theme",
 
 	"register.keky.step0": "Hallo, ich werde heute mit dir deinen eigenen KekAccount erstellen",
 	"register.keky.step1": "Ich bin keky und werde dich hier begleiten!",
@@ -92,5 +93,8 @@
     
     "table.permission.title": "Berechtigungen",
     "table.permission.select_all": "Alle auswählen",
-    "table.permission.deselect_all": "Alle abwählen"
+    "table.permission.deselect_all": "Alle abwählen",
+
+    "theme.dark": "⚫ Dunkel",
+    "theme.light": "⚪ Hell"
 }
