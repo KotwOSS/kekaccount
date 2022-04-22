@@ -21,23 +21,23 @@ const config = {
 					$lib: path.resolve("src/lib"),
 					$components: path.resolve("./src/components")
 				}
-			},
-            // build: {
-            //     rollupOptions: {
-            //         plugins: [
-            //             legacy({
-            //                 targets: ['ie >= 11'],
-            //                 additionalLegacyPolyfills: ['regenerator-runtime/runtime']
-            //             })
-            //         ]
-            //     }
-            // },
-            // plugins: [
-            //     // legacy({
-            //     //     targets: ['ie >= 11'],
-            //     //     additionalLegacyPolyfills: ['regenerator-runtime/runtime']
-            //     // })
-            // ]
+			}
+			// build: {
+			//     rollupOptions: {
+			//         plugins: [
+			//             legacy({
+			//                 targets: ['ie >= 11'],
+			//                 additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+			//             })
+			//         ]
+			//     }
+			// },
+			// plugins: [
+			//     // legacy({
+			//     //     targets: ['ie >= 11'],
+			//     //     additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+			//     // })
+			// ]
 		},
 		trailingSlash: "always"
 	}
