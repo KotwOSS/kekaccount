@@ -27,7 +27,7 @@
 		>
 			<div class="inner">
 				<div class="wrapper">
-					<p class:hint={token.active}>{token.name}</p>
+					<p class:active={token.active}>{token.name}</p>
 					<p class="id">{token.id}</p>
 				</div>
 				<button
@@ -84,6 +84,7 @@
 	.edit {
 		border-radius: 0;
 		font-size: 20px;
+		width: 30px;
 	}
 
 	.token.first .edit {
