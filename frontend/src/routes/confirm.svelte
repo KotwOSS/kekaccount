@@ -8,6 +8,8 @@
 	import { client, type Confirm } from "$lib/client";
 	import { regex } from "$lib/checker";
 
+	import { fade } from "svelte/transition";
+
 	let loading: boolean = false;
 	let error: string;
 
@@ -51,7 +53,7 @@
 	if (!confirm) goto("/dash");
 </script>
 
-<div class="root fadein">
+<div class="root" in:fade={{ duration: 200 }}>
 	<form class="card" on:submit={submit}>
 		{#if confirm}
 			<h1 class="title">{ln[lk.CONFIRM_TITLE]}</h1>
@@ -109,10 +111,6 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-	}
-
-	.title {
-		margin-bottom: 5px;
 	}
 
 	.description {

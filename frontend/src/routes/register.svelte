@@ -5,6 +5,8 @@
 
 	import { goto } from "$app/navigation";
 
+	import { fade } from "svelte/transition";
+
 	const emojis = ["👋😄", "✌️😁", "🤔", "😁👍", "🤔", "😉👍", "😀", "😅", "😀👍", "😁"];
 	const emojis_invalid = ["👇😉", "👇😅"];
 
@@ -165,7 +167,7 @@
 	}
 </script>
 
-<div class="root fadein">
+<div class="root" in:fade={{ duration: 200 }}>
 	<div class="speech">{text.substring(0, text_index)}</div>
 	<h1 class="emoji" class:talking>{emoji}</h1>
 	{#if input}

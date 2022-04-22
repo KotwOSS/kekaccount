@@ -5,6 +5,8 @@
 	import { APIError, Routes } from "$lib/api";
 	import { LangKey as lk, language as ln } from "$lib/lang";
 
+	import { fade } from "svelte/transition";
+
 	let params = new URLSearchParams(window.location.search);
 	let query = params.get("q");
 
@@ -78,7 +80,8 @@
 </script>
 
 <form
-	class="root fadein"
+	class="root"
+	in:fade={{ duration: 200 }}
 	on:submit={function (e) {
 		e.preventDefault();
 		search();

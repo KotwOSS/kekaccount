@@ -8,6 +8,8 @@
 	import { client } from "$lib/client";
 	import { regex } from "$lib/checker";
 
+	import { fade } from "svelte/transition";
+
 	let loading: boolean = false;
 	let error: string;
 
@@ -65,7 +67,7 @@
 	}
 </script>
 
-<div class="root fadein">
+<div class="root" in:fade={{ duration: 200 }}>
 	<form class="card" on:submit={submit}>
 		<h1 class="title">{ln[lk.LOGIN_TITLE]}</h1>
 		<p class="description">{ln[lk.LOGIN_DESCRIPTION]}</p>
@@ -90,10 +92,6 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-	}
-
-	.title {
-		margin-bottom: 5px;
 	}
 
 	.description {
