@@ -1,0 +1,100 @@
+{
+	"index.title": "KekAccount",
+	"index.description": "An account system for everyone",
+
+	"nav.title": "KekAccount",
+	"nav.dashboard": "Dashboard",
+	"nav.login": "Login",
+	"nav.register": "Register",
+	"nav.home": "Home",
+	"nav.account": "Account",
+	"nav.logout": "Logout",
+
+	"footer.privacy": "Privacy",
+	"footer.imprint": "Imprint",
+	"footer.notice": "This awesome opensource account system was made with ❤️ by KekOnTheWorld and it's contributers. Check it out on <a href='https://github.com/KotwOSS/kekaccount' target='_blank'>Github</a>!",
+	"footer.language": "Language",
+	"footer.events": "Events",
+	"footer.legal": "Legal",
+	"footer.theme": "Theme",
+
+	"register.keky.step0": "Hello, today we will create your own KekAccount.",
+	"register.keky.step1": "I am keky and will help you.",
+	"register.keky.step2": "Let's start simple. What's your name?",
+	"register.keky.step3": "Good choice!",
+	"register.keky.step4": "Now what's your email address? (as example kekontheworld@gmail.com)",
+	"register.keky.step5": "Nice job!",
+	"register.keky.step6": "Please enter a password which you will use to login.",
+	"register.keky.step7": "I haven't quite understood you. Can you repeat it?",
+	"register.keky.step8": "Faboulous! I'll create an account for you...",
+	"register.keky.step9": "Now just the verification is missing. You should receive an email with a verification code. You can already login",
+	"register.keky.email": "Emeil address",
+	"register.keky.email.exists": "There already exists an account with that email address.",
+	"register.keky.email.invalid": "You have to enter a valid email address.",
+	"register.keky.username": "Username",
+	"register.keky.username.invalid": "The username must be in between 3 and 32 characters long.",
+	"register.keky.username.exists": "A user with that username already exists. Please choose another one.",
+	"register.keky.password": "Password",
+	"register.keky.password.repeat": "Repeat Password",
+	"register.keky.password.weak": "Your password is too weak. It must be at least 8 characters long and contain at least one number and one letter.",
+	"register.keky.password.space": "Your password may not contain spaces!",
+	"register.keky.password.match": "The passwords do not match!",
+	"register.keky.next": "Next",
+	"register.keky.back": "Back",
+
+	"login.title": "Login",
+	"login.description": "Here you can login to your account.",
+	"login.uoe": "Username or email",
+	"login.password": "Password",
+	"login.submit": "Submit",
+	"login.register": "No account yet? <a href='/register'>Register</a> now!",
+
+	"dashboard.title": "Dashboard",
+
+	"error.connection": "Connection Error",
+	"error.credentials": "Invalid credentials!",
+
+	"hint.verify": "Please verify your account! Non verified accounts may get deleted!",
+
+	"account.title": "Account",
+	"account.description": "Here you can change your account settings",
+	"account.delete": "Delete account",
+	"account.delete.confirm": "This will delete your account and erase all your data.",
+
+	"apps.title": "Apps",
+	"apps.description": "Here you can manage your apps.",
+	"apps.create": "Create new app",
+
+	"tokens.title": "Tokens",
+	"tokens.description": "Here you can manage your tokens.",
+	"tokens.create": "Create new token",
+	"tokens.create.description": "Here you can create a new token.  <a href='..'>Back</a>",
+	"tokens.create.name": "Name",
+	"tokens.create.submit": "Create",
+	"tokens.delete": "Delete token",
+	"tokens.delete.confirm": "This will delete a token.",
+
+	"confirm.title": "Confirm",
+	"confirm.description": "Please confirm that you're the owner of this Account.",
+	"confirm.submit": "Next",
+	"confirm.type_to_confirm": "Please type following to continue:",
+
+	"verify.confirm.hint": "This will verify this account.",
+
+	"back.to.dashboard": "Back to the <a href='/dash'>Dashboard</a>",
+
+	"api_error.description": "An error occured while contacting the api. Please try again later.",
+	"api_error.contact": "Support",
+
+	"users.title": "Users",
+	"users.description": "Search a user by its' name.",
+	"users.search": "Search",
+	"users.username": "Username",
+
+	"table.permission.title": "Permissions",
+	"table.permission.select_all": "Select all",
+	"table.permission.deselect_all": "Deselect all",
+
+	"theme.dark": "Dark",
+	"theme.light": "Light"
+}
