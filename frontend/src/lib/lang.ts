@@ -1,10 +1,26 @@
 export let language: any;
 export let initialized: number = 0;
 
-export const supported: any = {
-	en_us: "🇬🇧 English",
-	de: "🇩🇪 Deutsch"
+export type Language = {
+    name: string,
+    emoji: string
+}
+
+export const supported: {[key: string]: Language} = {
+	en_us: {
+        name: "English (US)",
+        emoji: "🇺🇸"
+    },
+    en_uk: {
+        name: "English (UK)",
+        emoji: "🇬🇧"
+    },
+	de: {
+        name: "Deutsch",
+        emoji: "🇩🇪"
+    }
 };
+
 export const fallback: string = "en_us";
 
 export function init() {

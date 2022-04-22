@@ -26,45 +26,57 @@
 			<p class="short">{@html ln[lk.FOOTER_NOTICE]}</p>
 		</div>
 		<div class="categories">
-			<div class="legal category">
+			<div class="legals category">
 				<h4>⚖️ {ln[lk.FOOTER_LEGAL]}</h4>
-				{#if privacy}<a href={privacy}>🔒 {ln[lk.FOOTER_PRIVACY]}</a>{/if}
-				{#if imprint}<a href={imprint}>📖 {ln[lk.FOOTER_IMPRINT]}</a>{/if}
+                {#if privacy}
+                    <div class="legal">
+                        <a href={privacy}>🔒 {ln[lk.FOOTER_PRIVACY]}</a>
+                    </div>
+				{/if}
+                {#if imprint}
+                    <div class="legal">
+                        <a href={imprint}>📖 {ln[lk.FOOTER_IMPRINT]}</a>
+                    </div>
+				{/if}
 			</div>
 
-			<div class="language category">
+			<div class="languages category">
 				<h4>🗣️ {ln[lk.FOOTER_LANGUAGE]}</h4>
 				{#each Object.entries(supported_langs) as lang}
-					<!-- svelte-ignore a11y-invalid-attribute -->
-					<a
-						class:active={fallbacked_lang === lang[0]}
-						on:click={function (e) {
-							e.preventDefault();
-							if (fallbacked_lang === lang[0]) return;
+                    <div class="language">
+                        <!-- svelte-ignore a11y-invalid-attribute -->
+                        <a
+                            class:active={fallbacked_lang === lang[0]}
+                            on:click={function (e) {
+                                e.preventDefault();
+                                if (fallbacked_lang === lang[0]) return;
 
-							localStorage.setItem("lang", lang[0]);
-							window.location = window.location; // Causes the page to reload
-						}}
-						href="#">{lang[1]}</a
-					>
+                                localStorage.setItem("lang", lang[0]);
+                                window.location = window.location; // Causes the page to reload
+                            }}
+                            href="#">{lang[1].emoji} {lang[1].name}</a
+                        >
+                    </div>
 				{/each}
 			</div>
 
-            <div class="theme category">
+            <div class="themes category">
 				<h4>🌈 {ln[lk.FOOTER_THEME]}</h4>
 				{#each Object.entries(supported_themes) as theme}
-					<!-- svelte-ignore a11y-invalid-attribute -->
-					<a
-						class:active={fallbacked_theme === theme[0]}
-						on:click={function (e) {
-							e.preventDefault();
-							if (fallbacked_theme === theme[0]) return;
+                    <div class="theme">
+                        <!-- svelte-ignore a11y-invalid-attribute -->
+                        <a
+                            class:active={fallbacked_theme === theme[0]}
+                            on:click={function (e) {
+                                e.preventDefault();
+                                if (fallbacked_theme === theme[0]) return;
 
-							localStorage.setItem("theme", theme[0]);
-							window.location = window.location; // Causes the page to reload
-						}}
-						href="#">{ln[theme[1]]}</a
-					>
+                                localStorage.setItem("theme", theme[0]);
+                                window.location = window.location; // Causes the page to reload
+                            }}
+                            href="#">{theme[1].emoji} {ln[theme[1].name]}</a
+                        >
+                    </div>
 				{/each}
 			</div>
 
@@ -86,7 +98,9 @@
 <style>
 	.big > .emoji {
 		font-size: 70px;
-		margin-bottom: 5px;
+        height: 70px;
+		margin-bottom: 15px;
+        line-height: 70px;
 	}
 
 	.big {
@@ -96,11 +110,22 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+        text-align: center;
 	}
 
 	footer {
 		padding: 10px 0;
 	}
+
+    a {
+        font-size: 16px;
+        font-weight: 400;
+        border-bottom: none;
+    }
+
+    a.active {
+        font-weight: 700;
+    }
 
 	.wrapper {
 		width: 100%;
@@ -123,13 +148,14 @@
 		margin-top: 20px;
 	}
 
-	.category * {
-		text-align: left;
-	}
-
 	.category {
 		display: flex;
 		flex-direction: column;
+        align-items: flex-start;
 		gap: 5px;
 	}
+
+    .copyright {
+        text-align: center;
+    }
 </style>
