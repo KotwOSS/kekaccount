@@ -1,15 +1,28 @@
+:root {
+	--nav-height: 63px;
+}
+
 * {
-	text-align: center;
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	color: var(--color);
 	scrollbar-width: none;
-	overflow: hidden;
 }
 
-nav>.burger>div {
-    background-color: var(--color);
+h1 {
+	font-weight: 800;
+	font-size: 2.25em;
+}
+
+p {
+	font-size: 18px;
+	color: var(--color-secondary);
+	line-height: 31.5px;
+}
+
+nav > .wrapper > .burger > div {
+	background-color: var(--color);
 }
 
 *::-webkit-scrollbar {
@@ -18,13 +31,19 @@ nav>.burger>div {
 
 body {
 	background-color: var(--background);
-	/* height: 100vh;
-	overflow-y: scroll;
-    overflow-x: hidden; */
+	overflow: hidden;
 }
 
 html {
 	overflow: scroll;
+}
+
+.title {
+	margin-bottom: 20px;
+}
+
+nav > .wrapper > h1 {
+	color: var(--brand-color);
 }
 
 button {
@@ -33,7 +52,8 @@ button {
 	color: var(--button-color);
 	border-radius: 10px;
 	cursor: pointer;
-	padding: 5px;
+	padding: 5px 10px;
+	font-size: 16px;
 	outline: none;
 	transition: background 0.3s, border 0.3s;
 	transition-timing-function: ease;
@@ -54,7 +74,9 @@ input {
 	background-color: var(--input-background);
 	color: var(--input-color);
 	border-radius: 10px;
-	padding: 5px;
+	padding: 5px 10px;
+	font-size: 16px;
+	letter-spacing: 1px;
 	outline: none;
 	transition: all 0.3s ease;
 }
@@ -82,7 +104,8 @@ input:disabled {
 }
 
 .darken {
-    background: var(--darken-background);
+	background: var(--darken-background);
+	backdrop-filter: blur(2px);
 }
 
 .error {
@@ -90,6 +113,7 @@ input:disabled {
 }
 
 .card {
+	text-align: center;
 	border: 1px solid var(--card-border);
 	background-color: var(--card-background);
 	border-radius: 20px;
@@ -112,6 +136,7 @@ input:disabled {
 nav {
 	border-bottom: 1px solid var(--nav-border);
 	background-color: var(--nav-background);
+	backdrop-filter: blur(2px);
 }
 
 footer {
@@ -120,20 +145,31 @@ footer {
 }
 
 a {
-	text-decoration: none;
 	color: var(--a-color);
+	font-size: 18px;
+	font-weight: 600;
+	border-left: 0px solid;
+	border-right: 0px solid;
+	border-top: 0px solid;
+	border-bottom: 1px solid var(--brand-color);
+	cursor: pointer;
+	text-decoration: none;
+	text-decoration-line: none;
+	padding-bottom: 1px;
 }
 
 a:hover {
+	border-bottom-width: 2px;
 	color: var(--a-color-hover);
 }
 
-.active, .active * {
+.active,
+.active * {
 	color: var(--active-color);
 }
 
 .root {
-	min-height: calc(100vh - 63px);
+	min-height: calc(100vh - var(--nav-height));
 }
 
 .short {
