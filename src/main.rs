@@ -45,11 +45,6 @@ async fn main() {
         .parse()
         .unwrap_or(5071);
 
-    let db_clean_interval = env::var("db_clean_interval")
-        .unwrap_or("60000".to_owned())
-        .parse()
-        .unwrap_or(60000);
-
     let pool_arc = Arc::new(pool.clone());
 
     let smtp_host = env::var("smtp_host").unwrap_or("youremail.com".to_owned());
@@ -80,9 +75,8 @@ async fn main() {
         verification_base,
     );
 
-    let (_tcp, _db_cleaner, _http) = tokio::join!(
+    let (_tcp, _http) = tokio::join!(
         api::tcp::main(&pool, tcp_address, tcp_port),
-        api::db_clean::main(&pool, db_clean_interval),
         api::http::main(pool_arc, http_address, http_port)
     );
 }
