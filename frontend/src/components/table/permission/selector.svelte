@@ -95,6 +95,7 @@
 		width: 100%;
 		padding: 2px 15px;
 		border-radius: 10px;
+        align-items: center;
 		cursor: pointer;
 	}
 
