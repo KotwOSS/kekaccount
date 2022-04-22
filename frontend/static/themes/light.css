@@ -1,9 +1,12 @@
 @import url("base.css");
-@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap');
+@import url("https://rsms.me/inter/inter.css");
 
 :root {
+	--brand-color: rgb(255, 62, 0);
 	--background: rgb(255, 255, 255);
-	--color: #222;
+	--color: rgb(17, 24, 39);
+	--a-color: var(--color);
+	--color-secondary: #707070;
 	--hint: rgb(155, 101, 0);
 	--warning: rgb(255, 72, 0);
 	--error: red;
@@ -11,43 +14,46 @@
 	--nav-background: rgba(255, 255, 255, 0.85);
 	--footer-border: rgb(217, 217, 217);
 	--footer-background: rgb(255, 255, 255);
-	--a-color: rgb(107, 52, 20);
-	--a-color-hover: rgb(153, 48, 0);
-	--active-color: rgb(158, 92, 17);
-	/* --button-border: rgb(129, 75, 13); */
+	--a-color: rgb(17, 24, 39);
+	--a-color-hover: rgb(189, 47, 0);
+	--active-color: var(--brand-color);
 	--button-color: rgb(255, 255, 255);
-	--button-background: rgb(201, 105, 79);
-	--button-hover-background: rgb(202, 99, 51);
+	--button-background: var(--brand-color);
+	--button-disabled-color: rgba(255, 255, 255, 0.5);
+	--button-disabled-background: rgb(128, 32, 0);
+	--button-disabled-background: rgb(139, 35, 0);
+	--button-hover-background: var(--a-color-hover);
 	--input-border: rgba(0, 0, 0, 0.5);
-	--input-color: rgb(0, 0, 0);
+	--input-color: var(--color);
 	--input-background: rgba(255, 255, 255, 0.2);
-	--input-focus-border: rgb(19, 69, 177);
-    --card-border: rgba(0, 0, 0, 0.2);
-    --darken-background: rgba(0, 0, 0, 0.7) none repeat scroll 0% 0%;
-	/* --card-border: rgba(0, 0, 0, 0.5);
-	--card-background: rgba(255, 255, 255, 0.01); */
+	--input-focus-border: rgb(0, 0, 0);
+	--input-disabled-border: rgba(126, 126, 126, 0.3);
+	--input-disabled-color: rgb(143, 143, 143);
+	--input-disabled-background: rgba(0, 0, 0, 0.2);
+	--card-border: rgba(0, 0, 0, 0.2);
+	--darken-background: rgba(0, 0, 0, 0.7) none repeat scroll 0% 0%;
+	--sub-border: transparent;
 }
 
 .card {
-    -webkit-box-shadow: 5px 6px 13px 1px rgba(0,0,0,0.3);
-    -moz-box-shadow: 5px 6px 13px 1px rgba(0,0,0,0.3);
-    box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 5px 6px 13px 1px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 5px 6px 13px 1px rgba(0, 0, 0, 0.3);
+	box-shadow: 3px 3px 10px 1px rgba(0, 0, 0, 0.3);
 }
 
-nav>h1 {
-    color: rgb(255, 136, 0);
-}
-
-nav>.burger>div {
-    background-color: rgb(0, 0, 0);
-}
-
-p {
-    color: rgb(19, 19, 19);
+nav > .burger > div {
+	background-color: rgb(0, 0, 0);
 }
 
 * {
-	font-family: "Roboto Mono", monospace;
+	font-family: "Inter", sans-serif;
+	tab-size: 4;
+}
+
+@supports (font-variation-settings: normal) {
+	* {
+		font-family: "Inter var", sans-serif;
+	}
 }
 
 .root {
