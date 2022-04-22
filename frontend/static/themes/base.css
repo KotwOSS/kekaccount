@@ -181,3 +181,40 @@ a:hover {
 	line-break: strict;
 	white-space: pre-wrap;
 }
+
+input[type=checkbox] {
+    --cisize: 20px;
+    --csize: 16px;
+    cursor: pointer;
+    border-radius: 20px;
+    border: 0;
+    outline: 0;
+    background-color: var(--checkbox-background);
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    width: calc(var(--cisize) * 2);
+    height: var(--cisize);
+    padding: calc(calc(var(--cisize) - var(--csize)) / 2);
+}
+
+input[type=checkbox]::after {
+    margin: 0;
+    display: block;
+    content: "";
+    background-color: var(--checkbox-handle-background);
+    width: var(--csize);
+    height: var(--csize);
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+}
+
+input[type=checkbox]:checked::after {
+    transform: translateX(var(--cisize));
+}
+
+input[type=checkbox]:checked {
+    background-color: var(--checkbox-checked-background);
+}

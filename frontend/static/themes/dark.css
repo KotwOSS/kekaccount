@@ -35,6 +35,10 @@
 	--darken-background: rgba(0, 0, 0, 0.7) none repeat scroll 0% 0%;
 	--secondary-color: gray;
 	--sub-border: var(--color-secondary);
+
+    --checkbox-handle-background: black;
+    --checkbox-background: var(--color-secondary);
+    --checkbox-checked-background: var(--brand-color);
 }
 
 * {
