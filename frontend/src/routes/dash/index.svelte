@@ -25,38 +25,29 @@
 	];
 </script>
 
-<div class="root fadein">
-	<h1 class="title">{ln[lk.DASHBOARD_TITLE]}</h1>
-	{#if !$user.verified}
-		<p class="hint short">{ln[lk.HINT_VERIFY]}</p>
-	{/if}
+<h1 class="title">{ln[lk.DASHBOARD_TITLE]}</h1>
+{#if !$user.verified}
+	<p class="hint short">{ln[lk.HINT_VERIFY]}</p>
+{/if}
 
-	<div class="categories">
-		{#each categories as category}
-			<a class="category card" href={category.link}>
-				<h2>{category.title}</h2>
-				<p>{category.description}</p>
-			</a>
-		{/each}
-	</div>
+<div class="categories">
+	{#each categories as category}
+		<a class="card category" href={category.link}>
+			<h2>{category.title}</h2>
+			<p>{category.description}</p>
+		</a>
+	{/each}
 </div>
 
 <style>
 	.categories {
-        width: 100%;
 		margin-top: 20px;
 		display: flex;
 		flex-direction: column;
 		gap: 15px;
-		justify-content: center;
-		align-items: center;
-        padding-bottom: 5px;
 	}
 
-	.root {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
+	.category:hover {
+		border-bottom-width: 1px;
 	}
 </style>
