@@ -16,7 +16,7 @@
 	"footer.language": "Language",
 	"footer.events": "Events",
 	"footer.legal": "Legal",
-    "footer.theme": "Theme",
+	"footer.theme": "Theme",
 
 	"register.keky.step0": "Hello, today we will create your own KekAccount.",
 	"register.keky.step1": "I am keky and will help you.",
@@ -47,7 +47,7 @@
 	"login.uoe": "Username or email",
 	"login.password": "Password",
 	"login.submit": "Submit",
-	"login.register": "No account yet? <a href='register'>Register</a> now!",
+	"login.register": "No account yet? <a href='/register'>Register</a> now!",
 
 	"dashboard.title": "Dashboard",
 
@@ -91,6 +91,10 @@
 	"users.search": "Search",
 	"users.username": "Username",
 
-    "theme.dark": "⚫ Dark",
-    "theme.light": "⚪ Light"
+	"table.permission.title": "Permissions",
+	"table.permission.select_all": "Select all",
+	"table.permission.deselect_all": "Deselect all",
+
+	"theme.dark": "Dark",
+	"theme.light": "Light"
 }
