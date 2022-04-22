@@ -33,16 +33,7 @@
 	}
 
 	main();
-
-	function onscroll(e) {
-		let scroll = e.target.scrollingElement.scrollTop;
-		detach_navbar = scroll >= 50;
-	}
-
-	let detach_navbar = false;
 </script>
-
-<svelte:window on:scroll={onscroll} />
 
 <div id="app" class="fadein">
 	{#if api_error}
@@ -50,7 +41,7 @@
 	{:else if loading}
 		<Loader />
 	{:else}
-		<Navbar detach={detach_navbar} />
+		<Navbar />
 		<slot />
 		<Footer />
 	{/if}
