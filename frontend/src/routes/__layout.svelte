@@ -36,28 +36,52 @@
 </script>
 
 <div id="app" class="fadein">
-	{#if api_error}
-		<ApiError />
-	{:else if loading}
-		<Loader />
-	{:else}
-		<Navbar />
-		<slot />
-		<Footer />
-	{/if}
+    <div class="wrapper">
+        <main>
+            {#if api_error}
+                <ApiError />
+            {:else if loading}
+                <div class="content loading">
+                    <Loader />
+                </div>
+            {:else}
+                <Navbar />
+                <div class="content">
+                    <slot />
+                </div>
+                <Footer />
+            {/if}
+        </main>
+    </div>
 </div>
 
 <style>
-	#app > :global(.loader) {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
+    .loading {
+        display: flex;
+        align-items: center; 
+        justify-content: center;
+        width: 100%;
+        height: 100vh;
+    }
+    
+	.loading > :global(.loader) {
 		width: 50px;
 		height: 50px;
 	}
 
+    main {
+        min-height: 100%;
+    }
+
+    .wrapper {
+        overflow: scroll;
+        width: 100%;
+        height: 100%;
+    }
+    
 	#app {
 		width: 100%;
+        height: 100vh;
+        overflow: hidden;
 	}
 </style>
