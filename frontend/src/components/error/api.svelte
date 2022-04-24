@@ -7,19 +7,24 @@
 	const emoji = emojis[Math.floor(Math.random() * emojis.length)];
 </script>
 
-<div class="root">
+<div class="content">
 	<h1>{emoji}</h1>
 
 	<p class="short">{ln[lk.API_ERROR_DESCRIPTION]}</p>
-	<a href={support}>{ln[lk.API_ERROR_CONTACT]}</a>
+    <div class="link">
+        <a href={support}>{ln[lk.API_ERROR_CONTACT]}</a>
+    </div>
 </div>
 
 <style>
-	.root {
+	.content {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
+        padding: 20px 0;
+        width: 100%;
+        min-height: 100vh;
 	}
 
 	h1 {
@@ -29,4 +34,8 @@
 	a {
 		margin-top: 10px;
 	}
+
+    p {
+        text-align: center;
+    }
 </style>
