@@ -35,6 +35,7 @@ table! {
         user_id -> Bytea,
         name -> Varchar,
         permissions -> Int2,
+        expire -> Nullable<Timestamptz>,
     }
 }
 

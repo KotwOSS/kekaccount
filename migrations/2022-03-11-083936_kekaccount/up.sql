@@ -18,7 +18,8 @@ CREATE TABLE tokens (
     user_id BYTEA NOT NULL 
     REFERENCES users (id) ON DELETE CASCADE,
     name VARCHAR(32) NOT NULL,
-    permissions SMALLINT NOT NULL
+    permissions SMALLINT NOT NULL,
+    expire TIMESTAMP WITH TIME ZONE DEFAULT NOW() + INTERVAL '5 minutes'
 );
 
 CREATE TABLE apps (
@@ -54,3 +55,11 @@ CREATE TABLE access_codes (
     token_id BYTEA NOT NULL 
     REFERENCES tokens (id) ON DELETE CASCADE
 );
+
+CREATE FUNCTION clean_account_db () 
+RETURNS void 
+AS $$
+BEGIN
+    DELETE FROM tokens WHERE expire < NOW();
+END;
+$$ LANGUAGE plpgsql;
