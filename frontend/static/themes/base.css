@@ -1,5 +1,6 @@
 :root {
 	--nav-height: 63px;
+    --full-height: calc(100vh - var(--nav-height));
 }
 
 * {
@@ -31,11 +32,8 @@ nav > .wrapper > .burger > div {
 
 body {
 	background-color: var(--background);
-	overflow: hidden;
-}
-
-html {
-	overflow: scroll;
+    overflow: hidden;
+    height: 100vh;
 }
 
 .title {
@@ -169,7 +167,14 @@ a:hover {
 }
 
 .root {
-	min-height: calc(100vh - var(--nav-height));
+	min-height: 100vh;
+}
+
+.root::before {
+    content: "";
+    display: block;
+    height: var(--nav-height);
+    width: 100%;
 }
 
 .short {
