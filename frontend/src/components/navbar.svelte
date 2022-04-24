@@ -16,8 +16,8 @@
 
 	let authorized = client.authorized;
 
-	let html = document.documentElement;
-	$: html.setAttribute("style", expand_menu ? "overflow-y: hidden" : "");
+	let scroller = document.querySelector("#app > .wrapper");
+	$: scroller.setAttribute("style", expand_menu ? "overflow-y: hidden" : "");
 </script>
 
 <div
@@ -28,36 +28,36 @@
 	class:expand={expand_menu}
 />
 
-<div class="spacer" />
-
 <div class="menu" class:expand={expand_menu}>
-	<Link href="/" exact>
-		🏠 {ln[lk.NAV_HOME]}
-	</Link>
-
-	{#if $authorized}
-		<Category>
-			<Link href="/dash" slot="title">
-				✏️ {ln[lk.NAV_DASHBOARD]}
-			</Link>
-			<svelte:fragment slot="sub">
-				<Link href="/dash/account/">Account</Link>
-				<Link href="/dash/apps/">Apps</Link>
-				<Link href="/dash/tokens/">Tokens</Link>
-			</svelte:fragment>
-		</Category>
-
-		<Link href="/logout">
-			⚔️ {ln[lk.NAV_LOGOUT]}
-		</Link>
-	{:else}
-		<div class="link">
-			<a href="/register" class:active={path.startsWith("/register")}>{ln[lk.NAV_REGISTER]}</a>
-		</div>
-		<div class="link">
-			<a href="/login" class:active={path.startsWith("/login")}>{ln[lk.NAV_LOGIN]}</a>
-		</div>
-	{/if}
+    <div class="links">
+        <Link href="/" exact>
+            🏠 {ln[lk.NAV_HOME]}
+        </Link>
+    
+        {#if $authorized}
+            <Category expand>
+                <Link href="/dash" slot="title">
+                    ✏️ {ln[lk.NAV_DASHBOARD]}
+                </Link>
+                <svelte:fragment slot="sub">
+                    <Link href="/dash/account/">Account</Link>
+                    <Link href="/dash/apps/">Apps</Link>
+                    <Link href="/dash/tokens/">Tokens</Link>
+                </svelte:fragment>
+            </Category>
+    
+            <Link href="/logout">
+                ⚔️ {ln[lk.NAV_LOGOUT]}
+            </Link>
+        {:else}
+            <div class="link">
+                <a href="/register" class:active={path.startsWith("/register")}>{ln[lk.NAV_REGISTER]}</a>
+            </div>
+            <div class="link">
+                <a href="/login" class:active={path.startsWith("/login")}>{ln[lk.NAV_LOGIN]}</a>
+            </div>
+        {/if}
+    </div>
 </div>
 
 <nav>
@@ -87,12 +87,12 @@
 					⚔️ {ln[lk.NAV_LOGOUT]}
 				</Link>
 			{:else}
-				<div class="link">
-					<a href="/register" class:active={path.startsWith("/register")}>{ln[lk.NAV_REGISTER]}</a>
-				</div>
-				<div class="link">
-					<a href="/login" class:active={path.startsWith("/login")}>{ln[lk.NAV_LOGIN]}</a>
-				</div>
+                <Link href="/register">
+                    ⚔️ {ln[lk.NAV_REGISTER]}
+                </Link>
+                <Link href="/login">
+                    ⚔️ {ln[lk.NAV_LOGIN]}
+                </Link>
 			{/if}
 		</div>
 	</div>
@@ -136,30 +136,32 @@
 		display: none;
 	}
 
-	.spacer {
-		height: var(--nav-height);
-	}
-
 	.menu {
-		align-items: flex-start;
 		position: fixed;
 		font-size: 20px;
-		display: flex;
-		flex-direction: column;
-		row-gap: 20px;
+        display: none;
+		overflow-y: scroll;
 		transform: translateX(-100%);
-		padding-top: 20px;
-		padding-left: 20px;
 		top: 63px;
 		left: 0;
 		width: 100%;
 		max-width: 260px;
+        height: var(--full-height);
 		height: calc(100vh - var(--nav-height));
 		background-color: var(--nav-background);
 		z-index: 1;
-		padding-bottom: 63px;
 		transition: transform 0.3s ease;
 	}
+
+    .menu > .links {
+        padding-top: 20px;
+		padding-left: 20px;
+        padding-bottom: 63px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+		row-gap: 20px;
+    }
 
 	.darken {
 		position: fixed;
@@ -212,11 +214,9 @@
 		nav > .wrapper > .links {
 			display: none;
 		}
-	}
 
-	@media (min-width: 600px) {
-		.menu {
-			display: none;
-		}
+        .menu {
+            display: block;
+        }
 	}
 </style>
