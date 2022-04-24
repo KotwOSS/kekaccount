@@ -44,16 +44,13 @@
 		margin-left: auto;
 		margin-right: auto;
 		width: 100%;
-		height: calc(100vh - var(--nav-height));
 		max-width: 1300px;
 	}
 
 	.content {
-		padding: 40px 32px;
-		overflow-y: scroll;
-		width: 100%;
-		min-height: 100%;
-	}
+        padding: 40px 32px;
+        width: 100%;
+    }
 
 	.side {
 		width: 350px;
@@ -67,5 +64,20 @@
 		.side {
 			display: none;
 		}
+
+        main {
+            min-height: var(--full-height);
+        }
 	}
+
+    @media (min-width: 900px) {
+        .content {
+            overflow-y: scroll;
+            max-height: 100%;
+        }
+
+        main {
+            height: var(--full-height);
+        }
+    }
 </style>
