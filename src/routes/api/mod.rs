@@ -1,9 +1,9 @@
-use actix_web::{Responder, get};
+use actix_web::{get, Responder};
 
-pub mod auth;
 pub mod apps;
-pub mod users;
+pub mod auth;
 pub mod user;
+pub mod users;
 
 #[get("/api")]
 pub async fn index() -> impl Responder {

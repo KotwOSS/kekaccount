@@ -1,10 +1,26 @@
 export let language: any;
 export let initialized: number = 0;
 
-export const supported: any = {
-    "en_us": "🇬🇧 English",
-    "de": "🇩🇪 Deutsch"
+export type Language = {
+	name: string;
+	emoji: string;
 };
+
+export const supported: { [key: string]: Language } = {
+	en_us: {
+		name: "English (US)",
+		emoji: "🇺🇸"
+	},
+	en_uk: {
+		name: "English (UK)",
+		emoji: "🇬🇧"
+	},
+	de: {
+		name: "Deutsch",
+		emoji: "🇩🇪"
+	}
+};
+
 export const fallback: string = "en_us";
 
 export function init() {
@@ -53,6 +69,7 @@ export enum LangKey {
 	FOOTER_LANGUAGE = "footer.language",
 	FOOTER_LEGAL = "footer.legal",
 	FOOTER_EVENTS = "footer.events",
+	FOOTER_THEME = "footer.theme",
 	// REGISTER
 	REGISTER_KEKY_NEXT = "register.keky.next",
 	REGISTER_KEKY_BACK = "register.keky.back",
@@ -93,6 +110,8 @@ export enum LangKey {
 	// ACCOUNT
 	ACCOUNT_TITLE = "account.title",
 	ACCOUNT_DESCRIPTION = "account.description",
+	ACCOUNT_DELETE = "account.delete",
+	ACCOUNT_DELETE_CONFIRM = "account.delete.confirm",
 	// APPS
 	APPS_TITLE = "apps.title",
 	APPS_DESCRIPTION = "apps.description",
@@ -101,7 +120,39 @@ export enum LangKey {
 	TOKENS_TITLE = "tokens.title",
 	TOKENS_DESCRIPTION = "tokens.description",
 	TOKENS_CREATE = "tokens.create",
+	TOKENS_CREATE_DESCRIPTION = "tokens.create.description",
+	TOKENS_CREATE_NAME = "tokens.create.name",
+	TOKENS_CREATE_SUBMIT = "tokens.create.submit",
+	TOKENS_DELETE = "tokens.delete",
+	TOKENS_DELETE_CONFIRM = "tokens.delete.confirm",
+	// CONFIRM
+	CONFIRM_TITLE = "confirm.title",
+	CONFIRM_DESCRIPTION = "confirm.description",
+	CONFIRM_SUBMIT = "confirm.submit",
+	CONFIRM_TYPE_TO_CONFIRM = "confirm.type_to_confirm",
+	// VERIFY
+	VERIFY_CONFIRM_HINT = "verify.confirm.hint",
+
+	// API ERROR
+	API_ERROR_DESCRIPTION = "api_error.description",
+	API_ERROR_CONTACT = "api_error.contact",
 
 	// MISC
-	BACK_TO_DASHBOARD = "back.to.dashboard"
+	BACK_TO_DASHBOARD = "back.to.dashboard",
+
+	// USERS
+	USERS_TITLE = "users.title",
+	USERS_DESCRIPTION = "users.description",
+	USERS_SEARCH = "users.search",
+	USERS_USERNAME = "users.username",
+	USERS_REFRESH = "users.refresh",
+
+	// TABLES
+	TABLE_PERMISSION_TITLE = "table.permission.title",
+	TABLE_PERMISSION_SELECT_ALL = "table.permission.select_all",
+	TABLE_PERMISSION_DESELECT_ALL = "table.permission.deselect_all",
+
+	// THEMES
+	THEME_DARK = "theme.dark",
+	THEME_LIGHT = "theme.light"
 }

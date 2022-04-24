@@ -4,7 +4,11 @@
 		<meta charset="utf-8" />
 		<meta name="description" content="" />
 		<link rel="icon" href="%svelte.assets%/favicon.png" />
-		<link rel="stylesheet" href="/themes/dark.css" />
+		<link id="theme" rel="stylesheet" href="/themes/dark.css" />
+		<script>
+			const theme = document.getElementById("theme");
+			theme.setAttribute("href", `/themes/${localStorage.getItem("theme") || "dark"}.css`);
+		</script>
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
 		%svelte.head%
 	</head>

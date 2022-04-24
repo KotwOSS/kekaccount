@@ -1,7 +1,6 @@
-import { dev } from "$app/env";
-
+/** @type {import('@sveltejs/kit').Handle} */
 export async function handle({ event, resolve }) {
 	return await resolve(event, {
-		ssr: !dev
+		ssr: false
 	});
 }

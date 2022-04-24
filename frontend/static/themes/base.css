@@ -1,11 +1,29 @@
+:root {
+	--nav-height: 63px;
+	--full-height: calc(100vh - var(--nav-height));
+}
+
 * {
-	text-align: center;
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	color: var(--color);
 	scrollbar-width: none;
-	overflow: hidden;
+}
+
+h1 {
+	font-weight: 800;
+	font-size: 2.25em;
+}
+
+p {
+	font-size: 18px;
+	color: var(--color-secondary);
+	line-height: 31.5px;
+}
+
+nav > .wrapper > .burger > div {
+	background-color: var(--color);
 }
 
 *::-webkit-scrollbar {
@@ -14,13 +32,16 @@
 
 body {
 	background-color: var(--background);
-	/* height: 100vh;
-	overflow-y: scroll;
-    overflow-x: hidden; */
+	overflow: hidden;
+	height: 100vh;
 }
 
-html {
-	overflow: scroll;
+.title {
+	margin-bottom: 20px;
+}
+
+nav > .wrapper > h1 {
+	color: var(--brand-color);
 }
 
 button {
@@ -29,13 +50,21 @@ button {
 	color: var(--button-color);
 	border-radius: 10px;
 	cursor: pointer;
-	padding: 5px;
+	padding: 5px 10px;
+	font-size: 16px;
 	outline: none;
-	transition: all 0.3s ease;
+	transition: background 0.3s, border 0.3s;
+	transition-timing-function: ease;
 }
 
 button:hover {
 	background-color: var(--button-hover-background);
+}
+
+button:disabled {
+	border: 1px solid var(--button-disabled-border);
+	background-color: var(--button-disabled-background);
+	color: var(--button-disabled-color);
 }
 
 input {
@@ -43,13 +72,21 @@ input {
 	background-color: var(--input-background);
 	color: var(--input-color);
 	border-radius: 10px;
-	padding: 5px;
+	padding: 5px 10px;
+	font-size: 16px;
+	letter-spacing: 1px;
 	outline: none;
 	transition: all 0.3s ease;
 }
 
 input:focus {
 	border: 1px solid var(--input-focus-border);
+}
+
+input:disabled {
+	border: 1px solid var(--input-disabled-border);
+	background-color: var(--input-disabled-background);
+	color: var(--input-disabled-color);
 }
 
 *:disabled {
@@ -64,11 +101,17 @@ input:focus {
 	color: var(--warning);
 }
 
+.darken {
+	background: var(--darken-background);
+	backdrop-filter: blur(2px);
+}
+
 .error {
 	color: var(--error);
 }
 
 .card {
+	text-align: center;
 	border: 1px solid var(--card-border);
 	background-color: var(--card-background);
 	border-radius: 20px;
@@ -91,6 +134,7 @@ input:focus {
 nav {
 	border-bottom: 1px solid var(--nav-border);
 	background-color: var(--nav-background);
+	backdrop-filter: blur(2px);
 }
 
 footer {
@@ -99,20 +143,38 @@ footer {
 }
 
 a {
-	text-decoration: none;
 	color: var(--a-color);
+	font-size: 18px;
+	font-weight: 600;
+	border-left: 0px solid;
+	border-right: 0px solid;
+	border-top: 0px solid;
+	border-bottom: 1px solid var(--brand-color);
+	cursor: pointer;
+	text-decoration: none;
+	text-decoration-line: none;
+	padding-bottom: 1px;
 }
 
 a:hover {
+	border-bottom-width: 2px;
 	color: var(--a-color-hover);
 }
 
-.active {
+.active,
+.active * {
 	color: var(--active-color);
 }
 
 .root {
-	min-height: calc(100vh - 50px);
+	min-height: 100vh;
+}
+
+.root::before {
+	content: "";
+	display: block;
+	height: var(--nav-height);
+	width: 100%;
 }
 
 .short {
@@ -123,4 +185,41 @@ a:hover {
 	word-break: break-all;
 	line-break: strict;
 	white-space: pre-wrap;
+}
+
+input[type="checkbox"] {
+	--cisize: 20px;
+	--csize: 16px;
+	cursor: pointer;
+	border-radius: 20px;
+	border: 0;
+	outline: 0;
+	background-color: var(--checkbox-background);
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	width: calc(var(--cisize) * 2);
+	height: var(--cisize);
+	padding: calc(calc(var(--cisize) - var(--csize)) / 2);
+}
+
+input[type="checkbox"]::after {
+	margin: 0;
+	display: block;
+	content: "";
+	background-color: var(--checkbox-handle-background);
+	width: var(--csize);
+	height: var(--csize);
+	border-radius: 50%;
+	transition: transform 0.3s ease;
+}
+
+input[type="checkbox"]:checked::after {
+	transform: translateX(var(--cisize));
+}
+
+input[type="checkbox"]:checked {
+	background-color: var(--checkbox-checked-background);
 }

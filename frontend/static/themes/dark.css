@@ -1,31 +1,66 @@
 @import url("base.css");
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap");
+@import url("https://rsms.me/inter/inter.css");
 
 :root {
+	--brand-color: rgb(255, 122, 34);
 	--background: #000;
 	--color: rgb(221, 221, 221);
+	--a-color: var(--color);
+	--color-secondary: #707070;
 	--hint: orange;
 	--warning: rgb(255, 72, 0);
 	--error: red;
-	--nav-border: rgba(255, 145, 0, 0.342);
-	--nav-background: rgba(0, 0, 0, 0.85);
-	--footer-border: rgba(255, 145, 0, 0.342);
-	--footer-background: rgba(0, 0, 0, 0.6);
-	--a-color: rgb(204, 99, 38);
-	--a-color-hover: rgb(212, 67, 0);
-	--active-color: rgb(245, 143, 27);
-	--button-border: rgb(245, 143, 27);
-	--button-color: rgb(245, 143, 27);
+	--nav-border: rgba(78, 78, 78, 0.7);
+	--nav-background: rgba(0, 0, 0, 0.5);
+	--footer-border: var(--nav-border);
+	--footer-background: rgba(0, 0, 0, 0.7);
+	--a-color-hover: rgb(219, 107, 33);
+	--active-color: var(--brand-color);
+	--button-border: var(--brand-color);
+	--button-color: var(--brand-color);
 	--button-background: rgba(0, 0, 0, 0.2);
+	--button-disabled-border: rgb(182, 107, 21);
+	--button-disabled-color: rgb(182, 107, 21);
+	--button-disabled-background: rgba(0, 0, 0, 0.2);
 	--button-hover-background: rgba(245, 143, 27, 0.2);
-	--input-border: rgba(255, 255, 255, 0.5);
+	--input-border: rgba(255, 255, 255, 0.3);
 	--input-color: rgb(255, 255, 255);
 	--input-background: rgba(0, 0, 0, 0.2);
-	--input-focus-border: rgb(245, 143, 27);
+	--input-disabled-border: rgba(126, 126, 126, 0.3);
+	--input-disabled-color: rgb(143, 143, 143);
+	--input-disabled-background: rgba(0, 0, 0, 0.2);
+	--input-focus-border: var(--brand-color);
 	--card-border: rgba(255, 255, 255, 0.2);
 	--card-background: rgba(0, 0, 0, 0.2);
+	--darken-background: rgba(0, 0, 0, 0.7) none repeat scroll 0% 0%;
+	--secondary-color: gray;
+	--sub-border: var(--color-secondary);
+
+	--checkbox-handle-background: black;
+	--checkbox-background: var(--color-secondary);
+	--checkbox-checked-background: var(--brand-color);
 }
 
 * {
-	font-family: "Roboto Mono", monospace;
+	font-family: "Inter", sans-serif;
+	tab-size: 4;
+}
+
+@supports (font-variation-settings: normal) {
+	* {
+		font-family: "Inter var", sans-serif;
+	}
+}
+
+#app {
+	background-image: url("/bg.jpg");
+	background-size: cover;
+}
+
+#app > .wrapper > main > .content {
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 1) 60%);
+}
+
+footer {
+	background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 1) 100%);
 }

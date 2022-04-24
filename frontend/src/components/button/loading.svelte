@@ -2,9 +2,10 @@
 	import Loader from "$components/loader.svelte";
 
 	export let loading: boolean = false;
+	export let disabled: boolean = false;
 </script>
 
-<button>
+<button {disabled}>
 	{#if loading}
 		<Loader />
 	{:else}
@@ -14,7 +15,7 @@
 
 <style>
 	button > :global(.loader) {
-		width: 18px;
-		height: 18px;
+		width: 19px;
+		height: 19px;
 	}
 </style>

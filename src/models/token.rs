@@ -1,15 +1,17 @@
-use diesel::{PgConnection, QueryResult, QueryDsl, BoolExpressionMethods, RunQueryDsl, ExpressionMethods};
+use diesel::{
+    BoolExpressionMethods, ExpressionMethods, PgConnection, QueryDsl, QueryResult, RunQueryDsl,
+};
 
 use crate::schema::tokens;
 
 #[derive(Queryable, Insertable)]
-#[table_name="tokens"]
+#[table_name = "tokens"]
 pub struct Token {
     pub id: Vec<u8>,
     pub token: Vec<u8>,
     pub user_id: Vec<u8>,
     pub name: String,
-    pub permissions: i16
+    pub permissions: i16,
 }
 
 impl Token {
@@ -22,46 +24,82 @@ impl Token {
     pub fn find(id: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<Token>> {
         tokens::table
             .filter(tokens::dsl::id.eq(id))
-            .select((tokens::dsl::id, tokens::dsl::token, tokens::dsl::user_id, tokens::dsl::name, tokens::dsl::permissions))
+            .select((
+                tokens::dsl::id,
+                tokens::dsl::token,
+                tokens::dsl::user_id,
+                tokens::dsl::name,
+                tokens::dsl::permissions,
+            ))
             .load::<Token>(connection)
     }
 
     pub fn delete(id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
         diesel::delete(tokens::table)
             .filter(tokens::dsl::id.eq(id))
-            .execute(connection)       
+            .execute(connection)
     }
 
-    pub fn delete_user(id: Vec<u8>, user_id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
+    pub fn delete_user(
+        id: Vec<u8>,
+        user_id: Vec<u8>,
+        connection: &PgConnection,
+    ) -> QueryResult<usize> {
         diesel::delete(tokens::table)
             .filter(tokens::dsl::id.eq(id).and(tokens::dsl::user_id.eq(user_id)))
-            .execute(connection)       
+            .execute(connection)
     }
 
     pub fn delete_user_all(user_id: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
         diesel::delete(tokens::table)
             .filter(tokens::dsl::user_id.eq(user_id))
-            .execute(connection)       
+            .execute(connection)
     }
 
     pub fn find_token(token: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<Token>> {
         tokens::table
             .filter(tokens::dsl::token.eq(token))
-            .select((tokens::dsl::id, tokens::dsl::token, tokens::dsl::user_id, tokens::dsl::name, tokens::dsl::permissions))
+            .select((
+                tokens::dsl::id,
+                tokens::dsl::token,
+                tokens::dsl::user_id,
+                tokens::dsl::name,
+                tokens::dsl::permissions,
+            ))
             .load::<Token>(connection)
     }
 
     pub fn find_user(user_id: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<Token>> {
         tokens::table
             .filter(tokens::dsl::user_id.eq(user_id))
-            .select((tokens::dsl::id, tokens::dsl::token, tokens::dsl::user_id, tokens::dsl::name, tokens::dsl::permissions))
+            .select((
+                tokens::dsl::id,
+                tokens::dsl::token,
+                tokens::dsl::user_id,
+                tokens::dsl::name,
+                tokens::dsl::permissions,
+            ))
             .load::<Token>(connection)
     }
 
-    pub fn get_name(user_id: Vec<u8>, name: String, connection: &PgConnection) -> QueryResult<Vec<Token>> {
+    pub fn get_name(
+        user_id: Vec<u8>,
+        name: String,
+        connection: &PgConnection,
+    ) -> QueryResult<Vec<Token>> {
         tokens::table
-            .filter(tokens::dsl::name.eq(name).and(tokens::dsl::user_id.eq(user_id)))
-            .select((tokens::dsl::id, tokens::dsl::token, tokens::dsl::user_id, tokens::dsl::name, tokens::dsl::permissions))
+            .filter(
+                tokens::dsl::name
+                    .eq(name)
+                    .and(tokens::dsl::user_id.eq(user_id)),
+            )
+            .select((
+                tokens::dsl::id,
+                tokens::dsl::token,
+                tokens::dsl::user_id,
+                tokens::dsl::name,
+                tokens::dsl::permissions,
+            ))
             .load::<Token>(connection)
     }
 }

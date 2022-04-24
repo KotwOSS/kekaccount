@@ -1,9 +1,12 @@
-use diesel::{PgConnection, QueryResult, QueryDsl, RunQueryDsl, ExpressionMethods, BoolExpressionMethods, PgTextExpressionMethods};
+use diesel::{
+    BoolExpressionMethods, ExpressionMethods, PgConnection, PgTextExpressionMethods, QueryDsl,
+    QueryResult, RunQueryDsl,
+};
 
 use crate::schema::apps;
 
 #[derive(Queryable, Insertable)]
-#[table_name="apps"]
+#[table_name = "apps"]
 pub struct App {
     pub id: Vec<u8>,
     pub owner: Vec<u8>,
@@ -15,7 +18,7 @@ pub struct App {
 }
 
 #[derive(AsChangeset)]
-#[table_name="apps"]
+#[table_name = "apps"]
 pub struct AppChangeSet {
     pub id: Option<Vec<u8>>,
     pub owner: Option<Vec<u8>>,
@@ -36,21 +39,49 @@ impl App {
     pub fn find(id: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<App>> {
         apps::table
             .filter(apps::dsl::id.eq(id))
-            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::avatar, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
+            .select((
+                apps::dsl::id,
+                apps::dsl::owner,
+                apps::dsl::name,
+                apps::dsl::avatar,
+                apps::dsl::description,
+                apps::dsl::redirect_uri,
+                apps::dsl::homepage,
+            ))
             .load::<App>(connection)
     }
 
     pub fn find_owner_all(owner: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<App>> {
         apps::table
             .filter(apps::dsl::owner.eq(owner))
-            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::avatar, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
+            .select((
+                apps::dsl::id,
+                apps::dsl::owner,
+                apps::dsl::name,
+                apps::dsl::avatar,
+                apps::dsl::description,
+                apps::dsl::redirect_uri,
+                apps::dsl::homepage,
+            ))
             .load::<App>(connection)
     }
 
-    pub fn find_owner(id: Vec<u8>, owner: Vec<u8>, connection: &PgConnection) -> QueryResult<Vec<App>> {
+    pub fn find_owner(
+        id: Vec<u8>,
+        owner: Vec<u8>,
+        connection: &PgConnection,
+    ) -> QueryResult<Vec<App>> {
         apps::table
             .filter(apps::dsl::id.eq(id).and(apps::dsl::owner.eq(owner)))
-            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::avatar, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
+            .select((
+                apps::dsl::id,
+                apps::dsl::owner,
+                apps::dsl::name,
+                apps::dsl::avatar,
+                apps::dsl::description,
+                apps::dsl::redirect_uri,
+                apps::dsl::homepage,
+            ))
             .load::<App>(connection)
     }
 
@@ -60,25 +91,47 @@ impl App {
             .execute(connection)
     }
 
-    pub fn delete_owner(id: Vec<u8>, owner: Vec<u8>, connection: &PgConnection) -> QueryResult<usize> {
+    pub fn delete_owner(
+        id: Vec<u8>,
+        owner: Vec<u8>,
+        connection: &PgConnection,
+    ) -> QueryResult<usize> {
         diesel::delete(apps::table)
             .filter(apps::dsl::id.eq(id).and(apps::dsl::owner.eq(owner)))
             .execute(connection)
     }
 
-    pub fn update_owner(id: Vec<u8>, owner: Vec<u8>, changes: &AppChangeSet, connection: &PgConnection) -> QueryResult<usize> {
+    pub fn update_owner(
+        id: Vec<u8>,
+        owner: Vec<u8>,
+        changes: &AppChangeSet,
+        connection: &PgConnection,
+    ) -> QueryResult<usize> {
         diesel::update(apps::table)
             .filter(apps::dsl::id.eq(id).and(apps::dsl::owner.eq(owner)))
             .set(changes)
             .execute(connection)
     }
 
-    pub fn ilike_name_ol(name: String, offset: i64, limit: i64, connection: &PgConnection) -> QueryResult<Vec<App>> {
+    pub fn ilike_name_ol(
+        name: String,
+        offset: i64,
+        limit: i64,
+        connection: &PgConnection,
+    ) -> QueryResult<Vec<App>> {
         apps::table
             .filter(apps::dsl::name.ilike(name))
             .limit(limit)
             .offset(offset)
-            .select((apps::dsl::id, apps::dsl::owner, apps::dsl::name, apps::dsl::avatar, apps::dsl::description, apps::dsl::redirect_uri, apps::dsl::homepage))
+            .select((
+                apps::dsl::id,
+                apps::dsl::owner,
+                apps::dsl::name,
+                apps::dsl::avatar,
+                apps::dsl::description,
+                apps::dsl::redirect_uri,
+                apps::dsl::homepage,
+            ))
             .load::<App>(connection)
     }
 }

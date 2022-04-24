@@ -1,0 +1,68 @@
+@import url("base.css");
+@import url("https://rsms.me/inter/inter.css");
+
+:root {
+	--brand-color: rgb(255, 62, 0);
+	--background: rgb(255, 255, 255);
+	--color: rgb(17, 24, 39);
+	--a-color: var(--color);
+	--color-secondary: #505050;
+	--hint: rgb(155, 101, 0);
+	--warning: rgb(255, 72, 0);
+	--error: red;
+	--nav-border: rgb(217, 217, 217);
+	--nav-background: rgba(255, 255, 255, 0.85);
+	--footer-border: rgb(217, 217, 217);
+	--footer-background: rgb(255, 255, 255);
+	--a-color: rgb(17, 24, 39);
+	--a-color-hover: rgb(189, 47, 0);
+	--active-color: var(--brand-color);
+	--button-color: rgb(255, 255, 255);
+	--button-background: var(--brand-color);
+	--button-disabled-color: rgba(255, 255, 255, 0.5);
+	--button-disabled-background: rgb(128, 32, 0);
+	--button-disabled-background: rgb(139, 35, 0);
+	--button-hover-background: var(--a-color-hover);
+	--input-border: rgba(0, 0, 0, 0.5);
+	--input-color: var(--color);
+	--input-background: rgba(255, 255, 255, 0.2);
+	--input-focus-border: rgb(0, 0, 0);
+	--input-disabled-border: rgba(126, 126, 126, 0.3);
+	--input-disabled-color: rgb(143, 143, 143);
+	--input-disabled-background: rgba(0, 0, 0, 0.2);
+	--card-border: rgba(0, 0, 0, 0.2);
+	--darken-background: rgba(0, 0, 0, 0.7) none repeat scroll 0% 0%;
+	--sub-border: transparent;
+
+	--checkbox-handle-background: black;
+	--checkbox-background: rgb(175, 175, 175);
+	--checkbox-checked-background: var(--brand-color);
+}
+
+.card {
+	-webkit-box-shadow: 5px 6px 13px 1px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 5px 6px 13px 1px rgba(0, 0, 0, 0.3);
+	box-shadow: 3px 3px 10px 1px rgba(0, 0, 0, 0.3);
+}
+
+nav > .burger > div {
+	background-color: rgb(0, 0, 0);
+}
+
+* {
+	font-family: "Inter", sans-serif;
+	tab-size: 4;
+}
+
+@supports (font-variation-settings: normal) {
+	* {
+		font-family: "Inter var", sans-serif;
+	}
+}
+
+.root {
+	background-color: white;
+	/* background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, rgb(255, 255, 255) 40%),
+		url("/bg.jpg"); */
+	background-size: cover;
+}

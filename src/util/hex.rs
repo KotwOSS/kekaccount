@@ -1,7 +1,7 @@
-use std::fmt::{Display, Formatter, self};
+use std::fmt::{self, Display, Formatter};
 
 pub struct HexError {
-    msg: String
+    msg: String,
 }
 
 impl Display for HexError {
@@ -10,12 +10,16 @@ impl Display for HexError {
     }
 }
 
-
 pub fn parse_to_buf<'a>(hex_string: &'a str, expected_len: usize) -> Result<Vec<u8>, HexError> {
     if hex_string.len() != expected_len {
-        return Err(HexError { msg: format!("Expected length {}, but found {}", expected_len, hex_string.len()) })
+        return Err(HexError {
+            msg: format!(
+                "Expected length {}, but found {}",
+                expected_len,
+                hex_string.len()
+            ),
+        });
     }
 
-    hex::decode(hex_string)
-        .map_err(|e| HexError { msg: e.to_string() })
+    hex::decode(hex_string).map_err(|e| HexError { msg: e.to_string() })
 }

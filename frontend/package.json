@@ -32,6 +32,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@vitejs/plugin-legacy": "^1.8.0",
 		"crypto-js": "^4.1.1",
 		"lodash.isequal": "^4.5.0"
 	}

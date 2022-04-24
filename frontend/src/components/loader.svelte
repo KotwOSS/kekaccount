@@ -2,12 +2,12 @@
 	<svg viewBox="0 0 100 100">
 		<defs>
 			<filter id="shadow">
-				<feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="#ffffff" />
+				<feDropShadow dx="0" dy="0" stdDeviation="1.5" flood-color="var(--color)" />
 			</filter>
 		</defs>
 		<circle
 			id="spinner"
-			style="fill:transparent;stroke:#ffffff;stroke-width: 7px;stroke-linecap: round;filter:url(#shadow);"
+			style="fill:transparent;stroke:var(--color);stroke-width: 7px;stroke-linecap: round;filter:url(#shadow);"
 			cx="50"
 			cy="50"
 			r="45"

@@ -9,9 +9,10 @@ const config = {
 	preprocess: preprocess(),
 
 	kit: {
-		adapter: adapter(),
+		adapter: adapter({
+			fallback: "404.html"
+		}),
 		prerender: {
-			enabled: false,
 			default: true
 		},
 		vite: {
@@ -21,6 +22,22 @@ const config = {
 					$components: path.resolve("./src/components")
 				}
 			}
+			// build: {
+			//     rollupOptions: {
+			//         plugins: [
+			//             legacy({
+			//                 targets: ['ie >= 11'],
+			//                 additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+			//             })
+			//         ]
+			//     }
+			// },
+			// plugins: [
+			//     // legacy({
+			//     //     targets: ['ie >= 11'],
+			//     //     additionalLegacyPolyfills: ['regenerator-runtime/runtime']
+			//     // })
+			// ]
 		},
 		trailingSlash: "always"
 	}

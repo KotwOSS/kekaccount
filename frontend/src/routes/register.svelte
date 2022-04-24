@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { APIError, hash_password, Routes } from "$lib/api";
 	import { regex } from "$lib/checker";
-	import * as lang from "$lib/lang";
-	import { LangKey as lk } from "$lib/lang";
-	import T from "$components/translate.svelte";
+	import { LangKey as lk, language as ln } from "$lib/lang";
+
+	import { goto } from "$app/navigation";
+
+	import { fade } from "svelte/transition";
 
 	const emojis = ["👋😄", "✌️😁", "🤔", "😁👍", "🤔", "😉👍", "😀", "😅", "😀👍", "😁"];
 	const emojis_invalid = ["👇😉", "👇😅"];
@@ -23,7 +25,7 @@
 		emoji = error
 			? emojis_invalid[Math.floor(Math.random() * emojis_invalid.length)]
 			: emojis[step_index];
-		text = error ? error : lang.language["register.keky.step" + step_index];
+		text = error ? error : ln["register.keky.step" + step_index];
 		talk();
 	}
 
@@ -47,22 +49,23 @@
 	let password: string;
 
 	async function check_email(msg: string) {
-		if (!regex.EMAIL.test(msg)) return lang.language[lk.REGISTER_KEKY_EMAIL_INVALID];
+		if (!regex.EMAIL.test(msg)) return ln[lk.REGISTER_KEKY_EMAIL_INVALID];
 		email = msg;
 	}
 
 	async function check_username(msg: string) {
 		if (msg.length >= 3 && msg.length <= 32) {
+			if (!regex.USERNAME.test(msg)) return ln[lk.REGISTER_KEKY_USERNAME_INVALID];
 			try {
 				if ((await Routes.Users.SEARCH.send({ name: msg, exact: true })).length !== 0) {
-					return lang.language[lk.REGISTER_KEKY_USERNAME_EXISTS];
+					return ln[lk.REGISTER_KEKY_USERNAME_EXISTS];
 				}
 			} catch (e) {
 				if (e instanceof APIError) {
 					return e.get_message();
-				} else return lang.language[lk.ERROR_CONNECTION];
+				} else return ln[lk.ERROR_CONNECTION];
 			}
-		} else return lang.language[lk.REGISTER_KEKY_USERNAME_INVALID];
+		} else return ln[lk.REGISTER_KEKY_USERNAME_INVALID];
 		username = msg;
 	}
 
@@ -71,34 +74,34 @@
 		let strong = regex.STRONG_PASSWORD.test(msg);
 		let spaces = regex.WHITESPACE.test(msg);
 
-		if (spaces) return lang.language[lk.REGISTER_KEKY_PASSWORD_SPACE];
-		if (msg.length < 8 || (!strong && !weak)) return lang.language[lk.REGISTER_KEKY_PASSWORD_WEAK];
+		if (spaces) return ln[lk.REGISTER_KEKY_PASSWORD_SPACE];
+		if (msg.length < 8 || (!strong && !weak)) return ln[lk.REGISTER_KEKY_PASSWORD_WEAK];
 		password = msg;
 	}
 
 	async function check_password_repeat(msg: string) {
-		if (msg != password) return lang.language[lk.REGISTER_KEKY_PASSWORD_MATCH];
+		if (msg != password) return ln[lk.REGISTER_KEKY_PASSWORD_MATCH];
 	}
 
 	function setup_input() {
 		switch (step_index) {
 			case 2:
 				input = {
-					placeholder: lang.language[lk.REGISTER_KEKY_USERNAME],
+					placeholder: ln[lk.REGISTER_KEKY_USERNAME],
 					checker: check_username,
 					value: username
 				};
 				break;
 			case 4:
 				input = {
-					placeholder: lang.language[lk.REGISTER_KEKY_EMAIL],
+					placeholder: ln[lk.REGISTER_KEKY_EMAIL],
 					checker: check_email,
 					value: email
 				};
 				break;
 			case 6:
 				input = {
-					placeholder: lang.language[lk.REGISTER_KEKY_PASSWORD],
+					placeholder: ln[lk.REGISTER_KEKY_PASSWORD],
 					checker: check_password,
 					type: "password",
 					value: password
@@ -106,7 +109,7 @@
 				break;
 			case 7:
 				input = {
-					placeholder: lang.language[lk.REGISTER_KEKY_PASSWORD_REPEAT],
+					placeholder: ln[lk.REGISTER_KEKY_PASSWORD_REPEAT],
 					checker: check_password_repeat,
 					type: "password"
 				};
@@ -131,7 +134,7 @@
 		if (step_index === 8) {
 			let hashed_password = hash_password(password);
 			Routes.Auth.REGISTER.send({
-				username,
+				name: username,
 				email,
 				password: hashed_password,
 				avatar: ""
@@ -143,14 +146,12 @@
 				.catch((e) => {
 					if (e instanceof APIError) {
 						if (e.status === 409) {
-							error = lang.language[lk.REGISTER_KEKY_EMAIL_EXISTS];
+							error = ln[lk.REGISTER_KEKY_EMAIL_EXISTS];
 							step_index = 4;
 							setup_input();
 						} else error = e.get_message();
-					} else error = lang.language[lk.ERROR_CONNECTION];
+					} else error = ln[lk.ERROR_CONNECTION];
 				});
-
-			//goto("/login");
 		}
 	}
 
@@ -160,9 +161,13 @@
 		step_index--;
 		setup_input();
 	}
+
+	function login() {
+		goto("/login");
+	}
 </script>
 
-<div class="root fadein">
+<div class="root" in:fade={{ duration: 200 }}>
 	<div class="speech">{text.substring(0, text_index)}</div>
 	<h1 class="emoji" class:talking>{emoji}</h1>
 	{#if input}
@@ -177,15 +182,15 @@
 		{#if step_index < 8}
 			{#if step_index !== 0}
 				<button on:click={back} disabled={talking !== 0} class="back"
-					><T k={lk.REGISTER_KEKY_BACK} /></button
+					>{ln[lk.REGISTER_KEKY_BACK]}</button
 				>
 			{/if}
 			<button on:click={next} disabled={talking !== 0} class="next"
-				><T k={lk.REGISTER_KEKY_NEXT} /></button
+				>{ln[lk.REGISTER_KEKY_NEXT]}</button
 			>
 		{/if}
 		{#if step_index === 9}
-			<a href="/login"><T k={lk.NAV_LOGIN} /></a>
+			<button on:click={login}>{ln[lk.NAV_LOGIN]}</button>
 		{/if}
 	</div>
 </div>
@@ -206,8 +211,6 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 1) 50%), url("/bg.jpg");
-		background-size: cover;
 	}
 
 	.speech {
