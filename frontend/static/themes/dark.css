@@ -11,9 +11,9 @@
 	--warning: rgb(255, 72, 0);
 	--error: red;
 	--nav-border: rgba(78, 78, 78, 0.7);
-	--nav-background: rgba(0, 0, 0, 0.85);
+	--nav-background: rgba(0, 0, 0, 0.5);
 	--footer-border: var(--nav-border);
-	--footer-background: rgba(0, 0, 0, 0.6);
+	--footer-background: rgba(0, 0, 0, 0.7);
 	--a-color-hover: rgb(219, 107, 33);
 	--active-color: var(--brand-color);
 	--button-border: var(--brand-color);
@@ -52,7 +52,15 @@
 	}
 }
 
-.root {
-	background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 1) 50%), url("/bg.jpg");
-	background-size: cover;
+#app {
+    background-image: url("/bg.jpg");
+    background-size: cover;
+}
+
+#app > .wrapper > main > .content {
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 1) 60%);
+}
+
+footer {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 1) 100%);
 }
