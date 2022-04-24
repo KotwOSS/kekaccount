@@ -1,6 +1,6 @@
 :root {
 	--nav-height: 63px;
-    --full-height: calc(100vh - var(--nav-height));
+	--full-height: calc(100vh - var(--nav-height));
 }
 
 * {
@@ -32,8 +32,8 @@ nav > .wrapper > .burger > div {
 
 body {
 	background-color: var(--background);
-    overflow: hidden;
-    height: 100vh;
+	overflow: hidden;
+	height: 100vh;
 }
 
 .title {
@@ -171,10 +171,10 @@ a:hover {
 }
 
 .root::before {
-    content: "";
-    display: block;
-    height: var(--nav-height);
-    width: 100%;
+	content: "";
+	display: block;
+	height: var(--nav-height);
+	width: 100%;
 }
 
 .short {
@@ -187,39 +187,39 @@ a:hover {
 	white-space: pre-wrap;
 }
 
-input[type=checkbox] {
-    --cisize: 20px;
-    --csize: 16px;
-    cursor: pointer;
-    border-radius: 20px;
-    border: 0;
-    outline: 0;
-    background-color: var(--checkbox-background);
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -ms-appearance: none;
-    width: calc(var(--cisize) * 2);
-    height: var(--cisize);
-    padding: calc(calc(var(--cisize) - var(--csize)) / 2);
+input[type="checkbox"] {
+	--cisize: 20px;
+	--csize: 16px;
+	cursor: pointer;
+	border-radius: 20px;
+	border: 0;
+	outline: 0;
+	background-color: var(--checkbox-background);
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	-ms-appearance: none;
+	width: calc(var(--cisize) * 2);
+	height: var(--cisize);
+	padding: calc(calc(var(--cisize) - var(--csize)) / 2);
 }
 
-input[type=checkbox]::after {
-    margin: 0;
-    display: block;
-    content: "";
-    background-color: var(--checkbox-handle-background);
-    width: var(--csize);
-    height: var(--csize);
-    border-radius: 50%;
-    transition: transform 0.3s ease;
+input[type="checkbox"]::after {
+	margin: 0;
+	display: block;
+	content: "";
+	background-color: var(--checkbox-handle-background);
+	width: var(--csize);
+	height: var(--csize);
+	border-radius: 50%;
+	transition: transform 0.3s ease;
 }
 
-input[type=checkbox]:checked::after {
-    transform: translateX(var(--cisize));
+input[type="checkbox"]:checked::after {
+	transform: translateX(var(--cisize));
 }
 
-input[type=checkbox]:checked {
-    background-color: var(--checkbox-checked-background);
+input[type="checkbox"]:checked {
+	background-color: var(--checkbox-checked-background);
 }

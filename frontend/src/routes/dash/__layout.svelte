@@ -48,9 +48,9 @@
 	}
 
 	.content {
-        padding: 40px 32px;
-        width: 100%;
-    }
+		padding: 40px 32px;
+		width: 100%;
+	}
 
 	.side {
 		width: 350px;
@@ -65,19 +65,19 @@
 			display: none;
 		}
 
-        main {
-            min-height: var(--full-height);
-        }
+		main {
+			min-height: var(--full-height);
+		}
 	}
 
-    @media (min-width: 900px) {
-        .content {
-            overflow-y: scroll;
-            max-height: 100%;
-        }
+	@media (min-width: 900px) {
+		.content {
+			overflow-y: scroll;
+			max-height: 100%;
+		}
 
-        main {
-            height: var(--full-height);
-        }
-    }
+		main {
+			height: var(--full-height);
+		}
+	}
 </style>

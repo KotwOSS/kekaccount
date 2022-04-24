@@ -29,35 +29,35 @@
 />
 
 <div class="menu" class:expand={expand_menu}>
-    <div class="links">
-        <Link href="/" exact>
-            🏠 {ln[lk.NAV_HOME]}
-        </Link>
-    
-        {#if $authorized}
-            <Category expand>
-                <Link href="/dash" slot="title">
-                    ✏️ {ln[lk.NAV_DASHBOARD]}
-                </Link>
-                <svelte:fragment slot="sub">
-                    <Link href="/dash/account/">Account</Link>
-                    <Link href="/dash/apps/">Apps</Link>
-                    <Link href="/dash/tokens/">Tokens</Link>
-                </svelte:fragment>
-            </Category>
-    
-            <Link href="/logout">
-                ⚔️ {ln[lk.NAV_LOGOUT]}
-            </Link>
-        {:else}
-            <div class="link">
-                <a href="/register" class:active={path.startsWith("/register")}>{ln[lk.NAV_REGISTER]}</a>
-            </div>
-            <div class="link">
-                <a href="/login" class:active={path.startsWith("/login")}>{ln[lk.NAV_LOGIN]}</a>
-            </div>
-        {/if}
-    </div>
+	<div class="links">
+		<Link href="/" exact>
+			🏠 {ln[lk.NAV_HOME]}
+		</Link>
+
+		{#if $authorized}
+			<Category expand>
+				<Link href="/dash" slot="title">
+					✏️ {ln[lk.NAV_DASHBOARD]}
+				</Link>
+				<svelte:fragment slot="sub">
+					<Link href="/dash/account/">Account</Link>
+					<Link href="/dash/apps/">Apps</Link>
+					<Link href="/dash/tokens/">Tokens</Link>
+				</svelte:fragment>
+			</Category>
+
+			<Link href="/logout">
+				⚔️ {ln[lk.NAV_LOGOUT]}
+			</Link>
+		{:else}
+			<div class="link">
+				<a href="/register" class:active={path.startsWith("/register")}>{ln[lk.NAV_REGISTER]}</a>
+			</div>
+			<div class="link">
+				<a href="/login" class:active={path.startsWith("/login")}>{ln[lk.NAV_LOGIN]}</a>
+			</div>
+		{/if}
+	</div>
 </div>
 
 <nav>
@@ -87,12 +87,12 @@
 					⚔️ {ln[lk.NAV_LOGOUT]}
 				</Link>
 			{:else}
-                <Link href="/register">
-                    ⚔️ {ln[lk.NAV_REGISTER]}
-                </Link>
-                <Link href="/login">
-                    ⚔️ {ln[lk.NAV_LOGIN]}
-                </Link>
+				<Link href="/register">
+					⚔️ {ln[lk.NAV_REGISTER]}
+				</Link>
+				<Link href="/login">
+					⚔️ {ln[lk.NAV_LOGIN]}
+				</Link>
 			{/if}
 		</div>
 	</div>
@@ -139,29 +139,29 @@
 	.menu {
 		position: fixed;
 		font-size: 20px;
-        display: none;
+		display: none;
 		overflow-y: scroll;
 		transform: translateX(-100%);
 		top: 63px;
 		left: 0;
 		width: 100%;
 		max-width: 260px;
-        height: var(--full-height);
+		height: var(--full-height);
 		height: calc(100vh - var(--nav-height));
 		background-color: var(--nav-background);
 		z-index: 1;
 		transition: transform 0.3s ease;
 	}
 
-    .menu > .links {
-        padding-top: 20px;
+	.menu > .links {
+		padding-top: 20px;
 		padding-left: 20px;
-        padding-bottom: 63px;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
+		padding-bottom: 63px;
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
 		row-gap: 20px;
-    }
+	}
 
 	.darken {
 		position: fixed;
@@ -215,8 +215,8 @@
 			display: none;
 		}
 
-        .menu {
-            display: block;
-        }
+		.menu {
+			display: block;
+		}
 	}
 </style>

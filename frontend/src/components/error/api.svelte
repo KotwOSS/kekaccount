@@ -11,9 +11,9 @@
 	<h1>{emoji}</h1>
 
 	<p class="short">{ln[lk.API_ERROR_DESCRIPTION]}</p>
-    <div class="link">
-        <a href={support}>{ln[lk.API_ERROR_CONTACT]}</a>
-    </div>
+	<div class="link">
+		<a href={support}>{ln[lk.API_ERROR_CONTACT]}</a>
+	</div>
 </div>
 
 <style>
@@ -22,9 +22,9 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-        padding: 20px 0;
-        width: 100%;
-        min-height: 100vh;
+		padding: 20px 0;
+		width: 100%;
+		min-height: 100vh;
 	}
 
 	h1 {
@@ -35,7 +35,7 @@
 		margin-top: 10px;
 	}
 
-    p {
-        text-align: center;
-    }
+	p {
+		text-align: center;
+	}
 </style>

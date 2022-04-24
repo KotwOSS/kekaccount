@@ -34,9 +34,9 @@
 	--darken-background: rgba(0, 0, 0, 0.7) none repeat scroll 0% 0%;
 	--sub-border: transparent;
 
-    --checkbox-handle-background: black;
-    --checkbox-background: rgb(175, 175, 175);
-    --checkbox-checked-background: var(--brand-color);
+	--checkbox-handle-background: black;
+	--checkbox-background: rgb(175, 175, 175);
+	--checkbox-checked-background: var(--brand-color);
 }
 
 .card {

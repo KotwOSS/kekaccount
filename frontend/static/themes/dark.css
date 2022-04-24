@@ -36,9 +36,9 @@
 	--secondary-color: gray;
 	--sub-border: var(--color-secondary);
 
-    --checkbox-handle-background: black;
-    --checkbox-background: var(--color-secondary);
-    --checkbox-checked-background: var(--brand-color);
+	--checkbox-handle-background: black;
+	--checkbox-background: var(--color-secondary);
+	--checkbox-checked-background: var(--brand-color);
 }
 
 * {
@@ -53,8 +53,8 @@
 }
 
 #app {
-    background-image: url("/bg.jpg");
-    background-size: cover;
+	background-image: url("/bg.jpg");
+	background-size: cover;
 }
 
 #app > .wrapper > main > .content {
@@ -62,5 +62,5 @@
 }
 
 footer {
-    background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 1) 100%);
+	background: linear-gradient(0deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 1) 100%);
 }
